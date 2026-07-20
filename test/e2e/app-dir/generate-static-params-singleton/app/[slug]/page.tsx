@@ -1,6 +1,7 @@
 import db from './db'
 
 export function generateStaticParams() {
+  console.log('generateStaticParams executed')
   return [{ slug: 'first' }]
 }
 
