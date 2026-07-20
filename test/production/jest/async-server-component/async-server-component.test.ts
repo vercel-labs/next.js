@@ -4,6 +4,11 @@ import execa from 'execa'
 describe('next/jest async Server Component', () => {
   const { next } = nextTestSetup({
     files: __dirname,
+    // Regression for https://github.com/vercel/next.js/issues/47131.
+    // Keep these versions pinned to the reporter's frozen reproduction:
+    // https://github.com/felipemullen/async-jest-bug/tree/0dd26fcf80732fcad8105fdad15eb2ddfb3b1297
+    // They preserve the reported React 18 and Jest 29 scenario; upgrading them
+    // would exercise a different async-component contract.
     dependencies: {
       '@testing-library/jest-dom': '5.16.5',
       '@testing-library/react': '14.0.0',
