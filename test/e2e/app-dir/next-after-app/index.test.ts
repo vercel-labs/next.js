@@ -219,6 +219,7 @@ describe.each(runtimes)('after() in %s runtime', (runtimeValue) => {
   })
 
   if (!isNextDeploy) {
+    // Regression test for https://github.com/vercel/next.js/issues/74941
     it('only runs callbacks after the response is fully sent', async () => {
       const pageStartedFetching = promiseWithResolvers<void>()
       pageStartedFetching.promise.catch(() => {})
@@ -280,6 +281,9 @@ describe.each(runtimes)('after() in %s runtime', (runtimeValue) => {
         // we blocked the request from completing, so there should be no logs yet,
         // because after() shouldn't run callbacks until the request is finished.
         expect(getLogs()).not.toContainEqual({
+          source: '[middleware] /delay',
+        })
+        expect(getLogs()).not.toContainEqual({
           source: '[page] /delay (Page)',
         })
         expect(getLogs()).not.toContainEqual({
@@ -291,6 +295,9 @@ describe.each(runtimes)('after() in %s runtime', (runtimeValue) => {
 
         // the request is finished, so after() should run, and the logs should appear now.
         await retry(() => {
+          expect(getLogs()).toContainEqual({
+            source: '[middleware] /delay',
+          })
           expect(getLogs()).toContainEqual({
             source: '[page] /delay (Page)',
           })
