@@ -36,6 +36,8 @@ export interface RequestData {
   requestMeta?: RequestMeta
   /** passed in when running in edge runtime sandbox */
   waitUntil?: (promise: Promise<any>) => void
+  /** passed in when the response lifecycle is managed by NextServer */
+  onClose?: (callback: () => void) => void
 }
 
 export type NodejsRequestData = Omit<RequestData, 'body'> & {

@@ -1710,6 +1710,7 @@ export default class NextNodeServer extends BaseServer<
 
       signal: signalFromNodeResponse(params.response.originalResponse),
       waitUntil: this.getWaitUntil(),
+      onClose: params.response.onClose.bind(params.response),
     }
     let result:
       | UnwrapPromise<ReturnType<typeof import('./web/sandbox').run>>

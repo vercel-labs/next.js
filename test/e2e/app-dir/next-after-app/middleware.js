@@ -7,6 +7,13 @@ export async function middleware(
 ) {
   const url = new URL(request.url)
 
+  if (/^\/[^/]+?\/delay$/.test(url.pathname)) {
+    after(() => {
+      cliLog({ source: '[middleware] /delay' })
+    })
+    return NextResponse.next()
+  }
+
   {
     const match = url.pathname.match(
       /^(?<prefix>\/[^/]+?)\/middleware\/redirect-source/
@@ -48,6 +55,7 @@ export async function middleware(
 
 export const config = {
   matcher: [
+    '/:prefix/delay',
     '/:prefix/middleware/:path*',
     '/:prefix/provided-request-context/middleware',
   ],

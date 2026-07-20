@@ -283,6 +283,8 @@ export async function adapter(
 
       const waitUntil = event.waitUntil.bind(event)
       const closeController = new CloseController()
+      const onClose =
+        params.request.onClose ?? closeController.onClose.bind(closeController)
 
       return getTracer().trace(
         MiddlewareSpan.execute,
@@ -342,7 +344,7 @@ export async function adapter(
                 },
                 supportsDynamicResponse: true,
                 waitUntil,
-                onClose: closeController.onClose.bind(closeController),
+                onClose,
                 onAfterTaskError: undefined,
               },
               isPrefetchRequest:
@@ -361,13 +363,14 @@ export async function adapter(
               )
             )
           } finally {
-            // middleware cannot stream, so we can consider the response closed
-            // as soon as the handler returns.
-            // we can delay running it until a bit later --
-            // if it's needed, we'll have a `waitUntil` lock anyway.
-            setTimeout(() => {
-              closeController.dispatchClose()
-            }, 0)
+            if (!params.request.onClose) {
+              // Without an outer response lifecycle, middleware cannot stream,
+              // so we consider the response closed once the handler returns.
+              // Delay it because waitUntil keeps the invocation alive if needed.
+              setTimeout(() => {
+                closeController.dispatchClose()
+              }, 0)
+            }
           }
         }
       )
