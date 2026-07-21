@@ -1,5 +1,10 @@
 import type { FindComponentsResult, NodeRequestHandler } from '../next-server'
-import type { LoadComponentsReturnType } from '../load-components'
+import type {
+  GenericComponentMod,
+  LoadComponentsReturnType,
+} from '../load-components'
+import type { AppPageModule } from '../route-modules/app-page/module'
+import type { AppRouteModule } from '../route-modules/app-route/module.compiled'
 import type { Options as ServerOptions } from '../next-server'
 import type { Params } from '../request/params'
 import type { ParsedUrl } from '../../shared/lib/router/utils/parse-url'
@@ -785,12 +790,14 @@ export default class DevServer extends Server {
     requestHeaders,
     page,
     isAppPath,
+    componentMod,
   }: {
     pathname: string
     urlPathname: string
     requestHeaders: IncrementalCache['requestHeaders']
     page: string
     isAppPath: boolean
+    componentMod: GenericComponentMod
   }): Promise<{
     prerenderedRoutes?: PrerenderedRoute[]
     staticPaths?: string[]
@@ -802,40 +809,49 @@ export default class DevServer extends Server {
     const __getStaticPaths = async () => {
       const { configFileName, httpAgentOptions } = this.nextConfig
       const { locales, defaultLocale } = this.nextConfig.i18n || {}
-      const staticPathsWorker = this.getStaticPathsWorker()
+      const options = {
+        dir: this.dir,
+        distDir: this.distDir,
+        pathname,
+        config: {
+          pprConfig: this.nextConfig.experimental.ppr,
+          configFileName,
+          cacheComponents: Boolean(this.nextConfig.cacheComponents),
+        },
+        httpAgentOptions,
+        locales,
+        defaultLocale,
+        page,
+        isAppPath,
+        requestHeaders,
+        cacheHandler: this.nextConfig.cacheHandler,
+        cacheHandlers: this.nextConfig.cacheHandlers,
+        cacheLifeProfiles: this.nextConfig.cacheLife,
+        fetchCacheKeyPrefix: this.nextConfig.experimental.fetchCacheKeyPrefix,
+        isrFlushToDisk: this.nextConfig.experimental.isrFlushToDisk,
+        cacheMaxMemorySize: this.nextConfig.cacheMaxMemorySize,
+        nextConfigOutput: this.nextConfig.output,
+        buildId: this.buildId,
+        deploymentId: this.deploymentId,
+        authInterrupts: Boolean(this.nextConfig.experimental.authInterrupts),
+        useCacheTimeout: this.nextConfig.experimental.useCacheTimeout,
+        staticPageGenerationTimeout:
+          this.nextConfig.staticPageGenerationTimeout,
+        sriEnabled: Boolean(this.nextConfig.experimental.sri?.algorithm),
+      }
 
-      try {
-        const pathsResult = await staticPathsWorker.loadStaticPaths({
-          dir: this.dir,
-          distDir: this.distDir,
-          pathname,
-          config: {
-            pprConfig: this.nextConfig.experimental.ppr,
-            configFileName,
-            cacheComponents: Boolean(this.nextConfig.cacheComponents),
-          },
-          httpAgentOptions,
-          locales,
-          defaultLocale,
-          page,
-          isAppPath,
-          requestHeaders,
-          cacheHandler: this.nextConfig.cacheHandler,
-          cacheHandlers: this.nextConfig.cacheHandlers,
-          cacheLifeProfiles: this.nextConfig.cacheLife,
-          fetchCacheKeyPrefix: this.nextConfig.experimental.fetchCacheKeyPrefix,
-          isrFlushToDisk: this.nextConfig.experimental.isrFlushToDisk,
-          cacheMaxMemorySize: this.nextConfig.cacheMaxMemorySize,
-          nextConfigOutput: this.nextConfig.output,
-          buildId: this.buildId,
-          deploymentId: this.deploymentId,
-          authInterrupts: Boolean(this.nextConfig.experimental.authInterrupts),
-          useCacheTimeout: this.nextConfig.experimental.useCacheTimeout,
-          staticPageGenerationTimeout:
-            this.nextConfig.staticPageGenerationTimeout,
-          sriEnabled: Boolean(this.nextConfig.experimental.sri?.algorithm),
+      if (isAppPath) {
+        const { loadStaticPaths } =
+          require('./static-paths-worker') as typeof import('./static-paths-worker')
+        return loadStaticPaths({
+          ...options,
+          ComponentMod: componentMod as AppPageModule | AppRouteModule,
         })
-        return pathsResult
+      }
+
+      const staticPathsWorker = this.getStaticPathsWorker()
+      try {
+        return await staticPathsWorker.loadStaticPaths(options)
       } finally {
         // we don't re-use workers so destroy the used one
         staticPathsWorker.end()

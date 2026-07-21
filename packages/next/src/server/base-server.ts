@@ -2017,6 +2017,7 @@ export default abstract class Server<
     requestHeaders: import('./lib/incremental-cache').IncrementalCache['requestHeaders']
     page: string
     isAppPath: boolean
+    componentMod: GenericComponentMod
   }): Promise<{
     staticPaths?: string[]
     prerenderedRoutes?: PrerenderedRoute[]
@@ -2430,6 +2431,7 @@ export default abstract class Server<
         requestHeaders: req.headers,
         page: components.page,
         isAppPath,
+        componentMod: components.ComponentMod,
       })
 
       if (this.dev && getStaticPathsStart && pathsResults.staticPaths?.length) {
