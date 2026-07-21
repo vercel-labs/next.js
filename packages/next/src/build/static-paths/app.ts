@@ -937,17 +937,19 @@ export async function buildAppStaticPaths({
     }
   }
 
+  const completeRouteParams = routeParams.filter((params) => {
+    for (const { paramName } of pathnameRouteParamSegments) {
+      if (paramName in params) continue
+      return false
+    }
+    return true
+  })
+
   // Determine if all the segments have had their parameters provided.
   const hadAllParamsGenerated =
     pathnameRouteParamSegments.length === 0 ||
     (routeParams.length > 0 &&
-      routeParams.every((params) => {
-        for (const { paramName } of pathnameRouteParamSegments) {
-          if (paramName in params) continue
-          return false
-        }
-        return true
-      }))
+      completeRouteParams.length === routeParams.length)
 
   // TODO: dynamic params should be allowed to be granular per segment but
   // we need additional information stored/leveraged in the prerender
@@ -972,8 +974,12 @@ export async function buildAppStaticPaths({
   // Convert rootParamKeys to Set for O(1) lookup.
   const rootParamSet = new Set(rootParamKeys)
 
-  if (hadAllParamsGenerated || isRoutePPREnabled) {
-    let paramsToProcess = routeParams
+  if (
+    hadAllParamsGenerated ||
+    completeRouteParams.length > 0 ||
+    isRoutePPREnabled
+  ) {
+    let paramsToProcess = completeRouteParams
 
     if (isRoutePPREnabled) {
       // Discover all unique combinations of the routeParams so we can generate
