@@ -52,6 +52,32 @@ describe('Exported runtimes value validation', () => {
     })
   })
 
+  describe('invalid-proxy-matcher', () => {
+    const { next } = nextTestSetup({
+      files: path.resolve(__dirname, './invalid-proxy-matcher'),
+      skipStart: true,
+    })
+
+    test('reports the source of a non-static proxy matcher', async () => {
+      const { exitCode, cliOutput } = await next.build()
+      expect(exitCode).toBe(1)
+
+      if (process.env.IS_TURBOPACK_TEST) {
+        expect(cliOutput).toMatch(/src[/\\]proxy\.ts/)
+        expect(cliOutput).toMatch(
+          /matcher.*(?:statically analyzable|static|literal)/i
+        )
+      } else {
+        expect(cliOutput).toContain(
+          'Next.js can\'t recognize the exported `config` field in route "/src/proxy"'
+        )
+        expect(cliOutput).toContain(
+          'Unsupported node type "TaggedTemplateExpression" at "config.matcher[0]"'
+        )
+      }
+    })
+  })
+
   describe('unsupported-syntax', () => {
     const { next } = nextTestSetup({
       files: path.resolve(__dirname, './unsupported-syntax/app'),
