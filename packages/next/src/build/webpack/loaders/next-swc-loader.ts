@@ -102,6 +102,14 @@ async function loaderTransform(
   }
 
   let loaderOptions: SWCLoaderOptions = this.getOptions() || {}
+  const moduleLayer = this._module?.layer
+  if (loaderOptions.bundleLayer == null && moduleLayer != null) {
+    loaderOptions = {
+      ...loaderOptions,
+      bundleLayer: moduleLayer as WebpackLayerName,
+    }
+  }
+
   const shouldMaybeExclude = maybeExclude(
     filename,
     loaderOptions.transpilePackages || []
