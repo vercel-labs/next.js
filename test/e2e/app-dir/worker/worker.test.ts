@@ -56,6 +56,21 @@ describe('app dir - workers', () => {
     )
   })
 
+  it('should support package module specifiers in web worker URLs', async () => {
+    const browser = await next.browser('/package-module-specifier', {
+      beforePageLoad,
+    })
+    expect(await browser.elementByCss('#worker-state').text()).toBe('default')
+
+    await browser.elementByCss('button').click()
+
+    await retry(async () =>
+      expect(await browser.elementByCss('#worker-state').text()).toBe(
+        'worker-loaded'
+      )
+    )
+  })
+
   it('should not bundle web workers with string specifiers', async () => {
     const browser = await next.browser('/string', {
       beforePageLoad,
