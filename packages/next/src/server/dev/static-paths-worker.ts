@@ -34,9 +34,10 @@ type RuntimeConfig = {
   cacheComponents: boolean
 }
 
-// we call getStaticPaths in a separate process to ensure
-// side-effects aren't relied on in dev that will break
-// during a production build
+// We call Pages Router getStaticPaths in a separate process to ensure
+// side-effects aren't relied on in dev that will break during a production
+// build. App Router generateStaticParams can reuse the route module loaded for
+// rendering, matching how page data is collected during a build.
 export async function loadStaticPaths({
   dir,
   distDir,
@@ -61,6 +62,7 @@ export async function loadStaticPaths({
   useCacheTimeout,
   staticPageGenerationTimeout,
   sriEnabled,
+  ComponentMod,
 }: {
   dir: string
   distDir: string
@@ -85,6 +87,7 @@ export async function loadStaticPaths({
   useCacheTimeout: number
   staticPageGenerationTimeout: number
   sriEnabled: boolean
+  ComponentMod?: AppPageModule | AppRouteModule
 }): Promise<StaticPathsResult> {
   // this needs to be initialized before loadComponents otherwise
   // "use cache" could be missing it's cache handlers
@@ -104,15 +107,21 @@ export async function loadStaticPaths({
     httpAgentOptions,
   })
 
-  const components = await loadComponents<AppPageModule | AppRouteModule>({
-    distDir,
-    // In `pages/`, the page is the same as the pathname.
-    page: page || pathname,
-    isAppPath,
-    isDev: true,
-    sriEnabled,
-    needsManifestsForLegacyReasons: true,
-  })
+  const components = ComponentMod
+    ? {
+        ComponentMod,
+        routeModule: ComponentMod.routeModule,
+        getStaticPaths: undefined,
+      }
+    : await loadComponents<AppPageModule | AppRouteModule>({
+        distDir,
+        // In `pages/`, the page is the same as the pathname.
+        page: page || pathname,
+        isAppPath,
+        isDev: true,
+        sriEnabled,
+        needsManifestsForLegacyReasons: true,
+      })
 
   if (isAppPath) {
     const routeModule = components.routeModule
