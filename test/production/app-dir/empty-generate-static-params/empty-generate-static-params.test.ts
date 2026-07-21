@@ -20,6 +20,17 @@ describe('empty-generate-static-params', () => {
       expect(next.cliOutput).toContain(`${isPPREnabled ? '◐' : '●'} /[slug]`)
     })
 
+    it('should prerender complete child params when another parent returns no params', async () => {
+      const prerenderManifest = JSON.parse(
+        await next.readFile('.next/prerender-manifest.json')
+      )
+      const nestedRoutes = Object.keys(prerenderManifest.routes)
+        .filter((route) => route.startsWith('/nested/'))
+        .sort()
+
+      expect(nestedRoutes).toEqual(['/nested/en/a', '/nested/en/b'])
+    })
+
     it('should be a cache miss on the initial render followed by a HIT after being generated', async () => {
       const firstResponse = await next.fetch('/foo')
       expect(firstResponse.status).toBe(200)
