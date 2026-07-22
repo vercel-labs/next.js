@@ -71,6 +71,20 @@ describe('Instrumentation Hook', () => {
     })
   })
 
+  describeCase('with-custom-page-extensions', ({ next, isNextStart }) => {
+    it('with custom page extensions should run the instrumentation hook', async () => {
+      const result = await next.render('/api/hello')
+      expect(result).toContain('instrumentationFinished=nodejs')
+
+      if (isNextStart) {
+        const trace = await next.readJSON(
+          '.next/server/pages/api/hello.js.nft.json'
+        )
+        expect(trace.files).toContain('../../instrumentation.js')
+      }
+    })
+  })
+
   describeCase('with-node-page', ({ next }) => {
     it('with-node-page should run the instrumentation hook', async () => {
       const result = await next.render('/')
