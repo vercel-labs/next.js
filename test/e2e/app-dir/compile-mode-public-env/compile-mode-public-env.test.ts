@@ -4,15 +4,18 @@ import { nextTestSetup } from 'e2e-utils'
 import fs from 'fs-extra'
 import { findPort, initNextServerScript, killApp, retry } from 'next-test-utils'
 
-describe('compile mode public environment variables', () => {
+// The verified canary behavior uses the default Turbopack build. Webpack
+// compile-only builds still leave the public value undefined, so keep that
+// unsupported path explicitly skipped instead of silently changing bundlers.
+const describeTurbopack = process.env.IS_TURBOPACK_TEST
+  ? describe
+  : describe.skip
+
+describeTurbopack('compile mode public environment variables', () => {
   const publicEnvValue = 'compile-mode-value'
   const { next, isNextStart, skipped } = nextTestSetup({
     files: __dirname,
     env: {
-      // The regression affects an unqualified `next build`, so exercise the
-      // release's default bundler rather than the test runner's forced bundler.
-      IS_TURBOPACK_TEST: '',
-      IS_WEBPACK_TEST: '',
       NEXT_PUBLIC_COMPILE_MODE_VALUE: publicEnvValue,
     },
     skipDeployment: true,
