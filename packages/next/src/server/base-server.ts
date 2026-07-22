@@ -134,10 +134,7 @@ import {
   isAppRouteRouteModule,
 } from './route-modules/checks'
 import { NextDataPathnameNormalizer } from './normalizers/request/next-data'
-import {
-  getIsPossibleServerAction,
-  getServerActionRequestMetadata,
-} from './lib/server-action-request-meta'
+import { getIsPossibleServerAction } from './lib/server-action-request-meta'
 import { isInterceptionRouteAppPath } from '../shared/lib/router/utils/interception-routes'
 import { toRoute } from './lib/to-route'
 import type { DeepReadonly } from '../shared/lib/deep-readonly'
@@ -496,7 +493,7 @@ export default abstract class Server<
       process.env.NEXT_DEPLOYMENT_ID = id
     }
     ;(globalThis as any).NEXT_CLIENT_ASSET_SUFFIX =
-      this.nextConfig.experimental.supportsImmutableAssets || !this.deploymentId
+      this.nextConfig.supportsImmutableAssets || !this.deploymentId
         ? ''
         : `?dpl=${this.deploymentId}`
 
@@ -2180,7 +2177,12 @@ export default abstract class Server<
         // generate the 5-character `_rsc` form.
         // Note: When no headers are present, expectedHash is empty string and client
         // must send `_rsc` param, otherwise actualHash is null and hash check fails.
-        const url = new URL(req.url || '', 'http://localhost')
+        // `req.url` may have had its basePath removed during normalization.
+        // Build the redirect from the original URL so it remains public-facing.
+        const url = new URL(
+          getRequestMeta(req, 'initURL') || req.url || '',
+          'http://localhost'
+        )
         setCacheBustingSearchParamWithHash(url, expectedHash)
         res.statusCode = 307
         res.setHeader('location', `${url.pathname}${url.search}`)
@@ -2660,22 +2662,6 @@ export default abstract class Server<
   ): Promise<LoadComponentsReturnType<ErrorModule> | null>
   protected abstract getRoutesManifest(): NormalizedRouteManifest | undefined
 
-  protected matchOptions(req: ServerRequest, pathname: string): MatchOptions {
-    return {
-      i18n: this.i18nProvider?.fromRequest(req, pathname),
-      // Only actual navigations and fetch actions compile the SSR-free output
-      // — never prefetches. With cache components, a prefetch triggers a dev
-      // validation render that consumes the Flight payload through
-      // `ssrModuleMapping`, which the SSR-free output doesn't emit. Fetch
-      // actions always respond with a Flight payload, unlike no-JS form
-      // actions, which respond with an HTML document.
-      rscOnly:
-        (!!getRequestMeta(req, 'isRSCRequest') &&
-          !getRequestMeta(req, 'isPrefetchRSCRequest')) ||
-        getServerActionRequestMetadata(req).isFetchAction,
-    }
-  }
-
   private async renderToResponseImpl(
     ctx: RequestContext<ServerRequest, ServerResponse>
   ): Promise<ResponsePayload | null> {
@@ -2696,7 +2682,9 @@ export default abstract class Server<
     }
     delete query[NEXT_RSC_UNION_QUERY]
 
-    const options = this.matchOptions(req, pathname)
+    const options: MatchOptions = {
+      i18n: this.i18nProvider?.fromRequest(req, pathname),
+    }
 
     const existingMatch = getRequestMeta(ctx.req, 'match')
 
