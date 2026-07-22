@@ -4,16 +4,9 @@ import { nextTestSetup } from 'e2e-utils'
 import fs from 'fs-extra'
 import { findPort, initNextServerScript, killApp, retry } from 'next-test-utils'
 
-// The verified canary behavior uses the default Turbopack build. Webpack
-// compile-only builds still leave the public value undefined, so keep that
-// unsupported path explicitly skipped instead of silently changing bundlers.
-const describeTurbopack = process.env.IS_TURBOPACK_TEST
-  ? describe
-  : describe.skip
-
-describeTurbopack('compile mode public environment variables', () => {
+describe('compile mode public environment variables', () => {
   const publicEnvValue = 'compile-mode-value'
-  const { next, isNextStart, skipped } = nextTestSetup({
+  const { next, isNextStart, isTurbopack, skipped } = nextTestSetup({
     files: __dirname,
     env: {
       NEXT_PUBLIC_COMPILE_MODE_VALUE: publicEnvValue,
@@ -40,6 +33,18 @@ describeTurbopack('compile mode public environment variables', () => {
     })
     if (exitCode !== 0) {
       throw new Error(`Compile mode build exited with ${exitCode}`)
+    }
+
+    if (!isTurbopack) {
+      // Next's webpack compile output requires a generate or generate-env
+      // finalizer. test/e2e/app-dir/app/index.test.ts exercises this existing
+      // two-phase build contract; use the full generate finalizer here.
+      const { exitCode: generateExitCode } = await next.build({
+        args: ['--experimental-build-mode', 'generate'],
+      })
+      if (generateExitCode !== 0) {
+        throw new Error(`Compile mode generate exited with ${generateExitCode}`)
+      }
     }
 
     await fs.copy(
