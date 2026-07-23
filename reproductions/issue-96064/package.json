@@ -1,0 +1,12 @@
+{
+  "name": "next-sharp-audit-example",
+  "private": true,
+  "scripts": {
+    "reproduce": "npm ls sharp next && npm audit"
+  },
+  "dependencies": {
+    "next": "16.2.11",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
