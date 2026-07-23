@@ -1,0 +1,8 @@
+.button {
+  --button-background: transparent;
+  background-color: var(--button-background);
+}
+
+.primary {
+  --button-background: #fd9728;
+}

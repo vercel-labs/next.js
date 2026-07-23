@@ -1,7 +1,8 @@
+/* eslint-disable jest/no-standalone-expect */
 import { nextTestSetup, isNextDev } from 'e2e-utils'
 
 describe('nx-handling', () => {
-  const { next } = nextTestSetup({
+  const { next, isTurbopack } = nextTestSetup({
     skipDeployment: true,
     files: __dirname,
     installCommand: 'npm i',
@@ -20,16 +21,16 @@ describe('nx-handling', () => {
       dependencies: {
         react: '19.0.0',
         'react-dom': '19.0.0',
-        '@nx/js': '21.1.3',
-        '@nx/next': '21.1.3',
-        '@nx/workspace': '21.1.3',
+        '@nx/js': '22.4.2',
+        '@nx/next': '22.4.2',
+        '@nx/workspace': '22.4.2',
         '@swc-node/register': '~1.9.1',
         '@swc/cli': '~0.6.0',
         '@swc/core': '~1.5.7',
         '@swc/helpers': '~0.5.11',
         '@types/react': '19.0.0',
         '@types/react-dom': '19.0.0',
-        nx: '21.1.3',
+        nx: '22.4.2',
         tslib: '^2.3.0',
         typescript: '~5.7.2',
       },
@@ -60,4 +61,27 @@ describe('nx-handling', () => {
     expect(res.status).toBe(200)
     expect(await res.text()).toBe('Hello, from API!')
   })
+
+  // TODO: Remove `it.failing` when https://github.com/vercel/next.js/issues/94980 is fixed.
+  // The external Button stylesheet is currently appended again after navigating
+  // to the catalog, overriding the equal-specificity route stylesheet on Back.
+  ;(isNextDev && isTurbopack ? it.failing : it.skip)(
+    'should preserve external CSS module order across client navigation',
+    async () => {
+      const browser = await next.browser('/css-order')
+      const button = () => browser.elementByCss('#css-order-link')
+
+      expect(await button().getComputedCss('background-color')).toBe(
+        'rgba(0, 0, 0, 0)'
+      )
+
+      await button().click()
+      await browser.waitForElementByCss('#catalog')
+      await browser.back().waitForElementByCss('#css-order-link')
+
+      expect(await button().getComputedCss('background-color')).toBe(
+        'rgba(0, 0, 0, 0)'
+      )
+    }
+  )
 })

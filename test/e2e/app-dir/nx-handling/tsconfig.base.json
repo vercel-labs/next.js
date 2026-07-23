@@ -13,6 +13,9 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "paths": {
+      "@ui-kit/*": ["libs/ui-kit/src/*"]
+    },
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
