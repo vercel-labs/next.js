@@ -1,0 +1,10 @@
+{
+  "name": "next-sharp-audit-reproduction",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "next": "16.2.11",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
