@@ -1,0 +1,22 @@
+{
+  "name": "next-89192-reproduction",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build --turbopack",
+    "start": "next start",
+    "reproduce": "node scripts/reproduce.mjs"
+  },
+  "dependencies": {
+    "my-sdk": "file:./packages/my-sdk",
+    "next": "15.5.10",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.19",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4",
+    "typescript": "5.7.3"
+  }
+}
