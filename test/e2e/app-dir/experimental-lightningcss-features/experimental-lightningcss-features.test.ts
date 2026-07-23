@@ -76,7 +76,9 @@ describe('experimental-lightningcss-features', () => {
       const css = await collectPageCss(next, '/custom-media')
       expect(css).not.toContain('@custom-media')
       expect(css).not.toContain('--narrow')
-      expect(css).toMatch(/max-width:\s*960px|width\s*<=\s*960px/)
+      expect(css).toMatch(
+        /@media\s*\(\s*(?:max-width:\s*960px|width\s*<=\s*960px)\s*\)\s*{[^}]*color:\s*red/
+      )
     })
   })
 
