@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { transform } from 'next/dist/build/swc'
+import { minify, transform } from 'next/dist/build/swc'
 import { installBindings } from 'next/dist/build/swc/install-bindings'
 import path from 'path'
 import fsp from 'fs/promises'
@@ -115,6 +115,19 @@ describe('next/swc', () => {
         var _useState = _to_array(useState(0)), copy = _useState.slice(0);
         "
       `)
+    })
+  })
+
+  describe('minifier', () => {
+    it('preserves trailing text when folding template literal concatenation', async () => {
+      const source = `const W=640,H=400; export function f(o){ return \`A\${W}B\${H}LTAIL>\` + \`<r \${W}RTAIL>\` + o; }`
+      const output = await minify(source, {
+        compress: true,
+        mangle: false,
+        module: true,
+      })
+
+      expect(output.code).toContain('A640B400LTAIL><r 640RTAIL>')
     })
   })
 
