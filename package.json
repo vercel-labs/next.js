@@ -1,0 +1,26 @@
+{
+  "name": "next-app-router-action-abort-repro",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Minimal reproduction: under next start (HTTP/1.1), the App Router prefetch burst can exhaust Chrome's 6-connection pool and abort an in-flight Server Action, leaving a committed mutation invisible in the UI.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "proxy": "node scripts/slow-rsc-proxy.mjs",
+    "repro": "node scripts/repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.0-canary.95",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "playwright": "^1.61.1",
+    "typescript": "^5"
+  }
+}
