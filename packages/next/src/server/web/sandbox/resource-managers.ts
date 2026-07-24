@@ -82,11 +82,11 @@ function webSetTimeoutPolyfill<TArgs extends any[]>(
       // a `setTimeout` whose Timeout was converted to a primitive will leak.
       // See: https://github.com/nodejs/node/issues/53335
       // We can work around this by explicitly calling `clearTimeout` after the callback runs.
-      clearTimeout(timeout)
+      timeoutsManager.remove(timeout)
     }
   }
-  const timeout = setTimeout(wrappedCallback, ms)
-  return timeout[Symbol.toPrimitive]()
+  const timeout = setTimeout(wrappedCallback, ms)[Symbol.toPrimitive]()
+  return timeout
 }
 
 export const intervalsManager = new IntervalsManager()
