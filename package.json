@@ -1,0 +1,15 @@
+{
+  "name": "next-96139-reproduction",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/gen-filler-pages.js",
+    "add-probe": "node scripts/add-probe.js",
+    "test": "node scripts/verify.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "next": "16.3.0-canary.95",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}
