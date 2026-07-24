@@ -102,6 +102,7 @@ import {
 import { ensureLeadingSlash } from '../../../shared/lib/page-path/ensure-leading-slash'
 import { Lockfile, type DevServerInfo } from '../../../build/lockfile'
 import { deobfuscateText } from '../../../shared/lib/magic-identifier'
+import { recursiveReadDir } from '../../../lib/recursive-readdir'
 
 export type SetupOpts = {
   renderServer: LazyRenderServerInstance
@@ -353,20 +354,6 @@ async function startWatcher(
   let prevSortedRoutes: string[] = []
 
   await new Promise<void>(async (resolve, reject) => {
-    if (pagesDir) {
-      // Watchpack doesn't emit an event for an empty directory
-      fs.readdir(pagesDir, (_, files) => {
-        if (files?.length) {
-          return
-        }
-
-        if (!resolved) {
-          resolve()
-          resolved = true
-        }
-      })
-    }
-
     const pages = pagesDir ? [pagesDir] : []
     const app = appDir ? [appDir] : []
     const directories = [...pages, ...app]
@@ -400,6 +387,48 @@ async function startWatcher(
     ] as const
     files.push(...tsconfigPaths)
 
+    const isRelevantFile = (fileName: string) =>
+      files.includes(fileName) ||
+      (validFileMatcher.isPageFile(fileName) &&
+        directories.some((directory) =>
+          fileName.startsWith(directory + path.sep)
+        ))
+
+    // Watchpack doesn't expose when its recursive initial scan has finished.
+    // Build the initial snapshot explicitly while Watchpack records mutations
+    // that happen during the scan. This avoids using a debounce as a proxy for
+    // completeness and keeps subsequent updates on Watchpack's fast path.
+    const scanRelevantFiles = async (): Promise<Set<string>> => {
+      const scannedFiles = new Set<string>()
+
+      await Promise.all(
+        files.map(async (fileName) => {
+          try {
+            if ((await fs.promises.stat(fileName)).isFile()) {
+              scannedFiles.add(fileName)
+            }
+          } catch (error: any) {
+            if (error.code !== 'ENOENT') throw error
+          }
+        })
+      )
+
+      const routeFiles = await Promise.all(
+        directories.map((directory) =>
+          recursiveReadDir(directory, {
+            pathnameFilter: validFileMatcher.isPageFile,
+            relativePathnames: false,
+            sortPathnames: false,
+          })
+        )
+      )
+      for (const fileNames of routeFiles) {
+        for (const fileName of fileNames) scannedFiles.add(fileName)
+      }
+
+      return scannedFiles
+    }
+
     const wp = new Watchpack({
       // Watchpack default is 200ms which adds 200ms of dead time on bootup.
       aggregateTimeout: 5, // Matches webpack-config.ts.
@@ -421,7 +450,38 @@ async function startWatcher(
     const validatorFilePath = path.join(distDir, 'types', 'validator.ts')
 
     let initialWatchTime = performance.now() + performance.timeOrigin
-    wp.on('aggregated', async () => {
+    let initialFilePaths: Set<string> | undefined
+    const pendingWatchEvents: Array<{
+      fileName: string
+      exists: boolean
+    }> = []
+
+    const applyWatchEvent = (fileName: string, exists: boolean) => {
+      if (!isRelevantFile(fileName)) return
+      if (exists) {
+        initialFilePaths!.add(fileName)
+      } else {
+        initialFilePaths!.delete(fileName)
+      }
+    }
+
+    const recordWatchEvent = (fileName: string, exists: boolean) => {
+      if (resolved) return
+      if (initialFilePaths) {
+        applyWatchEvent(fileName, exists)
+      } else {
+        pendingWatchEvents.push({ fileName, exists })
+      }
+    }
+
+    wp.on('change', (fileName: string, timestamp: number | null) => {
+      recordWatchEvent(fileName, timestamp !== null)
+    })
+    wp.on('remove', (fileName: string) => {
+      recordWatchEvent(fileName, false)
+    })
+
+    const processAggregatedChanges = async () => {
       let writeEnvDefinitions = false
       let typescriptStatusFromLastAggregation = enabledTypeScript
       let middlewareMatchers: ProxyMatcher[] | undefined
@@ -1215,9 +1275,59 @@ async function startWatcher(
           Log.warn('Failed to reload dynamic routes:', e)
         }
       }
-    })
+    }
+
+    // Only build route tables once Watchpack contains every file found by the
+    // explicit scan. This is a semantic completion check over all route inputs,
+    // rather than a timer or a dependency on Watchpack's private scan state.
+    const hasCompleteWatchpackSnapshot = () => {
+      if (!initialFilePaths) return false
+      const watchpackFiles = wp.getTimeInfoEntries()
+      return [...initialFilePaths].every(
+        (fileName) => watchpackFiles.get(fileName)?.accuracy !== undefined
+      )
+    }
+
+    // Coalesce aggregations while preserving a serialized route-table update.
+    // Events received during an update enqueue one more pass, while events
+    // received before the initial snapshot are folded into that snapshot.
+    let aggregationQueued = false
+    let aggregationChain: Promise<void> = Promise.resolve()
+    const queueAggregation = () => {
+      if (
+        aggregationQueued ||
+        !initialFilePaths ||
+        (!resolved && !hasCompleteWatchpackSnapshot())
+      ) {
+        return
+      }
+      aggregationQueued = true
+      aggregationChain = aggregationChain.then(async () => {
+        aggregationQueued = false
+        await processAggregatedChanges()
+      })
+    }
+    wp.on('aggregated', queueAggregation)
 
     wp.watch({ directories: [dir], startTime: 0 })
+    scanRelevantFiles().then(
+      (scannedFiles) => {
+        initialFilePaths = scannedFiles
+        for (const event of pendingWatchEvents) {
+          applyWatchEvent(event.fileName, event.exists)
+        }
+        pendingWatchEvents.length = 0
+        queueAggregation()
+      },
+      (error) => {
+        if (!resolved) {
+          resolved = true
+          reject(error)
+        } else {
+          Log.warn('Failed to scan routes:', error)
+        }
+      }
+    )
   })
 
   const clientPagesManifestPath = `/_next/${CLIENT_STATIC_FILES_PATH}/development/${DEV_CLIENT_PAGES_MANIFEST}`
