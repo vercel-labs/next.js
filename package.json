@@ -1,0 +1,22 @@
+{
+  "name": "nextjs-issue-89192-runtime-reproduction",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build --turbopack",
+    "start": "next start",
+    "repro": "next build --turbopack && node repro.mjs"
+  },
+  "dependencies": {
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "my-sdk": "file:./packages/my-sdk"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}
