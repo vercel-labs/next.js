@@ -1,4 +1,4 @@
-import { getModuleContext } from './context'
+import { clearAllModuleContexts, getModuleContext } from './context'
 import { validateURL } from '../utils'
 
 jest.mock('../utils', () => ({
@@ -68,5 +68,23 @@ describe('Next.js sandbox Request constructor', () => {
     expect(() => new NextRequest('/urls-b')).toThrow(
       'Please use only absolute URLs'
     )
+  })
+
+  it('should release a timeout after its callback runs', async () => {
+    const clearTimeoutSpy = jest.spyOn(globalThis, 'clearTimeout')
+
+    try {
+      await new Promise<void>((resolve) => {
+        moduleContext.runtime.context.setTimeout(resolve, 0)
+      })
+      clearTimeoutSpy.mockClear()
+
+      await clearAllModuleContexts()
+
+      expect(clearTimeoutSpy).not.toHaveBeenCalled()
+    } finally {
+      clearTimeoutSpy.mockRestore()
+      await clearAllModuleContexts()
+    }
   })
 })
