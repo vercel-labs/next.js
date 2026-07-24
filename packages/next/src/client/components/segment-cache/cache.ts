@@ -67,6 +67,7 @@ import type {
   RouteCacheKey,
 } from './cache-key'
 import { createCacheKey as createPrefetchRequestKey } from './cache-key'
+import { splitPathnameIntoParts } from './cache-key'
 import {
   doesStaticSegmentAppearInURL,
   getCacheKeyForDynamicParam,
@@ -154,9 +155,11 @@ type RouteTreeShared = {
   // don't have to recompute it on every shell request.
   shellVaryPath: SegmentVaryPath
   refreshState: RefreshState | null
-  slots: null | {
-    [parallelRouteKey: string]: RouteTree
-  }
+  // Keyed by parallel route slot name. Stored as a Map rather than a plain
+  // object because slot names are app-defined; with a plain object, every
+  // distinct combination of slot names creates a different hidden class,
+  // making keyed access to the slots megamorphic.
+  slots: null | Map<string, RouteTree>
   // Bitmask of PrefetchHint flags. Encodes route structure metadata:
   // root layout, loading boundaries, instant configs, and runtime prefetch
   // hints.
@@ -812,15 +815,14 @@ function deprecated_createOptimisticRouteTree(
   // Create a new route tree that identical to the original one except for
   // the rendered search string, which is contained in the vary path.
 
-  let clonedSlots: Record<string, RouteTree> | null = null
+  let clonedSlots: Map<string, RouteTree> | null = null
   const originalSlots = tree.slots
   if (originalSlots !== null) {
-    clonedSlots = {}
-    for (const parallelRouteKey in originalSlots) {
-      const childTree = originalSlots[parallelRouteKey]
-      clonedSlots[parallelRouteKey] = deprecated_createOptimisticRouteTree(
-        childTree,
-        newRenderedSearch
+    clonedSlots = new Map()
+    for (const [parallelRouteKey, childTree] of originalSlots) {
+      clonedSlots.set(
+        parallelRouteKey,
+        deprecated_createOptimisticRouteTree(childTree, newRenderedSearch)
       )
     }
   }
@@ -1416,7 +1418,7 @@ function convertRootTreePrefetchToRouteTree(
   acc: RouteTreeAccumulator
 ) {
   // Remove trailing and leading slashes
-  const pathnameParts = renderedPathname.split('/').filter((p) => p !== '')
+  const pathnameParts = splitPathnameIntoParts(renderedPathname)
   const index = 0
   const rootSegment = ROOT_SEGMENT_REQUEST_KEY
   return convertTreePrefetchToRouteTree(
@@ -1447,7 +1449,7 @@ function convertTreePrefetchToRouteTree(
   // it once instead of on every access. This same cache key is also used to
   // request the segment from the server.
 
-  let slots: { [parallelRouteKey: string]: RouteTree } | null = null
+  let slots: Map<string, RouteTree> | null = null
   let isPage: boolean
   let varyPath: SegmentVaryPath
   const prefetchSlots = prefetch.slots
@@ -1455,7 +1457,7 @@ function convertTreePrefetchToRouteTree(
     isPage = false
     varyPath = finalizeLayoutVaryPath(requestKey, partialVaryPath)
 
-    slots = {}
+    slots = new Map()
     for (let parallelRouteKey in prefetchSlots) {
       const childPrefetch = prefetchSlots[parallelRouteKey]
       const childSegmentName = childPrefetch.name
@@ -1528,15 +1530,18 @@ function convertTreePrefetchToRouteTree(
         parallelRouteKey,
         childRequestKeyPart
       )
-      slots[parallelRouteKey] = convertTreePrefetchToRouteTree(
-        childPrefetch,
-        childSegment,
-        childPartialVaryPath,
-        childRequestKey,
-        pathnameParts,
-        childPathnamePartsIndex,
-        renderedSearch,
-        acc
+      slots.set(
+        parallelRouteKey,
+        convertTreePrefetchToRouteTree(
+          childPrefetch,
+          childSegment,
+          childPartialVaryPath,
+          childRequestKey,
+          pathnameParts,
+          childPathnamePartsIndex,
+          renderedSearch,
+          acc
+        )
       )
     }
   } else {
@@ -1723,7 +1728,7 @@ function convertFlightRouterStateToRouteTree(
     }
   }
 
-  let slots: { [parallelRouteKey: string]: RouteTree } | null = null
+  let slots: Map<string, RouteTree> | null = null
 
   const parallelRoutes = flightRouterState[1]
   for (let parallelRouteKey in parallelRoutes) {
@@ -1746,12 +1751,9 @@ function convertFlightRouterStateToRouteTree(
       acc
     )
     if (slots === null) {
-      slots = {
-        [parallelRouteKey]: childTree,
-      }
-    } else {
-      slots[parallelRouteKey] = childTree
+      slots = new Map()
     }
+    slots.set(parallelRouteKey, childTree)
   }
 
   return {
@@ -1776,11 +1778,11 @@ export function convertRouteTreeToFlightRouterState(
   routeTree: RouteTree
 ): FlightRouterState {
   const parallelRoutes: Record<string, FlightRouterState> = {}
-  if (routeTree.slots !== null) {
-    for (const parallelRouteKey in routeTree.slots) {
-      parallelRoutes[parallelRouteKey] = convertRouteTreeToFlightRouterState(
-        routeTree.slots[parallelRouteKey]
-      )
+  const slots = routeTree.slots
+  if (slots !== null) {
+    for (const [parallelRouteKey, childTree] of slots) {
+      parallelRoutes[parallelRouteKey] =
+        convertRouteTreeToFlightRouterState(childTree)
     }
   }
   const flightRouterState: FlightRouterState = [
@@ -2966,8 +2968,9 @@ export function writeDynamicRenderResponseIntoCache(
       let tree = routeTree
       for (let i = 0; i < segmentPath.length; i += 2) {
         const parallelRouteKey: string = segmentPath[i]
-        if (tree?.slots?.[parallelRouteKey] !== undefined) {
-          tree = tree.slots[parallelRouteKey]
+        const childTree = tree?.slots?.get(parallelRouteKey)
+        if (childTree !== undefined) {
+          tree = childTree
         } else {
           if (spawnedEntries !== null) {
             rejectSegmentEntriesIfStillPending(spawnedEntries, now + 10 * 1000)
@@ -3080,8 +3083,7 @@ function writeSeedDataIntoCache(
   const slots = tree.slots
   if (slots !== null) {
     const seedDataChildren = seedData[1]
-    for (const parallelRouteKey in slots) {
-      const childTree = slots[parallelRouteKey]
+    for (const [parallelRouteKey, childTree] of slots) {
       const childSeedData: CacheNodeSeedData | null | void =
         seedDataChildren[parallelRouteKey]
       if (childSeedData !== null && childSeedData !== undefined) {
