@@ -26,6 +26,7 @@ import * as React from 'react'
 import fs from 'fs'
 import { Worker } from 'next/dist/compiled/jest-worker'
 import { installUseCacheProbe } from './use-cache-probe-pool'
+import { installDevValidationWorker } from './dev-validation-worker-pool'
 import { join as pathJoin } from 'path'
 import { PUBLIC_DIR_MIDDLEWARE_CONFLICT } from '../../lib/constants'
 import { findPagesDir } from '../../lib/find-pages-dir'
@@ -225,6 +226,30 @@ export default class DevServer extends Server {
       deploymentId: this.deploymentId,
       nextConfig: this.nextConfig,
     })
+
+    // Runs Cache Components dev validation on a worker thread, off the main
+    // thread, so validation renders don't block the event loop during rapid
+    // navigation. Gated by `experimental.devValidationWorker`. The worker is
+    // spawned lazily on the first navigation that validates, so this install is
+    // free when a project doesn't use Cache Components.
+    //
+    // Turbopack only, because the worker's thread has source maps just for the
+    // chunks it loaded itself, and resolves the rest by reading the `.map`
+    // Turbopack writes next to each chunk. Webpack keeps its dev source maps in
+    // the compiler, which the worker's thread cannot reach, so validation
+    // errors would be reported without a source location. Running validation on
+    // the main thread costs dev performance but keeps those frames intact.
+    if (
+      process.env.TURBOPACK &&
+      this.nextConfig.experimental.devValidationWorker !== false
+    ) {
+      installDevValidationWorker({
+        distDir: this.distDir,
+        buildId: this.buildId,
+        deploymentId: this.deploymentId,
+        nextConfig: this.nextConfig,
+      })
+    }
   }
 
   protected override getServerComponentsHmrCache() {
