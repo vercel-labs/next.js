@@ -1,6 +1,6 @@
 {
-  "scopeHoisting": false,
   "removeUnusedImports": true,
   "removeUnusedExports": true,
-  "followReexports": true
+  "cjsTreeShaking": true,
+  "treeShakingMode": "reexports-only"
 }
