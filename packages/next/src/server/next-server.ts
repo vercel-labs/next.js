@@ -1804,6 +1804,12 @@ export default class NextNodeServer extends BaseServer<
         result.response.headers.append('set-cookie', cookie)
       }
 
+      // Responses that set cookies must not be stored by shared caches.
+      result.response.headers.set(
+        'cache-control',
+        'private, no-cache, no-store, max-age=0, must-revalidate'
+      )
+
       // Add cookies to request meta.
       addRequestMeta(params.request, 'middlewareCookie', cookies)
     }
