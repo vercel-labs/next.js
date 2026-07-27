@@ -1,6 +1,22 @@
 import { parseArgs } from 'node:util'
 import { InvalidArgumentError } from 'next/dist/compiled/commander'
 
+let outputStreamErrorHandlersInstalled = false
+
+export function setupOutputStreamErrorHandlers() {
+  if (outputStreamErrorHandlersInstalled) return
+  outputStreamErrorHandlersInstalled = true
+
+  const handleOutputStreamError = (error: NodeJS.ErrnoException) => {
+    if (error.code !== 'EPIPE') {
+      throw error
+    }
+  }
+
+  process.stdout.on('error', handleOutputStreamError)
+  process.stderr.on('error', handleOutputStreamError)
+}
+
 export function printAndExit(message: string, code = 1) {
   if (code === 0) {
     console.log(message)

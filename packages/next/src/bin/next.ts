@@ -18,6 +18,7 @@ import { NON_STANDARD_NODE_ENV } from '../lib/constants'
 import {
   getParsedDebugAddress,
   parseValidPositiveInteger,
+  setupOutputStreamErrorHandlers,
   type DebugAddress,
 } from '../server/lib/utils'
 import {
@@ -34,6 +35,8 @@ import type { NextTypegenOptions } from '../cli/next-typegen.js'
 import type { NextPostBuildOptions } from '../cli/next-post-build.js'
 import { ensureProfilesDir } from '../lib/profiles-dir'
 import type { NextRequestInsightsOptions } from '../cli/next-request-insights.js'
+
+setupOutputStreamErrorHandlers()
 
 /**
  * Create `.next-profiles` (with its `.gitignore`) when profiling/tracing is
