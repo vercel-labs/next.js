@@ -1,0 +1,21 @@
+{
+  "name": "nextjs-bun-runtime-rewrite-repro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --bun next dev",
+    "build": "bun run --bun next build",
+    "start": "bun run --bun next start"
+  },
+  "dependencies": {
+    "next": "16.3.0-canary.97",
+    "next-intl": "4.13.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
