@@ -5,7 +5,7 @@ import { nextTestSetup } from 'e2e-utils'
 import type { Response } from 'node-fetch'
 
 describe('app-dir with middleware', () => {
-  const { next, isNextDeploy } = nextTestSetup({
+  const { next, isNextDev, isNextDeploy } = nextTestSetup({
     files: __dirname,
   })
 
@@ -134,6 +134,26 @@ describe('app-dir with middleware', () => {
     const res = await next.fetch('/preloads')
     expect(res.headers.get('link')).toContain(
       '<https://example.com/page>; rel="alternate"; hreflang="en"'
+    )
+  })
+
+  it('does not allow shared caching when middleware sets cookies', async () => {
+    const res = await next.fetch('/preloads', {
+      headers: { cookie: 'rt=USER_A' },
+    })
+
+    expect(res.status).toBe(200)
+    expect(res.headers.get('set-cookie')).toContain(
+      'at=access_token_for_USER_A'
+    )
+    expect(res.headers.get('set-cookie')).toContain(
+      'rt=refresh_token_for_USER_A'
+    )
+    if (!isNextDev && !isNextDeploy) {
+      expect(res.headers.get('x-nextjs-prerender')).toMatch(/(?:^|, )1(?:,|$)/)
+    }
+    expect(res.headers.get('cache-control')).toMatch(
+      isNextDev ? /^no-cache(?:,|$)/ : /(?:^|,)\s*(?:private|no-store)(?:,|$)/
     )
   })
 

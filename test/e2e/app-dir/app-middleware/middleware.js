@@ -81,6 +81,12 @@ export async function middleware(request) {
         link: '<https://example.com/page>; rel="alternate"; hreflang="en"',
       },
     })
+    const refreshToken = request.cookies.get('rt')?.value
+    if (refreshToken) {
+      const cookieOptions = { httpOnly: true, sameSite: 'lax', path: '/' }
+      res.cookies.set('at', `access_token_for_${refreshToken}`, cookieOptions)
+      res.cookies.set('rt', `refresh_token_for_${refreshToken}`, cookieOptions)
+    }
     return res
   }
 
