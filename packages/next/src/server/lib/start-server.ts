@@ -18,7 +18,7 @@ import os from 'os'
 import { exec } from 'child_process'
 import * as Log from '../../build/output/log'
 import setupDebug from 'next/dist/compiled/debug'
-import { RESTART_EXIT_CODE } from './utils'
+import { RESTART_EXIT_CODE, setupOutputStreamErrorHandlers } from './utils'
 import { formatHostname } from './format-hostname'
 import { initialize } from './router-server'
 import {
@@ -195,6 +195,10 @@ export async function startServer(
     serverFastRefresh,
   } = serverOptions
   let { port } = serverOptions
+
+  if (isDev) {
+    setupOutputStreamErrorHandlers()
+  }
 
   process.title = `next-server (v${process.env.__NEXT_VERSION})`
   let handlersReady = () => {}
