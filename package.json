@@ -1,0 +1,19 @@
+{
+  "name": "next-formdata-2gb-reproduction",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "upload": "node scripts/upload.mjs",
+    "direct": "node scripts/direct-undici.mjs",
+    "threshold": "node scripts/indexof-threshold.mjs",
+    "in-memory": "node scripts/in-memory.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.0-canary.97",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "type": "module"
+}
