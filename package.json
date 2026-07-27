@@ -1,19 +1,22 @@
 {
-  "name": "next-96217-reproduction",
+  "name": "next-96217-null-guard-reproduction",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "next build",
     "start": "next start",
-    "reproduce": "node scripts/reproduce.mjs"
+    "inspect": "node scripts/inspect-build.mjs",
+    "verify-runtime": "node scripts/verify-runtime.mjs",
+    "reproduce": "npm run build && npm run inspect && npm run verify-runtime"
   },
   "dependencies": {
     "next": "16.3.0-preview.9",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
-    "@types/node": "24.10.1",
-    "@types/react": "19.2.7"
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.9.0"
   }
 }

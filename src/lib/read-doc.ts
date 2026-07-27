@@ -1,4 +1,12 @@
-import type { Container } from './container'
+import type { Container } from './types'
+
+export function isNotFound(error: unknown): boolean {
+  return error instanceof Error && error.message === 'not found'
+}
+
+export function isConflict(error: unknown): boolean {
+  return error instanceof Error && error.message === 'conflict'
+}
 
 export async function readDoc<T>({
   container,
@@ -16,8 +24,4 @@ export async function readDoc<T>({
     if (isNotFound(error)) return null
     throw error
   }
-}
-
-function isNotFound(error: unknown): boolean {
-  return error instanceof Error && 'statusCode' in error && error.statusCode === 404
 }
