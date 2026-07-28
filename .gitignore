@@ -1,0 +1,20 @@
+# dependencies
+/node_modules
+
+# Next.js output
+/.next/
+/out/
+
+# Playwright output
+/test-results/
+/playwright-report/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# local files
+.DS_Store
+.env*
+.vercel
+npm-debug.log*
