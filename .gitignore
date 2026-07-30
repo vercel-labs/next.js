@@ -1,0 +1,5 @@
+node_modules/
+.next/
+.repro/
+next-env.d.ts
+*.tsbuildinfo
