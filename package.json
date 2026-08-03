@@ -1,0 +1,19 @@
+{
+  "name": "nextjs-96533-isr-arraybuffers-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start -p 3299",
+    "start:gc": "FORCE_GC=1 NODE_OPTIONS=--expose-gc next start -p 3299"
+  },
+  "dependencies": {
+    "next": "16.2.12",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "26.1.2",
+    "@types/react": "19.2.18",
+    "typescript": "6.0.3"
+  }
+}

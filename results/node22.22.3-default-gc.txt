@@ -1,0 +1,26 @@
+routes=200 rounds=25 node=v22.22.3
+round 1: uptime=381s rss=286MB heapUsed=83MB external=63MB arrayBuffers=59MB
+round 2: uptime=391s rss=313MB heapUsed=103MB external=70MB arrayBuffers=66MB
+round 3: uptime=401s rss=321MB heapUsed=124MB external=82MB arrayBuffers=78MB
+round 4: uptime=411s rss=314MB heapUsed=113MB external=71MB arrayBuffers=67MB
+round 5: uptime=421s rss=314MB heapUsed=104MB external=78MB arrayBuffers=74MB
+round 6: uptime=431s rss=295MB heapUsed=84MB external=43MB arrayBuffers=40MB
+round 7: uptime=446s rss=284MB heapUsed=56MB external=33MB arrayBuffers=30MB
+round 8: uptime=456s rss=299MB heapUsed=72MB external=46MB arrayBuffers=42MB
+round 9: uptime=466s rss=301MB heapUsed=84MB external=54MB arrayBuffers=51MB
+round 10: uptime=476s rss=311MB heapUsed=99MB external=63MB arrayBuffers=59MB
+round 11: uptime=486s rss=324MB heapUsed=120MB external=82MB arrayBuffers=78MB
+round 12: uptime=496s rss=327MB heapUsed=119MB external=81MB arrayBuffers=77MB
+round 13: uptime=511s rss=295MB heapUsed=64MB external=37MB arrayBuffers=33MB
+round 14: uptime=521s rss=303MB heapUsed=82MB external=47MB arrayBuffers=44MB
+round 15: uptime=531s rss=305MB heapUsed=90MB external=54MB arrayBuffers=51MB
+round 16: uptime=541s rss=314MB heapUsed=100MB external=61MB arrayBuffers=57MB
+round 17: uptime=551s rss=314MB heapUsed=95MB external=66MB arrayBuffers=62MB
+round 18: uptime=561s rss=320MB heapUsed=116MB external=76MB arrayBuffers=72MB
+round 19: uptime=571s rss=323MB heapUsed=115MB external=77MB arrayBuffers=74MB
+round 20: uptime=586s rss=324MB heapUsed=114MB external=80MB arrayBuffers=77MB
+round 21: uptime=596s rss=325MB heapUsed=117MB external=84MB arrayBuffers=80MB
+round 22: uptime=606s rss=322MB heapUsed=110MB external=79MB arrayBuffers=75MB
+round 23: uptime=616s rss=324MB heapUsed=122MB external=80MB arrayBuffers=76MB
+round 24: uptime=626s rss=330MB heapUsed=125MB external=82MB arrayBuffers=78MB
+round 25: uptime=636s rss=334MB heapUsed=133MB external=90MB arrayBuffers=87MB

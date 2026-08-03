@@ -1,0 +1,16 @@
+routes=200 rounds=15 node=v22.22.3
+round 1: uptime=366s rss=204MB heapUsed=44MB external=40MB arrayBuffers=30MB
+round 2: uptime=376s rss=217MB heapUsed=45MB external=40MB arrayBuffers=20MB
+round 3: uptime=386s rss=215MB heapUsed=45MB external=35MB arrayBuffers=20MB
+round 4: uptime=401s rss=218MB heapUsed=45MB external=24MB arrayBuffers=20MB
+round 5: uptime=411s rss=214MB heapUsed=46MB external=24MB arrayBuffers=20MB
+round 6: uptime=421s rss=222MB heapUsed=45MB external=29MB arrayBuffers=21MB
+round 7: uptime=431s rss=230MB heapUsed=46MB external=31MB arrayBuffers=20MB
+round 8: uptime=441s rss=230MB heapUsed=46MB external=42MB arrayBuffers=27MB
+round 9: uptime=451s rss=243MB heapUsed=46MB external=52MB arrayBuffers=26MB
+round 10: uptime=466s rss=244MB heapUsed=46MB external=24MB arrayBuffers=20MB
+round 11: uptime=476s rss=242MB heapUsed=46MB external=24MB arrayBuffers=20MB
+round 12: uptime=486s rss=242MB heapUsed=46MB external=24MB arrayBuffers=20MB
+round 13: uptime=496s rss=245MB heapUsed=46MB external=60MB arrayBuffers=20MB
+round 14: uptime=506s rss=245MB heapUsed=46MB external=37MB arrayBuffers=26MB
+round 15: uptime=516s rss=244MB heapUsed=46MB external=38MB arrayBuffers=29MB
