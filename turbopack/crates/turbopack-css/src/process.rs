@@ -97,6 +97,15 @@ async fn get_lightningcss_browser_targets(
     }
 }
 
+/// Strips a leading UTF-8 BOM (U+FEFF) from CSS source code.
+///
+/// A byte order mark is allowed at the start of a CSS file, but the CSS
+/// tokenizer does not skip it, so it would be parsed as part of the first
+/// token and break the stylesheet.
+fn strip_bom(code: &str) -> &str {
+    code.strip_prefix('\u{feff}').unwrap_or(code)
+}
+
 async fn stylesheet_to_css(
     ss: &StyleSheet<'_, '_>,
     code: &str,
@@ -224,12 +233,13 @@ pub async fn process_css_with_placeholder(
                 FileContent::Content(v) => v.content().to_str()?,
                 _ => bail!("this case should be filtered out while parsing"),
             };
+            let code = strip_bom(&code);
 
             // We use NoMinify because this is not a final css. We need to replace url references,
             // and we do final codegen with proper minification.
             let (result, _) = stylesheet_to_css(
                 stylesheet,
-                &code,
+                code,
                 MinifyType::NoMinify,
                 false,
                 false,
@@ -306,6 +316,7 @@ pub async fn finalize_css(
                 FileContent::Content(v) => v.content().to_str()?,
                 _ => bail!("this case should be filtered out while parsing"),
             };
+            let code = strip_bom(&code);
 
             let origin_source_map = if let Some(rope) = origin_source_map.await?.as_content() {
                 Some(parcel_sourcemap::SourceMap::from_json(
@@ -318,7 +329,7 @@ pub async fn finalize_css(
 
             let (result, srcmap) = stylesheet_to_css(
                 &stylesheet,
-                &code,
+                code,
                 minify_type,
                 true,
                 true,
@@ -383,7 +394,7 @@ pub async fn parse_css(
                     Ok(string) => {
                         process_content(
                             *file_content,
-                            string.into_owned(),
+                            strip_bom(&string).to_string(),
                             ident_str,
                             source,
                             origin,
