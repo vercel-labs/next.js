@@ -553,6 +553,31 @@ describe('server-hmr', () => {
     )
   })
 
+  describe('singleton registry', () => {
+    // Regression test for https://github.com/vercel/next.js/issues/96709
+    // A module-scoped registry with a run-once guard captures the component
+    // reference on first evaluation. Editing the registered server component
+    // must still be reflected in the rendered page.
+    it('reflects edits to a server component held by a singleton registry', async () => {
+      const initial = await next
+        .fetch('/singleton-registry')
+        .then((res) => res.text())
+      expect(initial).toContain('registry-v0')
+
+      await next.patchFile(
+        'app/singleton-registry/registered-server-component.tsx',
+        (content) => content.replace('registry-v0', 'registry-v1')
+      )
+
+      await retry(async () => {
+        const updated = await next
+          .fetch('/singleton-registry')
+          .then((res) => res.text())
+        expect(updated).toContain('registry-v1')
+      })
+    })
+  })
+
   describe('route handler hmr', () => {
     function getText(res: Response) {
       return res.ok
