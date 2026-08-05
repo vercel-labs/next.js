@@ -442,6 +442,67 @@ describe('server-hmr', () => {
     )
   })
 
+  describe('repeated server edits with a connected HMR client', () => {
+    // Regression test for #96705: once an HMR client had connected, server
+    // module updates stopped being applied for the rest of the dev server's
+    // lifetime. Turbopack kept compiling and writing new server chunks, but
+    // SSR kept rendering the module graph from the moment the client
+    // connected, so only the client bundle reflected further edits.
+    itTurbopackDev(
+      'keeps applying server component edits to SSR after a client connected',
+      async () => {
+        const readSsr = () =>
+          next.fetch('/repeated-server-edits').then((res) => res.text())
+
+        // Baseline: without any HMR client, the edit reaches SSR.
+        await next.patchFile('app/repeated-server-edits/page.tsx', (content) =>
+          content.replace('probe-v0', 'probe-v1')
+        )
+        await retry(async () => {
+          expect(await readSsr()).toContain('probe-v1')
+        }, 15000)
+
+        // Connect an HMR client and keep it open for the rest of the test.
+        // The page polls a route handler, so requests keep arriving while
+        // updates are applied.
+        const browser = await next.browser('/repeated-server-edits')
+        await retry(async () => {
+          expect(await browser.elementByCss('#probe').text()).toBe('probe-v1')
+          expect(await browser.elementByCss('#poller').text()).not.toBe(
+            'client poller: 0'
+          )
+        }, 15000)
+
+        // Every subsequent edit must still reach freshly rendered server
+        // output, not only the client bundle.
+        for (const [from, to] of [
+          ['probe-v1', 'probe-v2'],
+          ['probe-v2', 'probe-v3'],
+          ['probe-v3', 'probe-v4'],
+        ]) {
+          await next.patchFile(
+            'app/repeated-server-edits/page.tsx',
+            (content) => content.replace(from, to)
+          )
+
+          await retry(async () => {
+            const html = await readSsr()
+            expect(html).toContain(to)
+            expect(html).not.toContain(from)
+          }, 15000)
+
+          await retry(async () => {
+            expect(await browser.elementByCss('#probe').text()).toBe(to)
+          }, 15000)
+        }
+
+        await next.patchFile('app/repeated-server-edits/page.tsx', (content) =>
+          content.replace('probe-v4', 'probe-v0')
+        )
+      }
+    )
+  })
+
   describe('source maps', () => {
     itTurbopackDev(
       "stack frames from eval'd HMR modules point to original source locations",
