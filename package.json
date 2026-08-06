@@ -1,0 +1,12 @@
+{
+  "name": "nft-home-glob-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": { "build": "next build" },
+  "dependencies": {
+    "next": "16.2.11",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "home-plugin-loader": "file:./packages/home-plugin-loader"
+  }
+}
