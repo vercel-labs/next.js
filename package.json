@@ -1,0 +1,14 @@
+{
+  "name": "issue-73087-forceswctransforms-turbopack",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
