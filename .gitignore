@@ -1,4 +1,2 @@
-node_modules/
-.next/
-pages/p/
-pages/api/A*.js
+node_modules
+.next

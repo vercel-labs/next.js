@@ -1,15 +1,14 @@
 {
-  "name": "next-96139-reproduction",
+  "name": "nextjs-utf8-pagename-repro",
   "private": true,
   "scripts": {
-    "postinstall": "node scripts/gen-filler-pages.js",
-    "add-probe": "node scripts/add-probe.js",
-    "test": "node scripts/verify.js",
-    "dev": "node server.js"
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3001"
   },
   "dependencies": {
-    "next": "16.3.0-canary.95",
-    "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "next": "16.3.1-canary.7",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   }
 }
