@@ -1,0 +1,52 @@
+### GET /api/ping
+HTTP/2 200 
+age: 0
+cache-control: public, max-age=0, must-revalidate
+content-type: application/json; charset=utf-8
+date: Fri, 07 Aug 2026 17:19:29 GMT
+etag: "kbhkdsz68qs"
+server: Vercel
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-matched-path: /api/ping
+x-robots-tag: noindex
+x-vercel-cache: MISS
+x-vercel-id: iad1::iad1::ppnf5-1786123169185-73ca1e78dfbd
+content-length: 28
+
+{"ok":true,"route":"static"}
+### GET /api/echo/hello
+HTTP/2 404 
+accept-ranges: bytes
+access-control-allow-origin: *
+age: 1671
+cache-control: public, max-age=0, must-revalidate
+content-disposition: inline; filename="404"
+content-type: text/html; charset=utf-8
+date: Fri, 07 Aug 2026 17:19:29 GMT
+etag: "b82a427b37aeb65da7ed0790d5573906"
+last-modified: Fri, 07 Aug 2026 16:51:38 GMT
+server: Vercel
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-matched-path: /en/404
+x-robots-tag: noindex
+x-vercel-cache: HIT
+x-vercel-id: iad1::qg8fx-1786123169927-18130268c519
+content-length: 2098
+
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width" data-next-head=""/><title data-next-head="">404: This page could not be found</title><noscript data-n-css=""></noscript><script src="/_next/static/immutable/chunks/0sg10p5zx9q6o.js" defer=""></script><script src="/_next/static/immutable/chunks/3r3kb8wq51sx2.js" defer=""></script><script src="/_next/static/immutable/chunks/turbopack-1i5jf_vtcp97b.js" defer=""></script><script src="/_next/static/immutable/chunks/41jz2cvdsd8mb.js" defer=""></script><script src="/_next/static/immutable/chunks/turbopack-2pte33ap2-v4b.js" defer=""></script><script src="/_next/static/PkzeZKkJ-zGAEjSH9OQRY/_buildManifest.js" defer=""></script><script src="/_next/static/PkzeZKkJ-zGAEjSH9OQRY/_ssgManifest.js" defer=""></script><script src="/_next/static/PkzeZKkJ-zGAEjSH9OQRY/_clientMiddlewareManifest.js" defer=""></script></head><body><div id="__next"><div style="font-family:system-ui,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;height:100vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="line-height:48px"><style>body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}</style><h1 class="next-error-h1" style="display:inline-block;margin:0 20px 0 0;padding-right:23px;font-size:24px;font-weight:500;vertical-align:top">404</h1><div style="display:inline-block"><h2 style="font-size:14px;font-weight:400;line-height:28px">This page could not be found<!-- -->.</h2></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":404}},"page":"/_error","query":{},"buildId":"PkzeZKkJ-zGAEjSH9OQRY","nextExport":true,"isFallback":false,"gip":true,"locale":"en","locales":["en","es"],"defaultLocale":"en","scriptLoader":[]}</script></body></html>
+### GET /api/echo/%5Bslug%5D
+HTTP/2 200 
+age: 0
+cache-control: public, max-age=0, must-revalidate
+content-type: application/json; charset=utf-8
+date: Fri, 07 Aug 2026 17:19:29 GMT
+etag: "8krm71kpo619"
+server: Vercel
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-matched-path: /api/echo/%5Bslug%5D
+x-robots-tag: noindex
+x-vercel-cache: MISS
+x-vercel-id: iad1::iad1::6994l-1786123169966-20798c2d7fed
+content-length: 45
+
+{"ok":true,"route":"dynamic","slug":"[slug]"}

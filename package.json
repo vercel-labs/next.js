@@ -1,0 +1,14 @@
+{
+  "name": "nextjs-96935-i18n-dynamic-api-adapter-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "repro": "node check.js"
+  },
+  "dependencies": {
+    "next": "^16.3.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  }
+}
