@@ -9,7 +9,7 @@ until the dev server is restarted.
 
 ```bash
 npm install
-./reproduce.sh
+bash reproduce.sh
 ```
 
 ## Observed (next 16.3.0 and 16.3.1-canary.10)

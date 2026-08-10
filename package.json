@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "repro": "./reproduce.sh"
+    "repro": "bash reproduce.sh"
   },
   "dependencies": {
     "next": "16.3.0",
