@@ -1,24 +1,14 @@
-# Repro: headers() returns stale request headers in Proxy after NextRequest.headers mutation (vercel/next.js#97049)
+# Reproduction for vercel/next.js#85271 — cacheComponents JSDoc
 
-Mirror of https://github.com/r34son/nextjs-proxy-headers-snapshot-regression with the
-lockfile removed (original lockfile pinned a non-npmjs registry mirror).
+`check-jsdoc.mjs` uses the TypeScript language service to print the editor hover
+documentation for `cacheComponents` in a `next.config.ts`, for several versions of `next`.
 
-## Run
+Run:
 
 ```bash
-pnpm install
-pnpm dev
-curl http://localhost:3000/
+npm run repro
 ```
 
-## Observed (next@16.3.0-preview.9, 16.3.1-canary.9; dev and `next build && next start`)
-
-```json
-{"valueBeforeMutation":null,"valueOnNextRequest":"set-on-next-request","valueFromFirstViewAfterMutation":null,"valueFromSecondViewAfterMutation":null,"sameHeadersObject":true}
-```
-
-## Expected (next@16.2.4)
-
-```json
-{"valueBeforeMutation":null,"valueOnNextRequest":"set-on-next-request","valueFromFirstViewAfterMutation":"set-on-next-request","valueFromSecondViewAfterMutation":"set-on-next-request","sameHeadersObject":true}
-```
+Result: the misleading "Next.js will automatically cache page-level components and functions"
+text is present up to and including `next@16.2.12`, and is gone in `next@16.3.0` and canary
+(fixed by https://github.com/vercel/next.js/pull/94474).
