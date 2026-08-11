@@ -1,0 +1,15 @@
+{
+  "name": "next-74992-request-timeout-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "slow-upload": "node slow-upload.mjs"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
