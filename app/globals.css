@@ -1,0 +1,10 @@
+@font-face {
+  font-family: custom-font;
+  src: url("./fonts/Itim-Regular.ttf") format("truetype");
+}
+body {
+  font-family: custom-font, sans-serif;
+}
+.bg {
+  background-image: url("./fonts/dot.png");
+}

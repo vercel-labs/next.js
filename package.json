@@ -1,0 +1,22 @@
+{
+  "name": "repro-24952",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "dev:webpack": "next dev --webpack -p 3001",
+    "build": "next build",
+    "build:webpack": "next build --webpack",
+    "start": "next start -p 3000",
+    "custom-server": "node server.js",
+    "check": "node check.mjs http://localhost:3000/ check"
+  },
+  "dependencies": {
+    "express": "4.22.2",
+    "next": "16.3.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
