@@ -2074,9 +2074,20 @@ export async function handleBuildComplete({
       const isFallbackFalse =
         prerenderManifest.dynamicRoutes[route.page]?.fallback === false
 
+      // i18n routing prefixes the resolved locale onto the pathname before
+      // dynamic routes are matched. Pages API routes must not be localized in
+      // their destination (their outputs are emitted without a locale prefix),
+      // but their matcher still has to allow the locale-prefixed pathname,
+      // otherwise the request falls through to the localized 404 page.
+      const localePrefixRegex = shouldLocalize
+        ? '(?<nextLocale>[^/]{1,})'
+        : config.i18n
+          ? '(?:[^/]{1,})?'
+          : ''
+
       const sourceRegex = routeRegex.namedRegex.replace(
         '^',
-        `^${config.basePath && config.basePath !== '/' ? path.posix.join('/', config.basePath || '') : ''}[/]?${shouldLocalize ? '(?<nextLocale>[^/]{1,})' : ''}`
+        `^${config.basePath && config.basePath !== '/' ? path.posix.join('/', config.basePath || '') : ''}[/]?${localePrefixRegex}`
       )
       const destination =
         path.posix.join(
