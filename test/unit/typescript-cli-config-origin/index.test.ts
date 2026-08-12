@@ -1,4 +1,11 @@
-import { cpSync, mkdtempSync, mkdirSync, realpathSync, rmSync } from 'node:fs'
+import {
+  cpSync,
+  existsSync,
+  mkdtempSync,
+  mkdirSync,
+  realpathSync,
+  rmSync,
+} from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 
@@ -89,5 +96,26 @@ describe('TypeScript CLI config metadata', () => {
         path.join(testDir, 'node_modules/typescript/lib/tsc.js')
       ),
     })
+  })
+
+  it('resolves the CLI of a `typescript` package that names its bin `tsc6`', () => {
+    // `typescript` aliased to `@typescript/typescript6` declares
+    // `bin: { tsc6: 'bin/tsc6' }`. Without a resolved `tscPath`, load-jsconfig
+    // treats the project as non-TypeScript and silently drops every tsconfig
+    // `paths` alias, so webpack builds fail with `Module not found`.
+    const typeScriptDir = path.join(testDir, 'node_modules/typescript')
+    rmSync(typeScriptDir, { force: true, recursive: true })
+    cpSync(path.join(__dirname, 'fixture/typescript6-package'), typeScriptDir, {
+      recursive: true,
+    })
+
+    const packageInfo = getTypeScriptPackageInfo(testDir)
+
+    expect(packageInfo).toMatchObject({
+      version: '6.0.2-test',
+      apiPath: realpathSync(path.join(typeScriptDir, 'lib/typescript.js')),
+    })
+    expect(packageInfo?.tscPath).toBeDefined()
+    expect(existsSync(packageInfo!.tscPath!)).toBe(true)
   })
 })
