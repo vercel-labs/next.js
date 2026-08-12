@@ -1,0 +1,13 @@
+{
+  "name": "fetch-cache-tear-repro",
+  "private": true,
+  "scripts": {
+    "repro": "rm -rf .next && node run.mjs",
+    "check": "node check-cache.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
