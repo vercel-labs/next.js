@@ -34,6 +34,24 @@ describe('adapter config with i18n routes', () => {
     )
   })
 
+  // https://github.com/vercel/next.js/issues/96935
+  it('emits a matcher for dynamic Pages API routes that matches locale-prefixed paths', async () => {
+    const { routing }: Parameters<NextAdapter['onBuildComplete']>[0] =
+      await next.readJSON('build-complete.json')
+
+    const apiRoute = routing.dynamicRoutes.find(
+      (route) => route.source === '/api/echo/[slug]'
+    )
+    expect(apiRoute).toBeDefined()
+
+    // i18n routing prefixes the resolved locale onto the pathname before
+    // dynamic routes are matched, so the emitted matcher must still match the
+    // locale-prefixed pathname even though the destination is not localized.
+    const match = new RegExp(apiRoute!.sourceRegex).exec('/en/api/echo/hello')
+    expect(match).not.toBeNull()
+    expect(match!.groups?.nxtPslug).toBe('hello')
+  })
+
   it('does not emit outputs multiple times for a given pathname', async () => {
     const { outputs }: Parameters<NextAdapter['onBuildComplete']>[0] =
       await next.readJSON('build-complete.json')
