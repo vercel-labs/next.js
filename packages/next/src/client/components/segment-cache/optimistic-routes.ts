@@ -130,6 +130,16 @@ type KnownRoutePartBase = {
   // tree, like we do for static siblings, and attempting to match both.
   hasConflictingDynamicChildren: boolean
 
+  // True when a response was observed whose URL did not line up with the route
+  // shape at this level — i.e. a rewrite added, removed, or replaced the URL
+  // part that a route segment at this level would consume (e.g. a proxy that
+  // rewrites `/alpha` to `/de/alpha`). Once that's been observed, we can no
+  // longer tell from a URL alone whether the part at this position belongs to
+  // the route or was injected by the rewrite, so any prediction that consumes
+  // a URL part here could bind the wrong route shape. Matching bails out to
+  // server resolution instead.
+  hasRewriteMismatch: boolean
+
   // TODO: For prefix rewrite support. When true, this part may not appear in
   // the candidate URL because it was injected by a rewrite. Today, discovery
   // refuses to store a pattern for such routes (see the cache key comparison
@@ -197,6 +207,7 @@ function createEmptyPart(): KnownRoutePart {
     dynamicChildParamType: null,
     pattern: null,
     hasConflictingDynamicChildren: false,
+    hasRewriteMismatch: false,
   }
 }
 
@@ -294,6 +305,17 @@ export function discoverKnownRoute(
     supportsPerSegmentPrefetching,
     hasDynamicRewrite
   )
+}
+
+/**
+ * Record that a response was observed whose URL didn't line up with the route
+ * shape at this level: a rewrite added, removed, or replaced the URL part that
+ * a route segment here would consume. Prediction can no longer consume a URL
+ * part at this position, because we can't tell from the URL alone which route
+ * shape it resolves to (see matchKnownRoutePart).
+ */
+function markRewriteMismatch(part: KnownRoutePart): void {
+  part.hasRewriteMismatch = true
 }
 
 /**
@@ -401,6 +423,7 @@ function discoverKnownRoutePart(
       // match, the URL doesn't fit the route shape — the response was
       // rewrite-affected. Bail out.
       if (urlPart === null || urlPart !== segment) {
+        markRewriteMismatch(parentKnownRoutePart)
         return handleMismatchDueToRewrite(
           existingEntry,
           now,
@@ -442,6 +465,7 @@ function discoverKnownRoutePart(
       // must consume at least one URL part at runtime. If discovery reached
       // this segment with no URL parts left to consume, the URL doesn't fit
       // the route shape — the response was rewrite-affected. Bail out.
+      markRewriteMismatch(parentKnownRoutePart)
       return handleMismatchDueToRewrite(
         existingEntry,
         now,
@@ -463,6 +487,7 @@ function discoverKnownRoutePart(
     ) {
       // The route tree says this is a dynamic sibling, but the canonical URL
       // is a known static sibling. This is a mismatch.
+      markRewriteMismatch(parentKnownRoutePart)
       return handleMismatchDueToRewrite(
         existingEntry,
         now,
@@ -492,6 +517,7 @@ function discoverKnownRoutePart(
           urlPart !== null &&
           canonicalizeURLPart(urlPart) !== paramCacheKey
         ) {
+          markRewriteMismatch(parentKnownRoutePart)
           return handleMismatchDueToRewrite(
             existingEntry,
             now,
@@ -518,6 +544,7 @@ function discoverKnownRoutePart(
           .map(canonicalizeURLPart)
           .join('/')
         if (joinedRemainingParts !== paramCacheKey) {
+          markRewriteMismatch(parentKnownRoutePart)
           return handleMismatchDueToRewrite(
             existingEntry,
             now,
@@ -666,6 +693,7 @@ function discoverKnownRoutePart(
   // left to consume, the route tree is shorter than the URL, which means
   // the URL doesn't match the route structure (likely a rewrite).
   if (nextPartIndex < pathnameParts.length) {
+    markRewriteMismatch(knownRoutePart)
     return handleMismatchDueToRewrite(
       existingEntry,
       now,
@@ -845,6 +873,17 @@ function matchKnownRoutePart(
 ): KnownRouteMatch {
   const urlPart =
     partIndex < pathnameParts.length ? pathnameParts[partIndex] : null
+
+  // A rewrite was previously observed that shifted which URL part maps to
+  // which route segment at this level (see `hasRewriteMismatch`). Any URL part
+  // at this position may have been injected, removed, or replaced by that
+  // rewrite, so we can't tell from the URL which route shape it resolves to —
+  // predicting one would prefetch another route's segments at this URL. Bail
+  // out to server resolution. A pattern stored directly at this node is still
+  // safe, since matching it consumes no URL part.
+  if (part.hasRewriteMismatch && urlPart !== null) {
+    return null
+  }
 
   // If staticChildren is null, we don't know what static routes exist at this
   // level. This happens in webpack dev mode where routes are compiled
