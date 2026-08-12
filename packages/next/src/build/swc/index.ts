@@ -482,12 +482,28 @@ export function createDefineEnv({
 }
 
 function rustifyEnv(env: Record<string, string>): RustifiedEnv {
-  return Object.entries(env)
-    .filter(([_, value]) => value != null)
-    .map(([name, value]) => ({
-      name,
-      value,
-    }))
+  const entries = Object.entries(env).filter(([_, value]) => value != null)
+
+  // Values containing a NUL byte cannot be passed to child processes. Turbopack
+  // would only fail once it spawns a process (e.g. for PostCSS), reporting an
+  // internal error that blames an unrelated module instead of the variable.
+  const invalidNames = entries
+    .filter(([_, value]) => typeof value === 'string' && value.includes('\0'))
+    .map(([name]) => name)
+  if (invalidNames.length > 0) {
+    throw new Error(
+      `The value of the environment variable${
+        invalidNames.length > 1 ? 's' : ''
+      } ${invalidNames
+        .map((name) => `'${name}'`)
+        .join(', ')} must be a string without null bytes.`
+    )
+  }
+
+  return entries.map(([name, value]) => ({
+    name,
+    value,
+  }))
 }
 
 function rustifyOptionEnv(
