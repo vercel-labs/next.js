@@ -34,6 +34,26 @@ describe('adapter config with i18n routes', () => {
     )
   })
 
+  // Dynamic Pages API routes are matched against locale-prefixed request
+  // pathnames when i18n is configured, so their generated matcher has to
+  // accept that prefix or the request falls through to the 404 page.
+  // https://github.com/vercel/next.js/issues/97230
+  it('matches locale-prefixed request paths for dynamic Pages API routes', async () => {
+    const { routing }: Parameters<NextAdapter['onBuildComplete']>[0] =
+      await next.readJSON('build-complete.json')
+
+    const apiRoute = routing.dynamicRoutes.find(
+      (route) => route.source === '/api/proxy/[[...slug]]'
+    )
+
+    expect(apiRoute).toBeDefined()
+
+    const apiRegex = new RegExp(apiRoute.sourceRegex)
+
+    expect(apiRegex.test('/en/api/proxy/hello')).toBe(true)
+    expect(apiRegex.test('/fr/api/proxy/hello')).toBe(true)
+  })
+
   it('does not emit outputs multiple times for a given pathname', async () => {
     const { outputs }: Parameters<NextAdapter['onBuildComplete']>[0] =
       await next.readJSON('build-complete.json')
