@@ -1,15 +1,19 @@
 {
-  "name": "nextjs-i18n-dynamic-api-404",
-  "version": "0.1.0",
+  "name": "turbopack-nul-env-repro",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build --webpack",
-    "start": "next start"
+    "build:turbo": "next build --turbo",
+    "build:webpack": "next build --webpack",
+    "detect:nul-env": "node scripts/detect-nul-env.cjs",
+    "node-spawn-baseline": "node scripts/node-spawn-null-env-error.cjs"
   },
   "dependencies": {
-    "next": "16.3.0",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest"
   }
 }
