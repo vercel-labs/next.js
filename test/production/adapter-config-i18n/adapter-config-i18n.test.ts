@@ -34,6 +34,27 @@ describe('adapter config with i18n routes', () => {
     )
   })
 
+  // Regression test for https://github.com/vercel/next.js/issues/96931:
+  // hosting providers resolve Pages Router requests through a locale before
+  // dynamic route matching, so the emitted matchers must still route a
+  // locale-prefixed request to the dynamic Pages API route instead of the
+  // localized 404.
+  it('matches locale-prefixed request paths against dynamic Pages API routes', async () => {
+    const { routing }: Parameters<NextAdapter['onBuildComplete']>[0] =
+      await next.readJSON('build-complete.json')
+
+    const matchDestination = (pathname: string) =>
+      routing.dynamicRoutes.find((route) =>
+        new RegExp(route.sourceRegex).test(pathname)
+      )?.destination
+
+    for (const locale of ['en', 'fr']) {
+      expect(matchDestination(`/${locale}/api/proxy/hello`)).toContain(
+        '/api/proxy/[[...slug]]'
+      )
+    }
+  })
+
   it('does not emit outputs multiple times for a given pathname', async () => {
     const { outputs }: Parameters<NextAdapter['onBuildComplete']>[0] =
       await next.readJSON('build-complete.json')
