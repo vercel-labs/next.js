@@ -1,0 +1,13 @@
+{
+  "name": "nextjs-turbopack-postcss-var-export",
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build" },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "next": "16.3.0",
+    "postcss": "^8.5.26",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tailwindcss": "^4.3.3"
+  }
+}
