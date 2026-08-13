@@ -1,0 +1,10 @@
+{
+  "name": "issue-97316-repro",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "repro": "node --expose-gc repro.mjs",
+    "repro:next": "node --expose-gc next-path-repro.mjs"
+  },
+  "dependencies": { "next": "16.3.0" }
+}
