@@ -1,0 +1,7 @@
+{
+  "name": "repro-97347",
+  "private": true,
+  "scripts": { "lint": "next lint" },
+  "dependencies": { "next": "15.5.23", "react": "^19.0.0", "react-dom": "^19.0.0" },
+  "devDependencies": { "eslint": "^9.22.0", "eslint-config-next": "15.5.23" }
+}
