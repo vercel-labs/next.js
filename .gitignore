@@ -1,0 +1,4 @@
+node_modules
+.next
+hits.log
+server-*.log

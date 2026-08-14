@@ -1,0 +1,19 @@
+{
+  "name": "nextjs-97351-prerender-abort-retention",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "instrument": "node instrument.mjs",
+    "start": "node --expose-gc .next/standalone/server.js",
+    "patch": "node retain-patch.mjs",
+    "measure:baseline": "./run-measure.sh baseline 3101 200",
+    "measure:fix": "./run-measure.sh fix 3102 200",
+    "mechanism": "node --expose-gc repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  }
+}
