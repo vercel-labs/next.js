@@ -410,6 +410,35 @@ async function readNormalizedNFT(next, name) {
          ]
         `)
       })
+
+      // Regression test for #97358: `@swc/helpers@0.5.23` added a
+      // `module-sync` condition to every subpath export. Node >= 22.10 prefers
+      // that condition for `require()`, so `next/dist` loads
+      // `@swc/helpers/esm/*.js` at runtime while tracing only emitted the
+      // `cjs/*.cjs` targets. The standalone server then exited at boot with
+      // `Cannot find module '.../@swc/helpers/esm/_interop_require_default.js'`.
+      it('should trace the module-sync @swc/helpers targets next requires at runtime', async () => {
+        const { files } = await next.readJSON('.next/next-server.js.nft.json')
+
+        const helperNames = (pattern: RegExp) =>
+          new Set(
+            (files as string[])
+              .map((file) => pattern.exec(file)?.[1])
+              .filter((name): name is string => Boolean(name))
+          )
+
+        const cjsHelpers = helperNames(/\/@swc\/helpers\/cjs\/(.+)\.cjs$/)
+        const esmHelpers = helperNames(/\/@swc\/helpers\/esm\/(.+)\.js$/)
+
+        // Sanity check: next's server code does use swc helpers.
+        expect(cjsHelpers.size).toBeGreaterThan(0)
+
+        // Every traced CJS helper must have its `module-sync` ESM counterpart,
+        // because that is the file Node actually resolves via `require()`.
+        expect(
+          [...cjsHelpers].filter((name) => !esmHelpers.has(name)).sort()
+        ).toEqual([])
+      })
     })
 
     describe('default mode', () => {
