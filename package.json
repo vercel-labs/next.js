@@ -1,0 +1,14 @@
+{
+  "name": "next-font-google-404-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.16",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
