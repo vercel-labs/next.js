@@ -1,0 +1,7 @@
+{
+  "name": "nextjs-97348-abort-reason-stack-retention",
+  "private": true,
+  "type": "module",
+  "scripts": { "repro": "node --expose-gc repro-next-internals.mjs" },
+  "dependencies": { "next": "16.3.0", "react": "19.2.0", "react-dom": "19.2.0" }
+}
