@@ -861,6 +861,14 @@ export class NextInstance {
     return this._url
   }
 
+  /**
+   * PID of the spawned Next.js process, if it is running. Useful for tests that
+   * inspect OS-level state of the server, e.g. its memory usage.
+   */
+  public get pid(): number | undefined {
+    return this.childProcess?.pid
+  }
+
   public get appPort() {
     return this._parsedUrl.port
   }
