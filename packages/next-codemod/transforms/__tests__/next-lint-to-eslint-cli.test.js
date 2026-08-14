@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const os = require('os')
+const semver = require('semver')
 
 describe('next-lint-to-eslint-cli', () => {
   let isolatedDir
@@ -596,6 +597,53 @@ describe('next-lint-to-eslint-cli', () => {
         }
         "
       `)
+    })
+  })
+
+  // https://github.com/vercel/next.js/issues/97347
+  describe('legacy-config-next-15', () => {
+    it('should not emit a config that requires eslint-config-next@16 while leaving 15.x installed', async () => {
+      const testDir = path.join(fixturesDir, 'legacy-config-next-15')
+
+      expect(
+        JSON.parse(fs.readFileSync(path.join(testDir, 'package.json'), 'utf8'))
+          .devDependencies['eslint-config-next']
+      ).toBe('15.5.23')
+
+      await transformer([testDir], { skipInstall: true })
+
+      const actualConfig = fs.readFileSync(
+        path.join(testDir, 'eslint.config.mjs'),
+        'utf8'
+      )
+      const actualPackage = JSON.parse(
+        fs.readFileSync(path.join(testDir, 'package.json'), 'utf8')
+      )
+      const eslintConfigNext =
+        actualPackage.devDependencies?.['eslint-config-next'] ??
+        actualPackage.dependencies?.['eslint-config-next']
+
+      // `eslint-config-next/core-web-vitals` and `eslint-config-next/typescript`
+      // only exist as subpath exports (and only return flat config arrays) in
+      // eslint-config-next@16. Emitting them for a project that still resolves
+      // eslint-config-next@15 produces an ERR_MODULE_NOT_FOUND on the next
+      // `eslint` run.
+      const usesV16SubpathImports =
+        /from\s+["']eslint-config-next\/[^"']+["']/.test(actualConfig)
+
+      if (usesV16SubpathImports) {
+        expect(
+          semver.major(semver.minVersion(eslintConfigNext))
+        ).toBeGreaterThanOrEqual(16)
+      } else {
+        // Otherwise the config has to keep working with the installed 15.x, which
+        // requires FlatCompat and therefore `@eslint/eslintrc`.
+        expect(actualConfig).toMatch(/FlatCompat/)
+        expect(
+          actualPackage.devDependencies?.['@eslint/eslintrc'] ??
+            actualPackage.dependencies?.['@eslint/eslintrc']
+        ).toBeDefined()
+      }
     })
   })
 })
