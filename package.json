@@ -1,0 +1,13 @@
+{
+  "name": "turbopack-dev-memory-repro-97379",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack --port 3000",
+    "measure": "bash measure.sh"
+  },
+  "dependencies": {
+    "next": "15.5.23",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
