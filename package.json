@@ -1,0 +1,14 @@
+{
+  "name": "repro-next-dev-hang-huge-data-uri",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3247",
+    "dev:turbo": "next dev -p 3247 --turbopack",
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "15.5.18",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
