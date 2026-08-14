@@ -1,0 +1,17 @@
+{
+  "name": "nextjs-97363-use-cache-composite-retention",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "node --expose-gc --inspect=127.0.0.1:9231 --require ./preload-any.cjs .next/standalone/server.js",
+    "check": "node check-composites.mjs",
+    "repro": "node drive.mjs",
+    "repro:with-detach-fix": "node patch-detach-fix.mjs && node drive.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  }
+}
