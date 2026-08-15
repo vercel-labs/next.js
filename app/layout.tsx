@@ -1,7 +1,5 @@
-import type { PropsWithChildren } from 'react';
-import { Providers } from './providers';
-
-export const metadata = { title: 'repro 97354' };
+import { PropsWithChildren } from "react";
+import { Providers } from "./components/Providers/Providers";
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
