@@ -1,6 +1,6 @@
-import { Suspense, type PropsWithChildren } from 'react';
+import type { PropsWithChildren } from "react";
 
-// A Suspense boundary between the client provider and the dynamic route.
+// Extra route group used only by the "did NOT reproduce" variant below.
 export default function MainLayout({ children }: PropsWithChildren) {
-  return <Suspense>{children}</Suspense>;
+  return <>{children}</>;
 }
