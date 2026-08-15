@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const os = require('os')
+const semver = require('semver')
 
 describe('next-lint-to-eslint-cli', () => {
   let isolatedDir
@@ -596,6 +597,41 @@ describe('next-lint-to-eslint-cli', () => {
         }
         "
       `)
+    })
+  })
+  // Regression test for https://github.com/vercel/next.js/issues/97347
+  describe('flat-config-flat-compat-next-15', () => {
+    it('should not leave the project on an eslint-config-next that cannot load the emitted config', () => {
+      const testDir = path.join(fixturesDir, 'flat-config-flat-compat-next-15')
+
+      // Run transformer on a project that is still on Next 15, i.e. the only
+      // kind of project that can still be running `next lint`.
+      transformer([testDir], { skipInstall: true })
+
+      const actualConfig = fs.readFileSync(
+        path.join(testDir, 'eslint.config.mjs'),
+        'utf8'
+      )
+      const actualPackage = JSON.parse(
+        fs.readFileSync(path.join(testDir, 'package.json'), 'utf8')
+      )
+
+      // The generated config imports the flat-config subpaths of
+      // eslint-config-next, which only exist (and only return flat config
+      // arrays) in eslint-config-next >= 16.
+      expect(actualConfig).toMatch(
+        /from ["']eslint-config-next\/core-web-vitals["']/
+      )
+
+      // So the migration must not leave eslint-config-next on a version whose
+      // entry points the emitted config cannot resolve, otherwise `eslint .`
+      // fails with ERR_MODULE_NOT_FOUND right after a successful migration.
+      const eslintConfigNextRange =
+        actualPackage.devDependencies?.['eslint-config-next'] ??
+        actualPackage.dependencies?.['eslint-config-next']
+      expect(
+        semver.minVersion(eslintConfigNextRange)?.major
+      ).toBeGreaterThanOrEqual(16)
     })
   })
 })
