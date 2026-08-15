@@ -1,0 +1,19 @@
+{
+  "name": "next-97310-duplicate-segment-id",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.11",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.17",
+    "typescript": "5.9.3"
+  }
+}
