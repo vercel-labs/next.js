@@ -1,14 +1,6 @@
-import Link from 'next/link';
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <ul>
-      <li>
-        <Link href="/items/missing">/items/missing (calls notFound() - crashes)</Link>
-      </li>
-      <li>
-        <Link href="/items/a">/items/a (exists - fine)</Link>
-      </li>
-    </ul>
-  );
+// App Router control-flow throw at the end of a server render.
+export default async function Home() {
+  redirect("/dashboard");
 }
