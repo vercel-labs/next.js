@@ -1,7 +1,22 @@
 {
   "name": "next-97354-repro",
   "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
-  "dependencies": { "next": "16.2.12", "react": "19.2.0", "react-dom": "19.2.0" },
-  "devDependencies": { "typescript": "5.8.3", "@types/node": "20.19.0", "@types/react": "19.1.2", "@types/react-dom": "19.1.2" }
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "dev": "next dev",
+    "verify": "node check.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.12",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.0",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "playwright": "1.62.1",
+    "typescript": "5.9.2"
+  }
 }
