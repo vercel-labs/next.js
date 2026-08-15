@@ -1,7 +1,6 @@
-import { Suspense, type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
-const SignedInLayout = ({ children }: PropsWithChildren) => {
-  return <Suspense>{children}</Suspense>;
-};
-
-export default SignedInLayout;
+// Route group kept only so /dashboard (the redirect target) has a home.
+export default function SignedInLayout({ children }: PropsWithChildren) {
+  return <>{children}</>;
+}
