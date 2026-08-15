@@ -1,11 +1,13 @@
-import { PropsWithChildren } from "react";
-import { Providers } from "./components/Providers/Providers";
+import { PropsWithChildren, Suspense } from "react";
+import { Providers } from "./providers";
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Suspense>{children}</Suspense>
+        </Providers>
       </body>
     </html>
   );
