@@ -1,0 +1,74 @@
+name: repro-97423
+
+on:
+  workflow_dispatch:
+    inputs:
+      next-version:
+        description: next version to install
+        default: 16.2.11
+      rounds:
+        description: hammer rounds
+        default: '15'
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: corepack enable
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm add next@${{ inputs.next-version }}
+      - name: next dev + sample worker processes
+        shell: pwsh
+        run: |
+          $env:NEXT_TELEMETRY_DISABLED = '1'
+          $dev = Start-Process -FilePath 'node' -ArgumentList 'node_modules/next/dist/bin/next','dev' -PassThru -RedirectStandardOutput dev-server.log -RedirectStandardError dev-server.err.log
+          Start-Sleep -Seconds 25
+          Start-Process -FilePath 'node' -ArgumentList 'scripts/hammer.mjs','${{ inputs.rounds }}' -RedirectStandardOutput hammer.log -RedirectStandardError hammer.err.log
+          node scripts/count-workers.mjs 60 2000 2>&1 | Tee-Object -FilePath worker-counts.log
+          $code = $LASTEXITCODE
+          Stop-Process -Id $dev.Id -Force -ErrorAction SilentlyContinue
+          Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Select-Object ProcessId,ParentProcessId,WorkingSetSize,CommandLine | Format-List | Out-File process-tree.log
+          if ($code -eq 2) { Write-Host 'runaway worker spawn reproduced' }
+          exit 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repro-97423-windows-logs
+          path: |
+            worker-counts.log
+            dev-server.log
+            dev-server.err.log
+            hammer.log
+            process-tree.log
+
+  linux-control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: corepack enable
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm add next@${{ inputs.next-version }}
+      - name: next dev + sample worker processes
+        run: |
+          export NEXT_TELEMETRY_DISABLED=1
+          node node_modules/next/dist/bin/next dev > dev-server.log 2>&1 &
+          sleep 25
+          node scripts/hammer.mjs ${{ inputs.rounds }} > hammer.log 2>&1 &
+          node scripts/count-workers.mjs 60 2000 | tee worker-counts.log || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repro-97423-linux-logs
+          path: |
+            worker-counts.log
+            dev-server.log
+            hammer.log
