@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -uo pipefail
 D="$(cd "$(dirname "$0")" && pwd)"
-LOGDIR=/workspace/.next-maintainer/reproduction-artifacts/next-server
+LOGDIR=${LOGDIR:-$D/logs}; mkdir -p "$LOGDIR"
 NAME=${NAME:?}; N=node; OUT=$D/ret-$NAME.txt; rm -f "$OUT"
 ITEMS=60 $N "$D/upstream.mjs" > "$LOGDIR/upstream-$NAME.log" 2>&1 & UP=$!
 sleep 1

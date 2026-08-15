@@ -14,13 +14,13 @@ next 16.3.1-canary.18 (pinned by package-lock.json), react 19.2.8,
 npm install
 npm run build
 
-NAME=d1 CACHE_DEPTH=1 RENDERS=200 ./run-local.sh   # single `use cache` level
-NAME=d5 CACHE_DEPTH=5 RENDERS=200 ./run-local.sh   # five nested `use cache` levels
+NAME=d1 CACHE_DEPTH=1 RENDERS=200 bash run-local.sh   # single `use cache` level
+NAME=d5 CACHE_DEPTH=5 RENDERS=200 bash run-local.sh   # five nested `use cache` levels
 
 # post-GC heap trend over 3 x 200 renders
-NAME=s-d5-distinct CACHE_DEPTH=5 ./run-series.sh
-NAME=s-d1-distinct CACHE_DEPTH=1 ./run-series.sh
-NAME=s-d5-repeat   CACHE_DEPTH=5 REPEAT=1 ./run-series.sh   # control: 8 repeated slugs
+NAME=s-d5-distinct CACHE_DEPTH=5 bash run-series.sh
+NAME=s-d1-distinct CACHE_DEPTH=1 bash run-series.sh
+NAME=s-d5-repeat   CACHE_DEPTH=5 REPEAT=1 bash run-series.sh   # control: 8 repeated slugs
 ```
 
 `retention-probe.cjs` wraps `AbortController.prototype.abort`, keeps a `WeakRef`

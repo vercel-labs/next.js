@@ -2,7 +2,7 @@
 # lsof-free variant of run-ret.sh
 set -uo pipefail
 D="$(cd "$(dirname "$0")" && pwd)"
-LOGDIR=/workspace/.next-maintainer/reproduction-artifacts/next-server
+LOGDIR=${LOGDIR:-$D/logs}; mkdir -p "$LOGDIR"
 NAME=${NAME:?set NAME}
 RENDERS=${RENDERS:-200}
 N=${NODE_BIN:-node}
