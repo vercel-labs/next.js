@@ -15,6 +15,11 @@ describe('pages-app-router-filenames', () => {
     expect($('#page').text()).toBe('robots')
   })
 
+  it('should support getServerSideProps in a nested page named sitemap', async () => {
+    const $ = await next.render$('/en/sitemap')
+    expect($('#page').text()).toBe('en/sitemap')
+  })
+
   it('should support getStaticProps in a page named page', async () => {
     const $ = await next.render$('/page')
     expect($('#page').text()).toBe('page')
