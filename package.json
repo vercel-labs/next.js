@@ -1,0 +1,9 @@
+{
+  "name": "next-codemod-upgrade-npm12-repro",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Reproduction for vercel/next.js#97445 - @next/codemod upgrade fails on npm 12 (npm view --field removed)",
+  "scripts": {
+    "repro": "node repro.mjs"
+  }
+}
