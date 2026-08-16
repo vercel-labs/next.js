@@ -84,4 +84,22 @@ describe('partial prefetching config', () => {
     // incorrectly served from the bfcache via the Full prefetch's upgrade.
     expect(secondValue).not.toBe(firstValue)
   })
+
+  it('does not embed a runtime prefetch when the segment exports prefetch = "force-disabled"', async () => {
+    // /force-disabled-page opts out of Partial Prefetching with
+    // `export const prefetch = 'force-disabled'`, which must override the
+    // app-level `partialPrefetching: true` config for this route.
+    //
+    // The request below is a plain document request: no RSC header, no
+    // Next-Router-Prefetch header, and no <Link> involved. The cached shell
+    // therefore has to appear exactly twice in the response: once in the HTML
+    // markup and once in the inlined Flight payload of the dynamic render. A
+    // third copy means an additional runtime prefetch render was spawned and
+    // embedded in the payload, despite the route opting out.
+    const html = await next.render('/force-disabled-page')
+
+    expect(html).toContain('FORCE_DISABLED_SHELL_MARKER')
+    const shellCopies = html.split('FORCE_DISABLED_SHELL_MARKER').length - 1
+    expect(shellCopies).toBe(2)
+  })
 })
