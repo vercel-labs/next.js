@@ -1,0 +1,7 @@
+{
+  "name": "repro-97516",
+  "private": true,
+  "scripts": { "build": "next build", "build:webpack": "next build --webpack", "dev": "next dev" },
+  "dependencies": { "next": "16.3.1", "react": "19.2.8", "react-dom": "19.2.8" },
+  "devDependencies": { "@types/node": "^20", "@types/react": "^19", "@types/react-dom": "^19", "typescript": "^5" }
+}
