@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { transform } from 'next/dist/build/swc'
+import { minify, transform } from 'next/dist/build/swc'
 import { installBindings } from 'next/dist/build/swc/install-bindings'
 import path from 'path'
 import fsp from 'fs/promises'
@@ -117,6 +117,35 @@ describe('next/swc', () => {
        var _useState = _to_array(useState(0)), copy = _useState.slice(0);
        "
       `)
+    })
+  })
+
+  describe('minify', () => {
+    // https://github.com/vercel/next.js/issues/97516
+    it('should not emit a duplicate binding for a comma-assigned helper', async () => {
+      const { code } = await minify(
+        trim`
+        var join, run;
+        join = (e, t) => e + t,
+          run = (rows) => {
+            rows.map((s) => join(s.g, s.r));
+            return rows.map((s) => (i) => join(s.g, i.l));
+          };
+        out.run = run;
+      `,
+        { module: true, compress: true, mangle: true }
+      )
+
+      // Inlining `join` must not introduce a `let` that collides with (or
+      // shadows) the parameter of the arrow function it is inlined into.
+      let factory: (out: { run?: any }) => void
+      expect(() => {
+        factory = new Function('out', code) as typeof factory
+      }).not.toThrow()
+
+      const out: { run?: any } = {}
+      factory!(out)
+      expect(out.run([{ g: 'a', r: 'b' }])[0]({ l: 'c' })).toBe('ac')
     })
   })
 
