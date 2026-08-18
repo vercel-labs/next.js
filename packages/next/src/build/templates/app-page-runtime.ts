@@ -1852,13 +1852,13 @@ export function createAppPageEntrypoint({
 
             if (Array.isArray(value)) {
               for (const v of value) {
-                res.appendHeader(key, v)
+                appendResponseHeader(res, key, v)
               }
             } else if (typeof value === 'number') {
               value = value.toString()
-              res.appendHeader(key, value)
+              appendResponseHeader(res, key, value)
             } else {
-              res.appendHeader(key, value)
+              appendResponseHeader(res, key, value)
             }
           }
         }
@@ -2218,6 +2218,37 @@ export function createAppPageEntrypoint({
     routeModule,
     handler,
   }
+}
+
+/**
+ * Appends a header value that was stored in the cache entry to the response,
+ * unless the response already carries that exact value.
+ *
+ * When a cache entry is generated while serving a request (e.g. the initial
+ * request for a static page that redirects), the render writes some of its
+ * headers (such as `location`) to the response directly *and* records them in
+ * the cache entry's metadata. Replaying those recorded headers with the native
+ * `ServerResponse#appendHeader` would then emit the value twice, which breaks
+ * single-value headers like `location` once a proxy folds the duplicates into
+ * `location: /a, /a`. This mirrors the de-duplicating behavior of
+ * `BaseNextResponse#appendHeader`.
+ */
+function appendResponseHeader(
+  res: ServerResponse,
+  key: string,
+  value: string
+): void {
+  const existing = res.getHeader(key)
+
+  if (existing !== undefined) {
+    const existingValues = (
+      Array.isArray(existing) ? existing : [existing]
+    ).map((existingValue) => existingValue.toString())
+
+    if (existingValues.includes(value)) return
+  }
+
+  res.appendHeader(key, value)
 }
 
 // TODO: omit this from production builds, only test builds should include it
