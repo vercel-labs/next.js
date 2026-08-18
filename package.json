@@ -1,0 +1,14 @@
+{
+  "name": "next-upgrade-min-release-age-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "registry": "node age-gate-registry.mjs",
+    "repro": "./repro.sh"
+  },
+  "dependencies": {
+    "next": "16.2.9",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
