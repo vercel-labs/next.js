@@ -227,7 +227,7 @@ pub mod tests {
 
     use std::{
         collections::HashMap,
-        fs::{File, create_dir},
+        fs::{File, create_dir, create_dir_all},
         io::prelude::*,
     };
 
@@ -767,5 +767,121 @@ pub mod tests {
         })
         .await
         .unwrap();
+    }
+
+    // Regression test for https://github.com/vercel/next.js/issues/97550
+    //
+    // A single `outputFileTracingIncludes` entry makes next-api walk the whole tracing root with a
+    // `contains: true` glob. In a pnpm workspace where a package is physically nested inside
+    // another workspace package and declares that ancestor as a dependency, pnpm plants symlinks
+    // that make the directory tree self-embedding. The glob walk must skip such cycles instead of
+    // failing the build.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn read_glob_nested_workspace_symlink_cycle() {
+        let scratch = tempfile::tempdir().unwrap();
+        {
+            // A pnpm workspace layout:
+            //
+            //   app/included-asset.txt
+            //   app/node_modules/shared -> packages/umbrella/shared
+            //   packages/umbrella/                                  (package `umbrella`)
+            //   packages/umbrella/shared/                           (package `shared`)
+            //   packages/umbrella/shared/node_modules/umbrella -> packages/umbrella
+            //   packages/umbrella/leagues/                          (package `leagues`)
+            //   packages/umbrella/leagues/node_modules/shared -> packages/umbrella/shared
+            //
+            // The tree repeats forever through
+            // `shared -> umbrella -> leagues -> shared -> umbrella -> ...`.
+            let path = scratch.path();
+            let app = path.join("app");
+            let umbrella = path.join("packages/umbrella");
+            let shared = umbrella.join("shared");
+            let leagues = umbrella.join("leagues");
+            create_dir_all(app.join("node_modules")).unwrap();
+            create_dir_all(shared.join("node_modules")).unwrap();
+            create_dir_all(leagues.join("node_modules")).unwrap();
+            File::create_new(app.join("included-asset.txt"))
+                .unwrap()
+                .write_all(b"asset")
+                .unwrap();
+            File::create_new(shared.join("index.js"))
+                .unwrap()
+                .write_all(b"shared")
+                .unwrap();
+
+            // `shared` devDepends on its own physical ancestor `umbrella`.
+            symlink(&umbrella, shared.join("node_modules/umbrella")).unwrap();
+            // `leagues` depends on its sibling `shared`.
+            symlink(&shared, leagues.join("node_modules/shared")).unwrap();
+            // The app depends on `shared` too.
+            symlink(&shared, app.join("node_modules/shared")).unwrap();
+        }
+        let tt = turbo_tasks::TurboTasks::new(TurboTasksBackend::new(
+            BackendOptions::default(),
+            noop_backing_storage(),
+        ));
+        let path: RcStr = scratch.path().to_str().unwrap().into();
+        tt.run_once(async {
+            // Walking the workspace root, as `outputFileTracingRoot` does.
+            assert_read_glob_cycle_from_workspace_root_operation(path.clone())
+                .read_strongly_consistent()
+                .await?;
+
+            // Walking a directory that only reaches the cycle through symlinks, so that no
+            // symlink target is ever an ancestor of the unresolved path being walked. This is
+            // the case that recurses until the OS reports "Too many levels of symbolic links".
+            assert_read_glob_cycle_from_app_operation(path)
+                .read_strongly_consistent()
+                .await?;
+
+            anyhow::Ok(())
+        })
+        .await
+        .unwrap();
+    }
+
+    /// The glob shape that `outputFileTracingIncludes` compiles to.
+    fn tracing_includes_glob() -> Vc<Glob> {
+        Glob::new(
+            rcstr!("{included-asset.txt}"),
+            GlobOptions {
+                contains: true,
+                ..Default::default()
+            },
+        )
+    }
+
+    #[turbo_tasks::function(operation, root)]
+    async fn assert_read_glob_cycle_from_workspace_root_operation(
+        path: RcStr,
+    ) -> anyhow::Result<()> {
+        let root = disk_file_system_root_operation(path)
+            .read_strongly_consistent()
+            .await?;
+        let read_dir = root.read_glob(tracing_includes_glob()).await?;
+
+        // The walk completed and still reports the file the include pattern asked for.
+        let app = &*read_dir.inner.get("app").unwrap().await?;
+        assert_eq!(
+            app.results.get("included-asset.txt"),
+            Some(&DirectoryEntry::File(root.join("app/included-asset.txt")?))
+        );
+
+        Ok(())
+    }
+
+    #[turbo_tasks::function(operation, root)]
+    async fn assert_read_glob_cycle_from_app_operation(path: RcStr) -> anyhow::Result<()> {
+        let root = disk_file_system_root_operation(path)
+            .read_strongly_consistent()
+            .await?;
+        let read_dir = root.join("app")?.read_glob(tracing_includes_glob()).await?;
+
+        assert_eq!(
+            read_dir.results.get("included-asset.txt"),
+            Some(&DirectoryEntry::File(root.join("app/included-asset.txt")?))
+        );
+
+        Ok(())
     }
 }
