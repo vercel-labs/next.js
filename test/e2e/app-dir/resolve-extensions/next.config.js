@@ -1,4 +1,5 @@
-// .web.tsx intentionally placed before .tsx to verify resolveExtensions priority
+// .web.tsx/.web.js intentionally placed before .tsx/.js to verify
+// resolveExtensions priority
 const extensions = [
   '',
   '.png',
@@ -6,6 +7,7 @@ const extensions = [
   '.tsx',
   '.ts',
   '.jsx',
+  '.web.js',
   '.js',
   '.json',
 ]
