@@ -475,4 +475,34 @@ describe('adapter-config', () => {
     expect(preferredRegionRoute?.runtime).toBe('edge')
     expect(preferredRegionRoute?.config.preferredRegion).toEqual(['cdg1'])
   })
+
+  // Route handlers have no flight payload, so they must not get an extra
+  // `.rsc` output twin like app pages do.
+  // x-ref: https://github.com/vercel/next.js/issues/97564
+  it('should not emit duplicate .rsc outputs for route handlers', async () => {
+    const { outputs }: Parameters<NextAdapter['onBuildComplete']>[0] =
+      await next.readJSON('build-complete.json')
+
+    expect(outputs.appRoutes.length).toBeGreaterThan(0)
+
+    const rscRouteOutputs = outputs.appRoutes
+      .filter((output) => output.pathname.endsWith('.rsc'))
+      .map((output) => output.pathname)
+
+    expect(rscRouteOutputs).toEqual([])
+
+    // each route handler source page should only produce a single output
+    const sourcePageCounts = new Map<string, number>()
+    for (const output of outputs.appRoutes) {
+      sourcePageCounts.set(
+        output.sourcePage,
+        (sourcePageCounts.get(output.sourcePage) || 0) + 1
+      )
+    }
+    const duplicatedSourcePages = [...sourcePageCounts.entries()]
+      .filter(([, count]) => count > 1)
+      .map(([sourcePage]) => sourcePage)
+
+    expect(duplicatedSourcePages).toEqual([])
+  })
 })
