@@ -1,0 +1,19 @@
+{
+  "name": "next-97555-dev-memory-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "probe": "node probe.mjs",
+    "soak": "node soak.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
