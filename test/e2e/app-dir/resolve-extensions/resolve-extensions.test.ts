@@ -32,4 +32,16 @@ describe('turbo-resolve-extensions', () => {
     expect(html).toContain('hello web platform')
     expect(html).not.toContain('hello default platform')
   })
+
+  it('should respect resolveExtensions priority inside node_modules', async () => {
+    // The extension-less `./impl/impl` import inside the third-party
+    // `platform-package` must resolve to `impl.web.js`, because `.web.js`
+    // comes before `.js` in resolveExtensions. Turbopack used to apply the
+    // configured extensions only to first-party files, so imports inside
+    // node_modules fell back to the default extension order.
+    const res = await next.fetch('/')
+    const html = await res.text()
+    expect(html).toContain('web package platform')
+    expect(html).not.toContain('default package platform')
+  })
 })
