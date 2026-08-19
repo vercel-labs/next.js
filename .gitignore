@@ -1,0 +1,4 @@
+node_modules
+.next
+pw-report.json
+test-results
