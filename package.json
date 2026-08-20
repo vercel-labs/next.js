@@ -1,0 +1,19 @@
+{
+  "name": "repro-turbopack-loader-options-type",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
