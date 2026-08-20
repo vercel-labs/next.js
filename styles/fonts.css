@@ -1,0 +1,6 @@
+/* Remote @import living in a *nested* css file (e.g. shipped by a design system) */
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap');
+
+.remote-font {
+  font-family: 'Rubik Dirt', system-ui;
+}
