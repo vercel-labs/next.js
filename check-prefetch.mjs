@@ -1,0 +1,17 @@
+import { chromium } from 'playwright'
+const b = await chromium.launch()
+const p = await (await b.newContext()).newPage()
+const log = []
+p.on('request', r => log.push('REQ ' + r.url() + ' pf=' + r.headers()['x-middleware-prefetch']))
+p.on('response', async r => { if (r.url().includes('/_next/data/')) log.push('RES ' + r.url() + ' skip=' + r.headers()['x-middleware-skip'] + ' body=' + (await r.text())) })
+await p.goto('http://localhost:3000/')
+await p.waitForTimeout(1500)
+log.push('--- hover ---')
+await p.hover('a')
+await p.waitForTimeout(1500)
+log.push('--- click ---')
+await p.click('a')
+await p.waitForTimeout(1500)
+await p.screenshot({ path: '/workspace/.next-maintainer/reproduction-artifacts/playwright/prefetch.png' })
+console.log(log.join('\n'))
+await b.close()

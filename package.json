@@ -1,0 +1,17 @@
+{
+  "name": "repro-52515",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start -p 3000",
+    "check": "node check-prefetch.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
