@@ -1,0 +1,20 @@
+{
+  "name": "repro-70911",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "build:ppr": "PPR=1 next build",
+    "start:ppr": "PPR=1 next start",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "next": "15.6.0-canary.61",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
