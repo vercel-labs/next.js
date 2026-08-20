@@ -1,0 +1,13 @@
+{
+  "name": "standalone-node-env-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start:standalone": "node .next/standalone/server.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
