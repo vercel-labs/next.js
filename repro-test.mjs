@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+const OUT='.';
+const b = await chromium.launch();
+const p = await b.newPage();
+p.on('console', m => console.log('[browser]', m.text()));
+const responses=[];
+p.on('response', r => responses.push([r.request().method(), r.status(), r.url()]));
+await p.goto('http://localhost:3000/');
+await p.click('#run');
+await p.waitForTimeout(4000);
+console.log('URL after action:', p.url());
+console.log('result text:', await p.textContent('#result'));
+console.log('has #login?', await p.locator('#login').count());
+console.log('has #home?', await p.locator('#home').count());
+console.log('--- network ---');
+for (const r of responses) console.log(r.join(' '));
+await p.screenshot({path: OUT+'/after-action.png', fullPage:true});
+await b.close();
