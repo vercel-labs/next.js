@@ -1,0 +1,6 @@
+{
+  "name": "legacy-types-check",
+  "private": true,
+  "scripts": { "check": "tsc -p tsconfig.json" },
+  "devDependencies": { "typescript": "5.6.3", "@types/react": "18.3.31" }
+}

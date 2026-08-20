@@ -1,0 +1,20 @@
+{
+  "name": "repro-57652",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "playwright": "^1.62.1",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,1 @@
+{"compilerOptions":{"strict":true,"jsx":"react-jsx","noEmit":true,"moduleResolution":"bundler","module":"esnext","target":"es2020","skipLibCheck":true},"include":["check.tsx"]}
