@@ -1,0 +1,11 @@
+{
+  "name": "repro-72829-docs-router-switcher",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "repro": "node router-switcher.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
