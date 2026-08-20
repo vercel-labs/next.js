@@ -1,0 +1,4 @@
+.s { font-size: 40px; display: inline-block; font-family: var(--font-bricolage); }
+.v80 { font-variation-settings: "wdth" 80.7; }
+.v200 { font-variation-settings: "wdth" 200; }
+.st75 { font-stretch: 75%; }

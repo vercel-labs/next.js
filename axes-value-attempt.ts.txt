@@ -1,0 +1,3 @@
+import { Bricolage_Grotesque } from 'next/font/google'
+export const bad = Bricolage_Grotesque({ subsets: ['latin'], axes: { wdth: 80.7 } })
+export const bad2 = Bricolage_Grotesque({ subsets: ['latin'], axes: ['wdth', 'wght'] })
