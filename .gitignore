@@ -1,0 +1,12 @@
+node_modules
+.next
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.yarn/cache
+.yarn/unplugged
+.yarn/install-state.gz
+.pnp.*

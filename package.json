@@ -1,0 +1,13 @@
+{
+  "name": "nextjs-yarn-pnp-vscode-debug-node-options",
+  "private": true,
+  "scripts": {
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "packageManager": "yarn@4.9.2"
+}
