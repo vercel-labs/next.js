@@ -1,0 +1,22 @@
+{
+  "name": "repro-71889",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "setup": "node setup-stale-types.mjs",
+    "dev": "next dev --turbo",
+    "dev:webpack": "next dev",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "15.0.1",
+    "react": "19.0.0-rc-cae764ce-20241025",
+    "react-dom": "19.0.0-rc-cae764ce-20241025"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.0",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "typescript": "5.6.3"
+  }
+}
