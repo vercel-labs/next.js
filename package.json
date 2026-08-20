@@ -1,0 +1,19 @@
+{
+  "name": "issue-65795-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "verify": "bash scripts/verify.sh",
+    "check-chunks": "node scripts/check-chunk-comments.js"
+  },
+  "dependencies": {
+    "next": "14.3.0-canary.63",
+    "react": "19.0.0-beta-4508873393-20240430",
+    "react-dom": "19.0.0-beta-4508873393-20240430"
+  },
+  "devDependencies": {
+    "@types/node": "20.4.5",
+    "@types/react": "18.2.18",
+    "typescript": "5.1.3"
+  }
+}
