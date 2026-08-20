@@ -1,0 +1,6 @@
+{
+  "name": "nextjs-40178-buffer-polyfill",
+  "private": true,
+  "scripts": { "build": "next build", "dev": "next dev", "start": "next start" },
+  "dependencies": { "next": "canary", "react": "^19", "react-dom": "^19" }
+}
