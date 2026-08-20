@@ -1,0 +1,1 @@
+export default function Page(){return <pre>{JSON.stringify({RAW_SYMBOL:process.env.RAW_SYMBOL,WITH_SYMBOL:process.env.WITH_SYMBOL,DOUBLE_SYMBOL:process.env.DOUBLE_SYMBOL,MONGO_URL:process.env.MONGO_URL},null,2)}</pre>}
