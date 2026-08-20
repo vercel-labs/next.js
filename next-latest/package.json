@@ -1,0 +1,21 @@
+{
+  "name": "repro-68868-latest",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "^9",
+    "eslint-config-next": "latest",
+    "typescript": "^5"
+  }
+}
