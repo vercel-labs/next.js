@@ -1,0 +1,22 @@
+{
+  "name": "next-62008-vscode-breakpoints-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "repro": "bash ./run.sh"
+  },
+  "dependencies": {
+    "next": "14.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "source-map": "^0.7.4",
+    "typescript": "^5.3.3",
+    "ws": "^8.18.0",
+    "@types/react-dom": "^18"
+  }
+}
