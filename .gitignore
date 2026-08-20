@@ -1,0 +1,5 @@
+node_modules
+certificates
+unprivileged-certs
+logs
+.next
