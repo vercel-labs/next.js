@@ -1,0 +1,14 @@
+{
+  "name": "next-standalone-hostname-swarm-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start:standalone": "node .next/standalone/server.js",
+    "repro": "bash repro.sh"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
