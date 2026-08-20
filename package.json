@@ -1,0 +1,17 @@
+{
+  "name": "next-69999-prefetch-on-network-recovery",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.58.0"
+  }
+}
