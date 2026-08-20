@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'MyPacifico';
+  src: url('./fonts/pacifico.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+h1 { font-family: 'MyPacifico', monospace; font-size: 64px; }
