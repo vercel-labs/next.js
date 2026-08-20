@@ -1,0 +1,10 @@
+{
+  "name": "repro-74201",
+  "private": true,
+  "scripts": { "build": "next build" },
+  "dependencies": {
+    "next": "15.1.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
