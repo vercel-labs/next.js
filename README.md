@@ -19,7 +19,7 @@ node poll.mjs http://localhost:3000/cached/5s 30   # in another
 `poll.mjs` prints `staleness` = (now - timestamp rendered in the HTML).
 
 Or run the whole thing for an arbitrary version: `./test-version.sh <next-version> <port>`
-(then `node summarize.mjs /tmp/poll-<version>.txt`, which ignores the first 8s of warm-up).
+(then `node summarize.mjs logs/poll-<version>.txt`, which ignores the first 8s of warm-up).
 
 ## Observed with next@15.5.4 (buggy)
 
