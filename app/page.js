@@ -1,1 +1,3 @@
-export default function Page() { return <p>hello</p> }
+export default function Page() {
+  return <h1>setAssetPrefix repro</h1>;
+}

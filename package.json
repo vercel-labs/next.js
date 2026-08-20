@@ -1,6 +1,13 @@
 {
-  "name": "watcher-tdz-repro",
+  "name": "next-71557-setassetprefix",
   "private": true,
-  "scripts": { "dev": "next dev" },
-  "dependencies": { "next": "canary", "react": "latest", "react-dom": "latest" }
+  "scripts": {
+    "build": "next build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
 }
