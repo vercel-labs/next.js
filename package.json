@@ -1,0 +1,7 @@
+{
+  "name": "next-hidden-dir-alias-repro",
+  "private": true,
+  "scripts": { "build": "next build", "dev": "next dev", "repro": "node verify.mjs" },
+  "dependencies": { "next": "latest", "react": "^19", "react-dom": "^19" },
+  "devDependencies": { "@types/node": "^22", "@types/react": "^19", "typescript": "^5.6.3" }
+}
