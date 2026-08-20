@@ -1,0 +1,17 @@
+{
+  "name": "docs-encrypt-vs-sign-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "jose": "^5.9.6",
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "server-only": "^0.0.1"
+  }
+}
