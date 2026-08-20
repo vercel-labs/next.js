@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "build:webpack": "next build --webpack",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
