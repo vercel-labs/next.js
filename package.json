@@ -1,0 +1,12 @@
+{
+  "name": "repro",
+  "private": true,
+  "scripts": {
+    "dev": "node -r ./vm-loader.js server.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19",
+    "react-dom": "^19"
+  }
+}
