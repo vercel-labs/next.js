@@ -1,6 +1,4 @@
-import Link from 'next/link'
-export default async function B({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
-  const { page = '1' } = await searchParams
-  await new Promise(r => setTimeout(r, 3000))
-  return <main><h1 id="content">B page {page}</h1><Link id="to-a" href="/a">to A</Link></main>
+import Nav from '../nav';
+export default function B() {
+  return (<main><h1 id="title">page b</h1><Nav />{Array.from({length:200}).map((_,i)=><p key={i}>b line {i}</p>)}<Nav /></main>);
 }

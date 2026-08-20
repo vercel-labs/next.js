@@ -1,31 +1,18 @@
-# Reproduction for vercel/next.js#49297
+# Reproduction attempt for vercel/next.js#68053
 
-`loading.tsx` is not shown when navigating to the **same route** with different
-search params; the URL only updates once the full server response arrives.
+App Router: does `router.push(href)` scroll to top like `<Link>`?
 
 ## Run
-
-```bash
+```
 npm install
-npx playwright install chromium
-npm run build && npm start   # or: npm run dev
+npm run build && npm start   # http://localhost:3000
+node variants.mjs            # BASE=http://localhost:3000 (playwright)
 ```
+`variants.mjs` scrolls to y=3000 on the start page, navigates, then prints the resulting `window.scrollY`.
 
-Open http://localhost:3000/a?page=1 (3s server delay per render).
-
-- Click **A?page=2** (same route, new search params) -> no `app/a/loading.tsx`,
-  URL stays `?page=1` for ~3s, then content swaps.
-- Click **to B** (different route) -> `app/b/loading.tsx` appears immediately.
-
-Automated check (server must be running on :3000):
-
-```bash
-npm run test:nav
-```
-
-Observed on next@16.3.1-canary.25:
-
-```
-{ "loadingSeenMs": null, "urlChangedMs": 3066, "contentChangedMs": 3068 }
-different-route loading shown at ms: 73
-```
+## Result
+Both `next@14.2.5` (the reported version, Node 20) and `next@16.3.1` scroll to top (`scrollY=0`)
+for `router.push` and `<Link>` in every variant: static prefetched route, dynamic route with
+`loading.tsx`, searchParams-only change, and `startTransition(() => router.push(...))`.
+`experimental.scrollRestoration` (set in next.config.js) is a Pages-Router-only flag and has no
+effect on the App Router.
