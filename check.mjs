@@ -1,0 +1,15 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await b.newPage();
+const reqs = [];
+p.on('request', r => { if (r.url().includes('/_next/image')) reqs.push(r.url()); });
+p.on('response', async r => { if (r.url().includes('/_next/image')) console.log('RESPONSE', r.status(), r.url()); });
+await p.goto('http://localhost:3001', { waitUntil: 'networkidle' });
+console.log('IMAGE REQUESTS:');
+reqs.forEach(u => console.log(' ', u));
+const outer = await p.evaluate(() => document.querySelector('link[rel=preload][as=image]')?.outerHTML);
+console.log('outerHTML:', outer);
+const raw = await (await fetch('http://localhost:3001')).text();
+console.log('RAW SOURCE MATCH:', raw.match(/<link rel="preload" as="image"[^>]*>/)?.[0]);
+await p.screenshot({ path: '/workspace/.next-maintainer/reproduction-artifacts/playwright/page.png', fullPage: true });
+await b.close();
