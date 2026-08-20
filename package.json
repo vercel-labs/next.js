@@ -1,0 +1,13 @@
+{
+  "name": "repro-56253",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
