@@ -1,0 +1,15 @@
+{
+  "name": "next-39516-repro",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/install-vendor-lib.js",
+    "build": "next build --webpack",
+    "build:turbopack": "next build",
+    "dev": "next dev --webpack"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
