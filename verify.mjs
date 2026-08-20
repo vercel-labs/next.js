@@ -1,0 +1,15 @@
+import { chromium } from 'playwright';
+const base = process.argv[2], tag = process.argv[3];
+const b = await chromium.launch(); const p = await b.newPage();
+const out = {tag}; const errs=[]; p.on('console',m=>{if(m.type()==='error')errs.push(m.text())});
+await p.goto(base+'/dashboard/1/1',{waitUntil:'networkidle'});
+await p.evaluate(()=>window.__m=1);
+await p.click('a.card >> nth=0'); await p.waitForTimeout(3000);
+out.afterClick={url:p.url(),soft:await p.evaluate(()=>window.__m===1),dialogs:await p.locator('dialog').count()};
+await p.click('.close-button'); await p.waitForTimeout(3000);
+out.afterClose={url:p.url(),soft:await p.evaluate(()=>window.__m===1),dialogs:await p.locator('dialog').count(),body:await p.locator('body').innerText()};
+await p.goto(base+'/dashboard/1/audit?photoId=3',{waitUntil:'networkidle'});
+out.directAudit={dialogs:await p.locator('dialog').count(),body:await p.locator('body').innerText()};
+out.errs=errs; console.log(JSON.stringify(out,null,2));
+await p.screenshot({path:`/workspace/.next-maintainer/reproduction-artifacts/playwright/${tag}-final.png`,fullPage:true});
+await b.close();
