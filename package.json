@@ -1,0 +1,18 @@
+{
+  "name": "repro-73988-fragment-metadata-scroll",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "test:scroll": "node scroll-test.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
