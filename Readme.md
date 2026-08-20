@@ -1,173 +1,37 @@
-# next.js
+# Minimal repro: inconsistent CSS module order between `next dev` and `next build` (App Router)
 
-`Next.js` is a minimalistic framework for server-rendered React applications.
+Ref: https://github.com/vercel/next.js/issues/64921
 
-## How to use
+Two CSS modules define the same class (`.box`) with conflicting `background-color`.
+Each page imports them in its own, page-local order, so per-page order decides the winner:
 
-The file-system is the main API. Every `.js` file becomes a route that gets automatically processed and rendered.
+- `app/a/page.tsx`: `red.module.css` then `green.module.css` -> expected **green**
+- `app/b/page.tsx`: `green.module.css` then `red.module.css` -> expected **red**
 
-Populate `pages/index.js` inside your project:
+## Steps
 
-```
-import React from 'react'
-export default () => (
-  <div>Welcome to next.js!</div>
-)
-```
-
-and then just run `next` and go to `http://localhost:3000`
-
-So far, we get:
-
-- Automatic transpilation and bundling (with webpack and babel)
-- Hot code reloading
-- Server rendering and indexing
-
-### Bundling (code splitting)
-
-Every `import` you declare gets bundled and served with each page
-
-```
-import React from 'react'
-import cowsay from 'cowsay'
-export default () => (
-  <pre>{ cowsay('hi there!') }</pre>
-)
+```sh
+npm install
+npm run dev          # http://localhost:3000/a  -> green, /b -> red   (correct)
+npm run build        # Turbopack build (default in Next 16)
+npm run start        # http://localhost:3001/a  -> RED (wrong), /b -> red
 ```
 
-That means pages never load unneccessary code!
+Automated check (needs `npx playwright install chromium`), with dev on :3000 and start on :3001:
 
-### CSS
-
-We use [Aphrodite](https://github.com/Khan/aphrodite) to provide a great built-in solution for CSS modularization
-
-```
-import React from 'react'
-import { css, StyleSheet } from 'next/css'
-
-export default () => {
-  <div className={ css(styles.main) }>
-    Hello world
-  </div>
-})
-
-const styles = StyleSheet.create({
-  main: {
-    background: 'red',
-    '@media (max-width: 600px)': {
-      background: 'blue'
-    }
-  }
-})
+```sh
+node check.mjs
 ```
 
-### `<head>` side effects
-
-We expose a built-in component for appending elements to the `<head>` of the page.
+Observed (next@16.3.1):
 
 ```
-import React from 'react'
-import Head from 'next/head'
-export default () => (
-  <Head>
-    <title>My page title</title>
-    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-  </Head>
-  <p>Hello world!</p>
-)
+dev  /a #box background = rgb(0, 128, 0)   <- expected
+dev  /b #box background = rgb(255, 0, 0)
+prod /a #box background = rgb(255, 0, 0)   <- WRONG, differs from dev
+prod /b #box background = rgb(255, 0, 0)
 ```
 
-### Stateful components
-
-When state, lifecycle hooks or initial data population you can export a `React.Component`:
-
-```
-import React from 'react'
-export default class extends React.Component {
-  async getInitialProps ({ isServer, req }) {
-    return isServer
-      ? { userAgent: req.headers.userAgent }
-      : { userAgent: navigator.userAgent }
-  }
-
-  render () {
-    return <div>
-      Hello World {this.props.userAgent}
-    </div>
-  }
-}
-```
-
-### Routing
-
-Client-side transitions between routes are enabled via a `<Link>` component
-
-#### pages/index.js
-
-```
-import React from 'react'
-import Link from 'next/link'
-export default () => (
-  <div>Click <Link href="/about"><a>here</a></Link> to read more</div>
-)
-```
-
-#### pages/about.js
-
-```
-import React from 'react'
-export default () => (
-  <p>Welcome to About!</p>
-)
-```
-
-Client-side routing behaves exactly like the native UA:
-
-1. The component is fetched
-2. If it defines `getInitialProps`, data is fetched. If an error occurs, `_error.js` is rendered
-3. After 1 and 2 complete, `pushState` is performed and the new component rendered
-
-Each top-level component receives a `url` property with the following API:
-
-- `path` - `String` of the current path excluding the query string
-- `query` - `Object` with the parsed query string. Defaults to `{}`
-- `push(url)` - performs a `pushState` call associated with the current component
-- `replace(url)` - performs a `replaceState` call associated with the current component
-- `pushTo(url)` - performs a `pushState` call that renders the new `url`. This is equivalent to following a `<Link>`
-- `replaceTo(url)` - performs a `replaceState` call that renders the new `url`
-
-### Error handling
-
-404 or 500 errors are handled both client and server side by a default component `error.js`. If you wish to override it, define a `_error.js`:
-
-```
-import React from 'react'
-export default ({ statusCode }) => (
-  <p>An error { statusCode } occurred</p>
-)
-```
-
-### Production deployment
-
-To deploy, run:
-
-```
-next build
-next start
-```
-
-For example, to deploy with `now` a `package.json` like follows is recommended:
-
-```
-{
-  "name": "my-app",
-  "dependencies": {
-    "next": "latest"
-  },
-  "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
-  }
-}
-```
+The Turbopack production build merges both modules into one stylesheet chunk
+(`green` then `red`) which is reused by both routes, so `/a` gets the wrong order.
+`next build --webpack` emits two chunks with per-page order and matches dev.
