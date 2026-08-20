@@ -1,0 +1,24 @@
+{
+  "name": "nextjs-68740-repro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "@opentelemetry/instrumentation-undici": "^0.4.0",
+    "@splunk/otel": "^2.16.1",
+    "next": "canary",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}
