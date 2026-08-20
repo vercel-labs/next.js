@@ -1,0 +1,14 @@
+{
+  "name": "issue-67763-gssp-back-forward",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "test:back-forward": "node scripts/back-forward.mjs 3000 A object",
+    "test:shallow-push": "node scripts/shallow-push-back-forward.mjs",
+    "test:rapid": "node scripts/rapid-back-forward.mjs 3000 200 6"
+  },
+  "dependencies": { "next": "16.3.1", "react": "^19", "react-dom": "^19" },
+  "devDependencies": { "playwright": "^1.55.0" }
+}
