@@ -1,0 +1,17 @@
+{
+  "name": "repro-73374",
+  "private": true,
+  "scripts": {
+    "build": "next build --webpack",
+    "start": "next start -p 3000",
+    "custom-server": "node server/index.js"
+  },
+  "dependencies": {
+    "async-hook-jl": "1.7.6",
+    "express": "4.21.2",
+    "express-http-context": "1.2.4",
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
