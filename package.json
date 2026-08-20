@@ -1,0 +1,10 @@
+{
+  "name": "next-env-esm-repro",
+  "private": true,
+  "scripts": {
+    "repro": "node script.js && node script.mjs"
+  },
+  "dependencies": {
+    "@next/env": "latest"
+  }
+}
