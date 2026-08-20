@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <body>
+    <details open id="d">
+      <summary>summary</summary>
+      content
+    </details>
+    <script>
+      // Listener attached in a later task, like React hydration does.
+      setTimeout(() => {
+        document.getElementById('d').addEventListener('toggle', () => console.log('TOGGLE_FIRED'))
+      }, 0)
+    </script>
+  </body>
+</html>
