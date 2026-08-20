@@ -1,0 +1,22 @@
+{
+  "name": "repro-49427",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test:scroll": "node test.mjs",
+    "test:hash": "node test2.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "playwright": "^1.62.1",
+    "typescript": "5.6.3"
+  }
+}
