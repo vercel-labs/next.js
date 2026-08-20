@@ -1,31 +1,16 @@
-# Reproduction for vercel/next.js#49297
+# Repro: partial Suspense key change blocks navigation (vercel/next.js#67484)
 
-`loading.tsx` is not shown when navigating to the **same route** with different
-search params; the URL only updates once the full server response arrives.
+Two server components each wrapped in `<Suspense key={searchParam}>`; each awaits a 3s API route.
 
-## Run
-
-```bash
+```
 npm install
-npx playwright install chromium
-npm run build && npm start   # or: npm run dev
+npm run dev
+# open http://localhost:3000/?key1=1&key2=2
 ```
 
-Open http://localhost:3000/a?page=1 (3s server delay per render).
+Click "Refresh via router (both)" -> URL updates immediately, both fallbacks show.
+Click "Refresh via router key 1" (only one search param changes) -> the URL does not
+change and the UI is blocked for the full 3s fetch; no fallback is shown while waiting.
 
-- Click **A?page=2** (same route, new search params) -> no `app/a/loading.tsx`,
-  URL stays `?page=1` for ~3s, then content swaps.
-- Click **to B** (different route) -> `app/b/loading.tsx` appears immediately.
-
-Automated check (server must be running on :3000):
-
-```bash
-npm run test:nav
-```
-
-Observed on next@16.3.1-canary.25:
-
-```
-{ "loadingSeenMs": null, "urlChangedMs": 3066, "contentChangedMs": 3068 }
-different-route loading shown at ms: 73
-```
+`node measure.mjs` (needs `npm i playwright`) prints, for each button, how long after the
+click the URL changed and the `loading...` fallback appeared.
