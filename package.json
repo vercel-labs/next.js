@@ -1,0 +1,16 @@
+{
+  "name": "sitemap-cache-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "^7.0.2"
+  }
+}
