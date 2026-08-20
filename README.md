@@ -1,12 +1,11 @@
-# Verification repro for vercel/next.js#52165
+# Repro: next.js#53112 — "Optional route parameters are not yet supported"
 
-Globals in the app directory across HMR / repeated requests (dev mode).
+App Router optional segment directory `app/[[lang]]/page.js`.
 
-    npm install
-    npm run dev        # Turbopack; add --webpack for webpack
-    curl localhost:3000/exact   # then edit app/exact/page.js and curl again
+```
+npm install
+npx next dev   # crashes: Error: Optional route parameters are not yet supported ("[[lang]]").
+npx next build # Error: Optional route parameters are not yet supported ("[[lang]]") in route "/[[lang]]".
+```
 
-Result on next@16.3.1-canary.25 (Node 24): `global._foo` is preserved across
-HMR edits and requests in app pages, app route handlers (including dynamic
-segments) and pages/api — all in the same process. Only `runtime = "edge"`
-routes lose globals after an edit, because the edge sandbox is recreated.
+Reproduced on next@16.3.1-canary.25 (Node 24). The dev server process exits, so no route can be served.
