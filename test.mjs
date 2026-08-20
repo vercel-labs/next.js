@@ -1,0 +1,17 @@
+import { chromium } from 'playwright';
+const out = '/workspace/.next-maintainer/reproduction-artifacts/playwright';
+const b = await chromium.launch();
+const p = await b.newPage();
+const reqs = [];
+p.on('request', r => { if (r.url().includes('_next/data')) reqs.push(r.url()); });
+await p.goto('http://localhost:3000/product/1234/?Page=2');
+const first = await p.textContent('#query');
+console.log('INITIAL', await p.textContent('#series'), first);
+await p.screenshot({ path: out + '/1-initial.png' });
+await p.click('#l5678');
+await p.waitForTimeout(1500);
+console.log('AFTER CLICK url:', p.url());
+console.log('AFTER CLICK', await p.textContent('#series'), await p.textContent('#query'));
+await p.screenshot({ path: out + '/2-after-click.png' });
+console.log('data requests:', reqs);
+await b.close();
