@@ -1,0 +1,23 @@
+{
+  "name": "next-68882-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "verify": "node verify-storyblok.mjs run && node verify-singleton.mjs run"
+  },
+  "dependencies": {
+    "@storyblok/react": "^3.0.10",
+    "next": "14.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.6.2",
+    "@types/react": "18.2.22",
+    "@types/react-dom": "18.2.7",
+    "typescript": "5.2.2",
+    "playwright": "^1.47.0"
+  }
+}

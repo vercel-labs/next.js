@@ -1,0 +1,14 @@
+import { chromium } from 'playwright';
+const label = process.argv[2] || 'run';
+const OUT = './screenshots';
+const b = await chromium.launch(); const p = await b.newPage();
+let errs=[]; p.on('pageerror', e=>errs.push(e.message));
+await p.goto('http://localhost:3000/', { waitUntil:'networkidle' });
+await p.click('text=Go to singleton (next link)');
+await p.waitForTimeout(5000);
+console.log('[singleton after Link click]', (await p.textContent('h1').catch(()=>'<no h1>'))+' | '+((await p.textContent('body')).match(/BROKEN[^<]*|OK/)||['-'])[0], 'errs=', errs);
+await p.screenshot({ path: `${OUT}/${label}-singleton-after-link.png`, fullPage:true });
+await p.reload({waitUntil:'networkidle'}); await p.waitForTimeout(1500);
+console.log('[singleton after reload]', (await p.textContent('h1').catch(()=>'<no h1>'))+' | '+((await p.textContent('body')).match(/BROKEN[^<]*|OK/)||['-'])[0]);
+await p.screenshot({ path: `${OUT}/${label}-singleton-after-reload.png`, fullPage:true });
+await b.close();
