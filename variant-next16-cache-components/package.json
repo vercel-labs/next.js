@@ -1,0 +1,10 @@
+{
+  "name": "repro-68826-deploy",
+  "private": true,
+  "scripts": { "build": "next build", "start": "next start", "dev": "next dev" },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
