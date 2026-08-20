@@ -1,0 +1,6 @@
+{
+  "name": "next-req-url-host-repro",
+  "private": true,
+  "scripts": { "build": "next build", "start": "next start -p 3000" },
+  "dependencies": { "next": "latest", "react": "latest", "react-dom": "latest" }
+}
