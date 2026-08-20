@@ -1,0 +1,19 @@
+{
+  "name": "nextjs-64879-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "1.9.0",
+    "@opentelemetry/instrumentation-http": "0.57.2",
+    "@opentelemetry/sdk-node": "0.57.2",
+    "@opentelemetry/sdk-trace-node": "1.30.1",
+    "next": "15.5.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  }
+}
