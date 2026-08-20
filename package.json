@@ -1,0 +1,19 @@
+{
+  "name": "nextjs-63469-polyfill-nomodule-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:webpack": "next build --webpack",
+    "start": "next start",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}
