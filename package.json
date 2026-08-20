@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "dev:turbopack": "next dev"
+  },
+  "dependencies": {
+    "next": "canary",
+    "next-translate": "2.5.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "next-translate-plugin": "2.5.3",
+    "playwright": "1.62.1"
+  }
+}
