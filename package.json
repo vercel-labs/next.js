@@ -1,0 +1,14 @@
+{
+  "name": "next-50166-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "4.19.2",
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
