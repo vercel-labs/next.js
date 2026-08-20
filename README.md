@@ -28,3 +28,9 @@ Direct (non-client) navigation to `/noop` correctly returns 404.
 
 `GET /_next/data/<buildId>/noop.json` → **404**, and clicking the link renders
 `404: This page could not be found`.
+
+## Versions checked (deployed to Vercel)
+
+- `next@15.5.23` + middleware → **BUG**: data request 200 `{}`, no 404 page
+- `next@15.5.23` without middleware → correct 404
+- `next@16.3.1` + middleware → correct 404 (appears fixed on 16.x)
