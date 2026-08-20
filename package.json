@@ -1,14 +1,18 @@
 {
-  "name": "unstable-cache-date-repro",
+  "name": "next-58805-repro",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "next build"
   },
   "dependencies": {
     "next": "canary",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
   }
 }

@@ -1,14 +1,18 @@
-# unstable_cache does not deserialize Dates (vercel/next.js#51613)
+# Repro: vercel/next.js#58805 — fully specified `.js` imports fail to resolve in TS projects
 
-Minimal reproduction: `unstable_cache` returns `Date` values as ISO strings on cache hits.
+tsconfig has `"module": "esnext"`, `"moduleResolution": "bundler"`.
+`pages/index.tsx` imports `../components/Foo.js` (file on disk is `components/Foo.tsx`).
 
 ```
 npm install
-npm run dev
-# request http://localhost:3000/ twice
+npx next build            # Turbopack (default): Module not found: Can't resolve '../components/Foo.js'
+npx next build --webpack  # webpack: Failed to compile, same error
 ```
 
-First request (cache miss) renders fine. Every subsequent request (cache hit) fails with
-`TypeError: post.createdAt.toISOString is not a function` because `createdAt` is a `string`.
+Documented workaround (`experimental.extensionAlias`) fixes only the webpack build; the
+default Turbopack build still fails with it configured:
 
-`/use-cache` (same data via the `"use cache"` directive) keeps the value a real `Date`.
+```js
+// next.config.js
+module.exports = { experimental: { extensionAlias: { '.js': ['.ts', '.tsx', '.js', '.jsx'] } } }
+```
