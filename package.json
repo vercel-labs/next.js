@@ -1,0 +1,16 @@
+{
+  "name": "next-69570-repro",
+  "private": true,
+  "scripts": {
+    "backend": "node backend.mjs",
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "probe": "node probe.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  }
+}
