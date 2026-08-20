@@ -1,2 +1,6 @@
 /** @type {import('next').NextConfig} */
-export default {};
+const nextConfig = {
+  output: "export",
+  assetPrefix: "https://mycdn.com/!mark",
+};
+export default nextConfig;

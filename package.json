@@ -1,7 +1,13 @@
 {
-  "name": "repro-64346",
+  "name": "repro-71426-assetprefix-exclamation",
   "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
-  "dependencies": { "next": "canary", "react": "19.1.0", "react-dom": "19.1.0" },
-  "devDependencies": { "typescript": "^5", "@types/node": "^20", "@types/react": "^19" }
+  "scripts": {
+    "build": "next build --webpack",
+    "build:turbopack": "next build"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
 }

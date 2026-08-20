@@ -1,26 +1,28 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Repro: `!` in `assetPrefix` breaks webpack build (next.js#71426)
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+`assetPrefix` is interpolated unescaped into the `next-app-loader` request in
+`next/dist/build/entries.js`, and webpack treats `!` as a loader separator, so the
+request is split and the tail is resolved as a module.
 
-## Run
+## Steps
 
 ```bash
-npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+npm install --legacy-peer-deps
+npm run build          # next build --webpack -> fails
+npm run build:turbopack # next build (turbopack) -> succeeds
 ```
 
-## Observed
+## Expected
+Build succeeds; `!` in `assetPrefix` is escaped in the internal loader request.
+
+## Actual (webpack, Next.js 16.3.1 and 15.0.0-canary.196)
 
 ```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
+Failed to compile.
+
+Module not found: Error: Can't resolve 'mark&nextConfigOutput=export&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=' in '<project>'
 ```
 
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+Notes:
+- App Router only; `output: "export"` is not required (fails with plain `assetPrefix` too).
+- Turbopack builds (default in Next 16) are unaffected.
