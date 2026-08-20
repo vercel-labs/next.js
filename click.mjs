@@ -1,0 +1,10 @@
+import { chromium } from 'playwright'
+const b = await chromium.launch()
+const p = await b.newPage()
+await p.goto('http://127.0.0.1:3000/')
+await p.click('#normal')
+await p.waitForTimeout(1500)
+await p.click('#request-object')
+await p.waitForTimeout(1500)
+await p.screenshot({ path: process.env.SHOT || 'shot.png' })
+await b.close()
