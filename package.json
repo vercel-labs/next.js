@@ -1,0 +1,20 @@
+{
+  "name": "next-jest-debugger-statement-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "test:inspect:watch": "node --inspect-brk=9229 ./node_modules/.bin/jest ./app --watch --no-cache --runInBand",
+    "test:inspect": "node --inspect-brk=9229 ./node_modules/.bin/jest ./app --no-cache --runInBand",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "jest": "29.7.0",
+    "jest-environment-jsdom": "29.7.0",
+    "ws": "^8.18.0"
+  }
+}
