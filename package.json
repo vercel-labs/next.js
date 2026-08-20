@@ -1,0 +1,24 @@
+{
+  "name": "next-swc-plugin-transpilepackages-repro",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "postinstall": "node scripts/setup-node-modules.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "next": "^16.3.1-canary.25",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@swc/plugin-transform-imports": "^12.19.0"
+  },
+  "private": true
+}
