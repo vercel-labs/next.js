@@ -1,0 +1,8 @@
+node_modules
+.next
+logs
+up
+work
+mnt
+next-env.d.ts
+tsconfig.json
