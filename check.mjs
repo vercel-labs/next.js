@@ -1,0 +1,17 @@
+import { chromium } from 'playwright'
+const b = await chromium.launch()
+const p = await b.newPage()
+const errs = []
+p.on('pageerror', e => errs.push('pageerror: ' + e.message))
+p.on('console', m => { if (m.type()==='error') errs.push('console: ' + m.text()) })
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+const direct = await p.evaluate(() => { try { window.history.pushState('', null, '/help'); return 'ok ' + location.pathname } catch (e) { return 'ERROR ' + e.name + ': ' + e.message } })
+console.log('direct pushState:', direct)
+const directR = await p.evaluate(() => { try { window.history.replaceState('', null, '/help2'); return 'ok ' + location.pathname } catch (e) { return 'ERROR ' + e.name + ': ' + e.message } })
+console.log('direct replaceState:', directR)
+console.log('pathname after:', await p.evaluate(() => location.pathname))
+await p.click('#push')
+console.log('button result:', await p.textContent('#result'))
+await p.screenshot({ path: '/workspace/.next-maintainer/reproduction-artifacts/playwright/repro.png', fullPage: true })
+console.log('errors:', errs.slice(0,5))
+await b.close()
