@@ -1,0 +1,19 @@
+{
+  "name": "next-58924-gtm-history-change",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "check": "node scripts/check.mjs",
+    "matrix": "bash scripts/matrix.sh 14.0.2 14.0.3 14.0.4 canary"
+  },
+  "dependencies": {
+    "next": "^16.3.1-canary.25",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
