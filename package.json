@@ -1,0 +1,11 @@
+{
+  "name": "next-69236-jest-watch-repro",
+  "private": true,
+  "scripts": {
+    "test": "jest --watch",
+    "test:ci": "jest --ci"
+  },
+  "devDependencies": {
+    "jest": "29.7.0"
+  }
+}
