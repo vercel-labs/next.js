@@ -1,0 +1,7 @@
+{
+  "name": "@repro/ui",
+  "version": "0.0.0",
+  "main": "./dist/fonts.js",
+  "exports": { "./*": "./dist/*" },
+  "dependencies": { "next": "latest" }
+}

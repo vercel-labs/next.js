@@ -1,0 +1,6 @@
+{
+  "name": "next-font-package-repro",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": ["app", "packages/*"]
+}
