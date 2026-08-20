@@ -1,0 +1,18 @@
+{
+  "name": "repro-53558",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_OPTIONS=--inspect next dev --webpack -p 3003",
+    "check": "node cdp-check.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "typescript": "latest"
+  }
+}
