@@ -1,0 +1,13 @@
+{
+  "name": "next-jest-globals-mock-repro",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@jest/globals": "29.3.1",
+    "jest": "29.3.1",
+    "next": "16.3.1-canary.25"
+  }
+}
