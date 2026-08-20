@@ -1,0 +1,19 @@
+{
+  "name": "repro-62507-geo-next15",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001"
+  },
+  "dependencies": {
+    "@vercel/functions": "2.2.13",
+    "next": "15.4.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.2.18",
+    "typescript": "^5.4.5"
+  }
+}
