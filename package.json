@@ -1,0 +1,15 @@
+{
+  "name": "next-49309-module-reevaluated",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
