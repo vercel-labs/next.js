@@ -1,0 +1,13 @@
+{
+  "name": "next-e328-client-reference-manifest-race",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack --port 5177",
+    "repro": "bash repro.sh"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
