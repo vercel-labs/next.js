@@ -273,6 +273,16 @@ describe('react-dom/server in React Server environment', () => {
     }
   })
 
+  // Regression test for https://github.com/vercel/next.js/issues/43810
+  // `react-dom/server` is a public React API and rendering markup with it
+  // inside a Server Component should not be rejected at build time.
+  it('supports renderToStaticMarkup from react-dom/server in app code', async () => {
+    const response = await next.fetch('/render-to-static-markup')
+
+    expect(response.status).toBe(200)
+    expect(await response.text()).toContain('&lt;p&gt;TEST&lt;/p&gt;')
+  })
+
   it('implicit react-dom/server.node usage in app code', async () => {
     const browser = await next.browser(
       '/exports/app-code/react-dom-server-node-implicit'
