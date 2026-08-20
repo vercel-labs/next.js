@@ -1,0 +1,19 @@
+{
+  "name": "issue-51260-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test:target": "node test.mjs",
+    "test:smooth": "node smooth.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "playwright": "^1.50.0"
+  }
+}

@@ -1,0 +1,2 @@
+:target { outline: 8px solid red; }
+:target::after { content: ' :target MATCHED'; color: red; font-weight: bold; }
