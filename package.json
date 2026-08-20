@@ -1,0 +1,17 @@
+{
+  "name": "pages-router-deployment-id-skew",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "repro": "node repro.js",
+    "repro:control": "node repro.js --no-deployment-id"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}
