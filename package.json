@@ -1,0 +1,10 @@
+{
+  "name": "next-74218-edge-console-error-cause",
+  "private": true,
+  "scripts": { "dev": "next dev" },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
