@@ -1,0 +1,17 @@
+{
+  "name": "repro-56699-render-aborted",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3055",
+    "abort": "node scripts/abort-mid-stream.mjs 3055 6 400",
+    "rapid-reload": "node scripts/rapid-reload.mjs 3055 rapid-reload.png"
+  },
+  "dependencies": {
+    "next": "13.5.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}
