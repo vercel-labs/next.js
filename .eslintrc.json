@@ -1,0 +1,36 @@
+{
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "rules": {
+    "no-console": "error",
+    "import/extensions": 0,
+    "@typescript-eslint/strict-boolean-expressions": [
+      2,
+      {
+        "allowString": false,
+        "allowNumber": false
+      }
+    ],
+    // Enforce Rules of Hooks
+    // https://github.com/facebook/react/blob/c11015ff4f610ac2924d1fc6d569a17657a404fd/packages/eslint-plugin-react-hooks/src/RulesOfHooks.js
+    "react-hooks/rules-of-hooks": "error",
+
+    // Verify the list of the dependencies for Hooks like useEffect and similar
+    // https://github.com/facebook/react/blob/1204c789776cb01fbaf3e9f032e7e2ba85a44137/packages/eslint-plugin-react-hooks/src/ExhaustiveDeps.js
+    "react-hooks/exhaustive-deps": "error",
+
+    "react/jsx-filename-extension": [1, { "extensions": ["ts", ".tsx"] }]
+  },
+
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "project": ["./tsconfig.json"] }
+}
