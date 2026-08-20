@@ -1,0 +1,18 @@
+import { chromium } from 'playwright'
+const b = await chromium.launch()
+const p = await b.newPage()
+const logs = []
+p.on('console', m => logs.push(m.text()))
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+logs.push('--- after initial load ---')
+await p.click('#to-about')
+await p.waitForSelector('#to-home')
+await p.waitForTimeout(1000)
+logs.push('--- after nav to /about ---')
+await p.click('#to-home')
+await p.waitForSelector('#to-about')
+await p.waitForTimeout(1000)
+logs.push('--- after nav back to / ---')
+console.log(logs.join('\n'))
+await p.screenshot({ path: '/workspace/.next-maintainer/reproduction-artifacts/playwright/after-nav.png' })
+await b.close()
