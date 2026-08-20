@@ -1,0 +1,18 @@
+{
+  "name": "next-53821-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build --webpack",
+    "start": "next start",
+    "check": "es-check es5 '.next/static/chunks/main-*.js' '.next/static/chunks/*.js' --verbose"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "es-check": "7.1.1"
+  },
+  "browserslist": [">0.3%, defaults, supports es5"]
+}
