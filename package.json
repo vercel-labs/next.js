@@ -1,0 +1,18 @@
+{
+  "name": "nextjs-vscode-breakpoint-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3010",
+    "debug:check": "node scripts/vscode-debug-check.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^26",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
