@@ -1,0 +1,21 @@
+{
+  "name": "fetch-cache-404-repro",
+  "private": true,
+  "scripts": {
+    "api": "node upstream-server.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repro": "next build && node run-repro.mjs"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
