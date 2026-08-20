@@ -1,0 +1,17 @@
+{
+  "name": "repro-55168-request-memoization",
+  "private": true,
+  "scripts": {
+    "counter": "node counter-server.js",
+    "dev": "next dev -p 3001",
+    "dev:webpack": "next dev --webpack -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "check": "node check.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
