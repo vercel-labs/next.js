@@ -1,0 +1,21 @@
+{
+  "name": "repro-53117",
+  "private": true,
+  "scripts": {
+    "data": "node data-server.js",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "dev": "next dev -p 3000"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "playwright": "^1.49.0",
+    "typescript": "^5.7.3"
+  }
+}
