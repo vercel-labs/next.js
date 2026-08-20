@@ -1,0 +1,10 @@
+{
+  "name": "next-45204-repro",
+  "private": true,
+  "scripts": { "dev": "next dev -p 3000" },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
