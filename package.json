@@ -1,0 +1,20 @@
+{
+  "name": "next-65630-optimize-package-imports-barrel-cache",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "dev:turbopack": "next dev",
+    "build": "next build --webpack",
+    "verify": "./verify.sh"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
