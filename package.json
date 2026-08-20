@@ -1,0 +1,19 @@
+{
+  "name": "typed-routes-repro",
+  "private": true,
+  "scripts": {
+    "typegen": "next typegen",
+    "build": "next build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5.9.2"
+  }
+}
