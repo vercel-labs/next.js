@@ -1,0 +1,15 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await b.newPage();
+const reqs = [];
+p.on('request', r => reqs.push(r.method()+' '+r.url()));
+p.on('console', m => console.log('[browser]', m.text()));
+await p.goto('http://localhost:3000/');
+await p.waitForTimeout(300);
+reqs.length = 0;
+await p.click('#with-slash');
+await p.waitForTimeout(3000);
+console.log('final URL:', p.url(), '| body:', (await p.content()).includes('foo page') ? 'foo page' : 'NOT foo page');
+console.log('data requests:', reqs.length);
+await p.screenshot({path:'/workspace/.next-maintainer/reproduction-artifacts/playwright/loop.png'});
+await b.close();
