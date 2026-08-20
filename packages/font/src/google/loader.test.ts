@@ -1,7 +1,12 @@
+import * as Log from 'next/dist/build/output/log'
 import nextFontGoogleFontLoader from './loader'
 import { fetchResource } from './fetch-resource'
 
 jest.mock('./fetch-resource')
+jest.mock('next/dist/build/output/log', () => ({
+  warn: jest.fn(),
+  error: jest.fn(),
+}))
 
 const mockFetchResource = fetchResource as jest.Mock
 
@@ -147,5 +152,69 @@ describe('next/font/google loader', () => {
         )
       }
     )
+  })
+
+  // https://github.com/vercel/next.js/issues/44375
+  describe('weight on a variable font', () => {
+    // Shape of the CSS Google Fonts returns for `Inter:wght@600`: the
+    // @font-face is pinned to the requested weight instead of declaring the
+    // variable `font-weight: 100 900` range.
+    const pinnedCss = `/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v13/pinned.woff2) format('woff2');
+  unicode-range: U+0000-00FF;
+}`
+
+    async function loadFont(functionName: string, fontFunctionArguments: any) {
+      mockFetchResource.mockImplementation(async (url: string) =>
+        Buffer.from(
+          url.startsWith('https://fonts.googleapis.com')
+            ? pinnedCss
+            : 'font-data'
+        )
+      )
+
+      return nextFontGoogleFontLoader({
+        functionName,
+        data: [
+          {
+            adjustFontFallback: false,
+            subsets: [],
+            ...fontFunctionArguments,
+          },
+        ],
+        emitFontFile: () => '/_next/static/media/pinned.woff2',
+        resolve: jest.fn(),
+        loaderContext: {} as any,
+        isDev: false,
+        isServer: true,
+        variableName: 'myFont',
+      })
+    }
+
+    it('warns that `font-weight` stops working when a weight is set on a variable font', async () => {
+      const { css } = await loadFont('Inter', { weight: '600' })
+
+      // The single @font-face is pinned to the requested weight, so every
+      // `font-weight` between 100 and 900 renders identically at runtime.
+      expect(css).toContain('font-weight: 600')
+      expect(css).not.toContain('font-weight: 100 900')
+
+      // `Inter` has a variable `wght` axis, so the pinning is silent today and
+      // there is nothing pointing users at the cause.
+      expect(Log.warn).toHaveBeenCalledWith(
+        expect.stringMatching(/Inter[\s\S]*weight/)
+      )
+    })
+
+    it('does not warn when the font has no variable weight axis', async () => {
+      await loadFont('Poppins', { weight: '500' })
+
+      expect(Log.warn).not.toHaveBeenCalled()
+    })
   })
 })
