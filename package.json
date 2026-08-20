@@ -1,0 +1,16 @@
+{
+  "name": "next-60473-optimizecss-memory-repro",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "next build",
+    "start": "NODE_OPTIONS=--expose-gc next start -p 3000",
+    "load": "node scripts/load.mjs http://127.0.0.1:3000 /ssr 1000 12 20"
+  },
+  "dependencies": {
+    "critters": "0.0.24",
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
