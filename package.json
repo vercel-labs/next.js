@@ -1,0 +1,14 @@
+{
+  "name": "next-36774-docker-hmr",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
+    "repro": "bash repro.sh"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19",
+    "react-dom": "^19"
+  }
+}
