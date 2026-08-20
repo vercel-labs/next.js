@@ -1,0 +1,16 @@
+{
+  "name": "issue-58459-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "canary",
+    "pdfmake": "0.2.8",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
