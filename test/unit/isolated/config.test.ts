@@ -1,9 +1,15 @@
 /* eslint-env jest */
 import { join } from 'path'
+import stripAnsi from 'strip-ansi'
 import { PHASE_DEVELOPMENT_SERVER } from 'next/constants'
 
 const pathToConfig = join(__dirname, '_resolvedata', 'without-function')
 const pathToConfigFn = join(__dirname, '_resolvedata', 'with-function')
+const pathToSpreadDefaultConfig = join(
+  __dirname,
+  '_resolvedata',
+  'spread-default-config'
+)
 
 // force require usage instead of dynamic import in jest
 // x-ref: https://github.com/nodejs/node/issues/35889
@@ -268,6 +274,28 @@ describe('config', () => {
       expect(config.outputFileTracingRoot).toBeDefined()
       expect(config.turbopack.root).toBe(config.outputFileTracingRoot)
     })
+  })
+
+  // Config wrappers such as `next-compose-plugins` spread the `defaultConfig`
+  // Next.js provides to the config function back into the returned config.
+  // Next.js must not warn about its own defaults being present.
+  // x-ref: https://github.com/vercel/next.js/issues/39161
+  it('Should not warn when defaultConfig is spread into the user config', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {})
+
+    try {
+      await loadConfig(PHASE_DEVELOPMENT_SERVER, pathToSpreadDefaultConfig, {
+        silent: false,
+      })
+
+      const warnings = warnSpy.mock.calls.map((args) =>
+        stripAnsi(args.map((arg) => String(arg)).join(' '))
+      )
+
+      expect(warnings).toEqual([])
+    } finally {
+      warnSpy.mockRestore()
+    }
   })
 
   describe('partialPrefetching config', () => {
