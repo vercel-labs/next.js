@@ -1,0 +1,21 @@
+{
+  "name": "next-image-memory-leak-44685",
+  "private": true,
+  "scripts": {
+    "gen": "node scripts/generate-images.mjs",
+    "build": "next build",
+    "start": "next start",
+    "load": "node scripts/load.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "sharp": "^0.34.2"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
