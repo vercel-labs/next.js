@@ -1,0 +1,17 @@
+{
+  "name": "nextjs-60956-reverse-proxy-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "proxy:strip": "node rp.js strip",
+    "proxy:keep": "node rp.js keep",
+    "proxy:iis": "node rp.js iis"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
