@@ -1,0 +1,17 @@
+{
+  "name": "next-71842-image-timeout",
+  "private": true,
+  "scripts": {
+    "upstream": "node upstream.mjs",
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "15.0.1",
+    "react": "19.0.0-rc-69d4b800-20241021",
+    "react-dom": "19.0.0-rc-69d4b800-20241021",
+    "sharp": "^0.33.5"
+  }
+}
