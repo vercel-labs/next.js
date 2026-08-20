@@ -1,0 +1,19 @@
+{
+  "name": "repro-62740",
+  "private": true,
+  "scripts": {
+    "build:a": "DEPLOY_LABEL=A next build && rm -rf outA && cp -r out outA",
+    "build:b": "DEPLOY_LABEL=B next build && rm -rf outB && cp -r out outB",
+    "serve:fresh": "STALE=0 node static-host.js",
+    "serve:stale": "node static-host.js",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
