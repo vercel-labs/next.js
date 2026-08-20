@@ -1,0 +1,6 @@
+{
+  "name": "nextjs-app",
+  "private": true,
+  "scripts": { "dev": "next dev -p 4040", "build": "next build", "start": "next start -p 4041" },
+  "dependencies": { "next": "canary", "react": "latest", "react-dom": "latest" }
+}
