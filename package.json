@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "msw": "^2.11.1",
+    "next": "canary",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}
