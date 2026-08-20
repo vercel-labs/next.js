@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "issue-73317-repro",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.23",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.6",
+    "@types/react": "19.2.18",
+    "playwright": "^1.62.1",
+    "typescript": "5.8.2"
+  }
+}

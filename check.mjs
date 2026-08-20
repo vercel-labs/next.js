@@ -1,0 +1,23 @@
+import { chromium } from 'playwright';
+const url = process.env.URL || 'http://localhost:3000';
+const tag = process.env.TAG || 'run';
+const b = await chromium.launch();
+const p = await (await b.newContext({recordVideo:{dir:`./artifacts/video-${tag}`}})).newPage();
+const nav=[]; p.on('framenavigated', f=>{ if(f===p.mainFrame()) nav.push(f.url()); });
+await p.goto(url, {waitUntil:'networkidle'});
+await p.evaluate(()=>{ window.__marker = true;
+  window.__log=[];
+  const el = document.querySelector('div');
+  new MutationObserver(()=>{ window.__log.push({t:Date.now(), text: document.body.innerText.replace(/\n/g,'|')}); }).observe(document.body,{childList:true,subtree:true,characterData:true});
+});
+const samples=[];
+const stop = setInterval(async()=>{ try{ samples.push(await p.evaluate(()=>({t:Date.now(), body:document.body.innerText.replace(/\n/g,'|'), marker: !!window.__marker}))); }catch(e){} }, 25);
+await p.click('button[type=submit]');
+await p.waitForTimeout(2500);
+clearInterval(stop);
+console.log('navigations:', JSON.stringify(nav));
+console.log('marker after click (false => full page reload):', await p.evaluate(()=>!!window.__marker));
+let prev=null;
+for(const s of samples){ const key=s.body+'/'+s.marker; if(key!==prev){ console.log(s.t, 'marker='+s.marker, JSON.stringify(s.body)); prev=key; } }
+await p.screenshot({path:`./artifacts/final-${tag}.png`});
+await b.close();
