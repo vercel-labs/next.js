@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "issue-59903-web-vitals-metric-type",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "typecheck:strict": "tsc --noEmit --skipLibCheck false",
+    "repro": "npm run typecheck && npm run typecheck:strict"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
