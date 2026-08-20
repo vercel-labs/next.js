@@ -1,0 +1,2 @@
+/* vendor2 css - imported LAST, should win */
+.box { color: rgb(0, 0, 255); }

@@ -1,0 +1,4 @@
+/* local css - should come SECOND and win */
+.svg-inline--fa { width: 20px; height: 20px; }
+/* local1 */
+.box { color: rgb(255, 0, 0); }
