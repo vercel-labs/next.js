@@ -1,0 +1,27 @@
+const { chromium } = require('playwright')
+const dir = '/workspace/.next-maintainer/reproduction-artifacts/playwright'
+;(async () => {
+  const tag = process.argv[2] || 'dev'
+  const browser = await chromium.launch()
+  const page = await browser.newPage()
+  const errors = []
+  page.on('console', (m) => { if (m.type() === 'error') errors.push('[console] ' + m.text()) })
+  page.on('pageerror', (e) => errors.push('[pageerror] ' + e.message))
+  await page.goto('http://localhost:3000/nonexistent', { waitUntil: 'load' })
+  console.log('404 page text:', (await page.locator('body').innerText()).replace(/\n+/g, ' | '))
+  await page.screenshot({ path: `${dir}/${tag}-1-404.png`, fullPage: true })
+  await page.click('#modal-link')
+  await page.waitForTimeout(3000)
+  console.log('after click url:', page.url())
+  console.log('after click body:', (await page.locator('body').innerText()).replace(/\n+/g, ' | '))
+  await page.screenshot({ path: `${dir}/${tag}-2-after-click.png`, fullPage: true })
+  // now try router.back()
+  await page.goBack().catch((e) => console.log('goBack err', e.message))
+  await page.waitForTimeout(2000)
+  console.log('after back url:', page.url())
+  console.log('after back body:', (await page.locator('body').innerText()).replace(/\n+/g, ' | '))
+  await page.screenshot({ path: `${dir}/${tag}-3-after-back.png`, fullPage: true })
+  console.log('--- errors ---')
+  console.log(errors.join('\n') || '(none)')
+  await browser.close()
+})()
