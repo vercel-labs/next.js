@@ -1,0 +1,20 @@
+{
+  "name": "next-52444-safari-suspense-streaming",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "raw": "node raw-server.mjs",
+    "probe:next": "node probe.mjs http://localhost:3001 prod",
+    "probe:raw": "node probe.mjs http://localhost:4000/?size=300 raw300"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
