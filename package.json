@@ -1,0 +1,20 @@
+{
+  "name": "repro-62479-chunk-load-error-percent-encoding",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "start": "next start -p 3010",
+    "proxy:lowercase": "MODE=lowercase PORT=3011 node proxy.mjs",
+    "proxy:decode-at": "MODE=decode-at PORT=3012 node proxy.mjs",
+    "verify": "node check.mjs && node check2.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.23",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
