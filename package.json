@@ -1,0 +1,16 @@
+{
+  "name": "repro-45607",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "build:webpack": "next build --webpack"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "lodash": "4.17.21",
+    "date-fns": "4.1.0",
+    "@tanstack/react-query": "5.90.2"
+  }
+}
