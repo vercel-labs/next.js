@@ -1,0 +1,14 @@
+{
+  "name": "next-android-arm64-swc-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "repro": "node repro.mjs",
+    "dev": "node -r ./spoof-android.cjs node_modules/next/dist/bin/next dev"
+  },
+  "dependencies": {
+    "next": "14.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
