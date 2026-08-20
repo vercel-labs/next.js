@@ -1,0 +1,18 @@
+{
+  "name": "repro-51710",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "lint": "eslint src --no-warn-ignored",
+    "lint:subdir": "eslint apps --no-warn-ignored"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "eslint-config-next": "latest"
+  }
+}
