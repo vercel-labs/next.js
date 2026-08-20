@@ -1,0 +1,22 @@
+{
+  "name": "repro-60879",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:turbopack": "next dev --turbopack --port 3010",
+    "dev:webpack": "next dev --webpack --port 3011",
+    "build:turbopack": "next build --turbopack",
+    "build:webpack": "next build --webpack",
+    "node:baseline": "node import-meta.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@types/react": "19.0.2",
+    "typescript": "5.7.2"
+  }
+}
