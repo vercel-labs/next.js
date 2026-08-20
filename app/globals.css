@@ -1,0 +1,20 @@
+/* Excerpt of Tailwind Preflight that affects images */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Equivalent of Tailwind classes used in the issue */
+.max-h-32px {
+  max-height: 32px;
+}
+.w-auto {
+  width: auto;
+}
+.h-auto {
+  height: auto;
+}
+.narrow {
+  width: 200px;
+}
