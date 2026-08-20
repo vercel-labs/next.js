@@ -1,0 +1,17 @@
+{
+  "name": "repro-52073",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "dev:webpack": "next dev --webpack -p 3001",
+    "check": "node bp2.mjs http://localhost:3000/"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
