@@ -1,0 +1,24 @@
+{
+  "name": "nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "15.0.2",
+    "react": "19.0.0-rc-02c0e824-20241028",
+    "react-dom": "19.0.0-rc-02c0e824-20241028"
+  },
+  "devDependencies": {
+    "@codecov/nextjs-webpack-plugin": "1.2.1",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "5.3.3"
+  },
+  "overrides": {
+    "@codecov/bundler-plugin-core": "1.2.1",
+    "@codecov/webpack-plugin": "1.2.1"
+  }
+}
