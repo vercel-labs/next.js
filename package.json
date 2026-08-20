@@ -1,0 +1,17 @@
+{
+  "name": "sourcemap-repro",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/setup-vendor.mjs",
+    "build": "next build --webpack",
+    "build:turbopack": "next build",
+    "check": "node scripts/check-maps.mjs",
+    "repro": "npm run build && npm run check"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "vendor-lib": "file:./vendor-lib"
+  }
+}

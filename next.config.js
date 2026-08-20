@@ -1,0 +1,1 @@
+module.exports = { productionBrowserSourceMaps: true }
