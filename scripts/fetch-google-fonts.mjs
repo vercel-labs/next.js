@@ -54,6 +54,7 @@ async function grab(query, ua) {
 }
 
 const HINTING = ['prep', 'fpgm', 'cvt ']
+await fs.mkdir(new URL('../public/', import.meta.url), { recursive: true })
 for (const [name, query] of FONTS) {
   for (const [label, ua] of [['nextfont-ua', NEXT_FONT_UA], ['windows-ua', WINDOWS_UA]]) {
     const { url, buf } = await grab(query, ua)
