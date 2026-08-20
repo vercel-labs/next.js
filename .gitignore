@@ -1,0 +1,8 @@
+node_modules
+.next
+custom-dir/.next
+deploy-out
+dist
+package-lock.json
+tsconfig.json
+next-env.d.ts
