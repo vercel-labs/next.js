@@ -1,0 +1,23 @@
+{
+  "name": "next-71077-image-flicker",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3200",
+    "build": "next build",
+    "start": "next start -p 3201",
+    "measure:dev": "node measure-flash.js http://localhost:3200/ dev",
+    "measure:prod": "node measure-flash.js http://localhost:3201/ prod"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "playwright": "1.62.1",
+    "pngjs": "7.0.0",
+    "typescript": "7.0.2"
+  }
+}

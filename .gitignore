@@ -1,0 +1,5 @@
+node_modules
+.next
+frames-*
+next-env.d.ts
+tsconfig.tsbuildinfo
