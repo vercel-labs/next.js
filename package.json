@@ -1,0 +1,20 @@
+{
+  "name": "next-47097-no-img-element-og",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "canary",
+    "typescript": "^5"
+  }
+}
