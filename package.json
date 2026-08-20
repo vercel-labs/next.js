@@ -1,0 +1,14 @@
+{
+  "name": "repro-60877",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vendor-ctx": "file:vendor-ctx"
+  }
+}
