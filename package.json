@@ -1,0 +1,16 @@
+{
+  "name": "repro-58556",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000"
+  },
+  "dependencies": {
+    "@formatjs/intl-localematcher": "0.5.4",
+    "negotiator": "0.6.3",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
