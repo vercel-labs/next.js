@@ -1,0 +1,4 @@
+node_modules
+.next
+next-server.log
+package-lock.json
