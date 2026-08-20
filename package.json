@@ -1,0 +1,26 @@
+{
+  "name": "mqtt-useeffect-end-repro",
+  "private": true,
+  "scripts": {
+    "broker": "node scripts/broker.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repro": "node scripts/repro.mjs"
+  },
+  "dependencies": {
+    "mqtt": "^5.10.3",
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "aedes": "^0.51.3",
+    "playwright": "^1.55.0",
+    "typescript": "^5.7.2",
+    "ws": "^8.18.0"
+  }
+}
