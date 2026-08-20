@@ -1,0 +1,10 @@
+{
+  "name": "repro-60040",
+  "private": true,
+  "scripts": { "dev": "node server.js" },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
