@@ -1,0 +1,11 @@
+{
+  "name": "repro-39161",
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build" },
+  "dependencies": {
+    "next": "canary",
+    "next-compose-plugins": "2.2.1",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
