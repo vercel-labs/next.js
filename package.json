@@ -1,0 +1,22 @@
+{
+  "name": "next-45473-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build --webpack",
+    "build:turbopack": "next build",
+    "check": "node check.mjs",
+    "check:es": "es-check es2019 \".next/static/chunks/**/*.js\""
+  },
+  "dependencies": {
+    "filter-obj": "5.1.0",
+    "next": "16.3.1-canary.25",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "es-check": "^7.2.1"
+  },
+  "browserslist": [
+    "safari 12"
+  ]
+}
