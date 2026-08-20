@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "next-57966-babel-server-actions",
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "rc",
+    "react-dom": "rc"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.23.2",
+    "@types/node": "20.4.5",
+    "@types/react": "18.2.18",
+    "typescript": "5.1.3"
+  }
+}
