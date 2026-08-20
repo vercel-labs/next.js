@@ -1,0 +1,29 @@
+{
+  "name": "next-trailing-slash-repro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "repro:build": "node scripts/build-mixed-repro.mjs",
+    "repro:serve": "node scripts/serve-mixed-repro.mjs",
+    "start": "next start",
+    "lint": "eslint",
+    "repro:check": "node scripts/check-trailing-slash.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "typescript": "^5",
+    "playwright": "1.56.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}
