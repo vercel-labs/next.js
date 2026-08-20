@@ -1,0 +1,17 @@
+{
+  "name": "next-53473-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "canary",
+    "eslint": "^9.39.0"
+  }
+}
