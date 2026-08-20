@@ -1,0 +1,18 @@
+{
+  "name": "repro-68596-link-legacybehavior-rerenders",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3111",
+    "build": "next build",
+    "start": "next start -p 3111",
+    "check": "node check.js"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
