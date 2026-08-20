@@ -1,0 +1,13 @@
+{
+  "name": "next-57538-mdx-missing-mdx-components",
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "dependencies": {
+    "@mdx-js/loader": "^3.1.0",
+    "@mdx-js/react": "^3.1.0",
+    "@next/mdx": "canary",
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}

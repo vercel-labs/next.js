@@ -1,0 +1,4 @@
+// Rename to mdx-components.js at the PROJECT ROOT (not inside app/) to fix the error.
+export function useMDXComponents(components) {
+  return { ...components }
+}
