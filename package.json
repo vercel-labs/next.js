@@ -1,0 +1,6 @@
+{
+  "name": "i18n-default-locale-no-redirect",
+  "private": true,
+  "scripts": { "dev": "next dev -p 3000", "build": "next build", "start": "next start -p 3000" },
+  "dependencies": { "next": "latest", "react": "latest", "react-dom": "latest" }
+}
