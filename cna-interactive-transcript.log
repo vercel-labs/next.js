@@ -1,0 +1,70 @@
+[OK ] recommended Next.js defaults
+   screen: ' Choose your own preferences\r\n✔ Would you like to use the recommended Next.js defaults? › No, customize settings\r\n? Would you like to use TypeScript? › No / Yes'
+[OK ] Would you like to use TypeScript?
+   screen: 't? … No / Yes\r\n? Which linter would you like to use? › - Use arrow-keys. Return to submit.\r\n❯   ESLint\r\n    More comprehensive lint rules\r\n    Biome\r\n    None\r\n'
+[OK ] Which linter
+   screen: 'Lint\r\n    More comprehensive lint rules\r\n    Biome\r\n    None\r\n✔ Which linter would you like to use? › ESLint\r\n? Would you like to use React Compiler? › No / Yes'
+[OK ] Would you like to use React Compiler?
+   screen: '› ESLint\r\n? Would you like to use React Compiler? › No / Yes✔ Would you like to use React Compiler? … No / Yes\r\n? Would you like to use Tailwind CSS? › No / Yes'
+[OK ] Would you like to use Tailwind CSS?
+   screen: 'Would you like to use Tailwind CSS? › No / Yes✔ Would you like to use Tailwind CSS? … No / Yes\r\n? Would you like your code inside a `src/` directory? › No / Yes'
+[OK ] `src/` directory
+   screen: 'ide a `src/` directory? › No / Yes✔ Would you like your code inside a `src/` directory? … No / Yes\r\n? Would you like to use App Router? (recommended) › No / Yes'
+[OK ] App Router
+   screen: 'commended) › No / Yes✔ Would you like to use App Router? (recommended) … No / Yes\r\n? Would you like to customize the import alias (`@/*` by default)? › No / Yes'
+[OK ] customize the import alias
+   screen: '`@/*` by default)? › No / Yes✔ Would you like to customize the import alias (`@/*` by default)? … No / Yes\r\n? What import alias would you like configured? › @/*'
+[OK ] alias text prompt reached
+   typed screen: 's would you like configured? › @/ap? What import alias would you like configured? › @/app? What import alias would you like configured? › @/app/? What import alias would you like configured? › @/app/*'
+   after enter: 'e Next.js code? › No / Yes✔ Would you like to include AGENTS.md to guide coding agents to write up-to-date Next.js code? … No / Yes\r\nCreating a new Next.js app in /workspace/cna-test/aliasapp8.\r\n\r\nUsing npm.\r\n\r\nInitializing project with template: app-tw \r\n\r\n\r\nInstalling dependencies:\r\n- next\r\n- react\r\n- react-dom\r\n\r\nInstalling devDependencies:\r\n- @tailwindcss/postcss\r\n- @types/node\r\n- @types/react\r\n- @types/react-dom\r\n- eslint\r\n- eslint-config-next\r\n- tailwindcss\r\n- typescript\r\n\r\n⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴'
+=== TAIL ===
+to use TypeScript? › No / Yes✔ Would you like to use TypeScript? … No / Yes
+? Which linter would you like to use? › - Use arrow-keys. Return to submit.
+❯   ESLint
+    More comprehensive lint rules
+    Biome
+    None
+✔ Which linter would you like to use? › ESLint
+? Would you like to use React Compiler? › No / Yes✔ Would you like to use React Compiler? … No / Yes
+? Would you like to use Tailwind CSS? › No / Yes✔ Would you like to use Tailwind CSS? … No / Yes
+? Would you like your code inside a `src/` directory? › No / Yes✔ Would you like your code inside a `src/` directory? … No / Yes
+? Would you like to use App Router? (recommended) › No / Yes✔ Would you like to use App Router? (recommended) … No / Yes
+? Would you like to customize the import alias (`@/*` by default)? › No / Yes? Would you like to customize the import alias (`@/*` by default)? › No / Yes✔ Would you like to customize the import alias (`@/*` by default)? … No / Yes
+? What import alias would you like configured? › @/*? What import alias would you like configured? › @? What import alias would you like configured? › @/? What import alias would you like configured? › @/a? What import alias would you like configured? › @/ap? What import alias would you like configured? › @/app? What import alias would you like configured? › @/app/? What import alias would you like configured? › @/app/*✔ What import alias would you like configured? … @/app/*
+? Would you like to include AGENTS.md to guide coding agents to write up-to-date Next.js code? › No / Yes✔ Would you like to include AGENTS.md to guide coding agents to write up-to-date Next.js code? … No / Yes
+Creating a new Next.js app in /workspace/cna-test/aliasapp8.
+
+Using npm.
+
+Initializing project with template: app-tw 
+
+
+Installing dependencies:
+- next
+- react
+- react-dom
+
+Installing devDependencies:
+- @tailwindcss/postcss
+- @types/node
+- @types/react
+- @types/react-dom
+- eslint
+- eslint-config-next
+- tailwindcss
+- typescript
+
+⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴
+added 359 packages, and audited 360 packages in 21s
+⠴
+⠴147 packages are looking for funding
+⠴  run `npm fund` for details
+⠴
+found 0 vulnerabilities
+⠴
+Generating route types...
+✓ Types generated successfully
+⠙
+Success! Created aliasapp8 at /workspace/cna-test/aliasapp8
+
+⠙

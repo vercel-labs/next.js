@@ -1,0 +1,9 @@
+▲ Next.js 16.3.1 (Turbopack)
+- Local:         http://localhost:3111
+- Network:       http://100.64.32.91:3111
+✓ Ready in 292ms
+✓ Running next.config.ts took 36ms
+
+alias-import-works
+ GET / 200 in 2.4s (next.js: 2.3s, application-code: 181ms)
+[?25h
