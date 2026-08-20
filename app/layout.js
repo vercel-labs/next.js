@@ -1,7 +1,8 @@
-export default function Layout({ children }) {
+export const metadata = { title: 'image memory repro' }
+export default function RootLayout({ children }) {
   return (
-    <html>
-      <body style={{ fontFamily: 'sans-serif' }}>{children}</body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   )
 }

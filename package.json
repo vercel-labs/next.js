@@ -1,19 +1,21 @@
 {
-  "name": "repro",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "next-image-memory-repro",
+  "private": true,
+  "version": "0.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "hammer": "node scripts/hammer.mjs",
+    "generate-image": "node scripts/generate-image.mjs",
+    "baseline": "node scripts/baseline.mjs",
+    "concurrent": "node scripts/concurrent.mjs",
+    "badq": "node scripts/badq.mjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "next": "^16.3.1-canary.25",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest",
+    "sharp": "latest"
   }
 }
