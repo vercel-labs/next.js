@@ -1,0 +1,18 @@
+{
+  "name": "next-23756-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build --profile",
+    "build:webpack": "next build --profile --webpack",
+    "start": "next start",
+    "verify": "node verify-names.js"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "playwright": "latest"
+  }
+}
