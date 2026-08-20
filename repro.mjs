@@ -20,14 +20,15 @@ function run(cmd, args, env = {}) {
 
 async function devOnce() {
   console.log('\n$ next dev (started, will stop after first successful request)')
-  const dev = spawn(npx, ['next', 'dev', '--port', '3123'], {
+  const port = 3000 + Math.floor(Math.random() * 2000)
+  const dev = spawn(npx, ['next', 'dev', '--port', String(port)], {
     stdio: ['ignore', 'inherit', 'inherit'],
     shell: process.platform === 'win32',
   })
   for (let i = 0; i < 60; i++) {
     await new Promise((r) => setTimeout(r, 1000))
     try {
-      const res = await fetch('http://localhost:3123/')
+      const res = await fetch(`http://localhost:${port}/`)
       if (res.ok) break
     } catch {}
   }
@@ -42,6 +43,10 @@ rmSync('.next', { recursive: true, force: true })
 rmSync('tsconfig.tsbuildinfo', { force: true })
 await devOnce()
 
+if (!existsSync('.next/dev/types/validator.ts')) {
+  console.error('ERROR: next dev did not generate .next/dev/types/validator.ts - see output above')
+  process.exit(1)
+}
 for (const p of ['.next/dev/types/validator.ts', '.next/types/validator.ts']) {
   if (existsSync(p)) {
     const hit = readFileSync(p, 'utf8').includes('type PagesPageConfig')
