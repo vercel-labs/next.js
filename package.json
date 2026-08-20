@@ -1,0 +1,5 @@
+{
+  "name": "next-font-monorepo-repro",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"]
+}
