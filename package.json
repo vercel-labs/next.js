@@ -1,0 +1,21 @@
+{
+  "name": "next-static-export-basepath-rsc-404",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "serve": "node server.js",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.2",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "playwright": "^1.49.0",
+    "typescript": "^5"
+  }
+}
