@@ -1,0 +1,17 @@
+{
+  "name": "repro-48642",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "serve": "node server.js",
+    "verify": "node verify.js"
+  },
+  "dependencies": {
+    "next": "13.4.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}
