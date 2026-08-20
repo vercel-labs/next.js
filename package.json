@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": { "dev": "next dev -p 3002", "build": "next build", "start": "next start", "test": "playwright test" },
+  "dependencies": { "next": "canary", "react": "latest", "react-dom": "latest" },
+  "devDependencies": { "@playwright/test": "^1.49.0" }
+}
