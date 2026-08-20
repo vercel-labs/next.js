@@ -1,0 +1,13 @@
+{
+  "name": "issue-73679-docker-webpack-cache",
+  "private": true,
+  "scripts": {
+    "generate": "node generate.mjs",
+    "build": "next build --webpack"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  }
+}
