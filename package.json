@@ -1,0 +1,17 @@
+{
+  "name": "repro-73426",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "15.4.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
