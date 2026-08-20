@@ -1,30 +1,37 @@
-# Repro: issue #21565 — redirects with `i18n` + `basePath`
+# Repro: next >14.0.1 pages router cannot import `@ant-design/icons` (SyntaxError: Unexpected token 'export')
 
-Next.js 16.3.1 (also reported on 10.x). Config: `basePath: '/my-base-path'`, locales `en`/`es`,
-one redirect `{ source: '/', destination: '/my-base-path', basePath: false }`.
+Issue: https://github.com/vercel/next.js/issues/65707
+(The reporter's original repo is now 404, so this is a minimal recreation.)
 
-## Run
+## Steps
 
-```bash
+```
 npm install
-npm run dev            # port 3020
-# or: npm run build && npm start   # port 3021
-for u in / /en /es /en/my-base-path /es/my-base-path /my-base-path; do \
-  printf "%-20s " "$u"; curl -s -o /dev/null -w "%{http_code} -> %{redirect_url}\n" "http://localhost:3020$u"; done
+npx next build      # fails while "Collecting page data"
+# or
+npx next dev        # GET / -> 500
 ```
 
-## Observed (identical in dev and `next start`)
+## Observed
 
-| request | status | location |
-| --- | --- | --- |
-| `/` | 307 | `/my-base-path` (OK) |
-| `/en` | 307 | `/my-base-path` (OK) |
-| `/es` | 307 | `/es/my-base-path` |
-| `/es/my-base-path` | 404 | — |
-| `/en/my-base-path` | 404 | — |
-| `/my-base-path` | 200 | — |
-| `/my-base-path/es` | 200 | — |
+* Node 18 (no `require(esm)`): `SyntaxError: Unexpected token 'export'` at
+  `node_modules/@ant-design/icons-svg/es/asn/ReloadOutlined.js:3`
+* Node 20/24 (`require(esm)` enabled): `ERR_MODULE_NOT_FOUND: Cannot find module
+  .../rc-util/es/Dom/canUseDom imported from .../rc-util/es/Dom/dynamicCSS.js`
 
-For non-default locales the locale prefix is prepended to the redirect destination even though
-`basePath: false`, producing `/{locale}/{basePath}` which is never a routable path (the app serves
-`/{basePath}/{locale}`), so the redirect dead-ends in a 404.
+Both come from the same cause: the server bundle keeps `@ant-design/icons` deps
+external and loads their extension-less ESM `es/` files from a CJS bundle.
+
+## Version matrix (verified in this repro, pages router, webpack)
+
+| next | result |
+| --- | --- |
+| 14.2.3 | fails |
+| 15.1.2 | fails |
+| 15.2.4 | fails |
+| 15.3.5 | fails |
+| 15.4.7 | builds |
+| 15.5.4 | builds |
+| 16.3.1 | builds |
+
+Workaround on affected versions: `transpilePackages: ['@ant-design/icons', '@ant-design/icons-svg', 'rc-util']`.
