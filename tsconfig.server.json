@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "bin/",
+    "noEmit": false,
+    "isolatedModules": false
+  },
+  "include": ["server/**/*.ts"]
+}
