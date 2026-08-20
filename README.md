@@ -1,28 +1,31 @@
-# `<Link href="#hash">` does not activate the CSS `:target` selector
+# Reproduction for vercel/next.js#49297
 
-Reproduction for https://github.com/vercel/next.js/issues/51346
-
-Repaired from the reporter's repro (https://github.com/tilman/nextlink-css-target-selector-bug):
-React bumped to 19 and the stale `experimental.appDir` key removed so it installs/runs on `next@canary`.
+`loading.tsx` is not shown when navigating to the **same route** with different
+search params; the URL only updates once the full server response arrives.
 
 ## Run
 
 ```bash
 npm install
-npm run dev            # http://localhost:3000 (Pages Router) and /appExample (App Router)
-npx playwright install chromium   # only needed for the automated check
-npm run check          # drives Chromium and prints the computed background colour
+npx playwright install chromium
+npm run build && npm start   # or: npm run dev
 ```
 
-## Expected vs actual
+Open http://localhost:3000/a?page=1 (3s server delay per render).
 
-`#sometesttarget:target { background: blue }`
+- Click **A?page=2** (same route, new search params) -> no `app/a/loading.tsx`,
+  URL stays `?page=1` for ~3s, then content swaps.
+- Click **to B** (different route) -> `app/b/loading.tsx` appears immediately.
 
-| action | url | expected bg | actual bg |
-| --- | --- | --- | --- |
-| `<a href="#sometesttarget">` | `/#sometesttarget` | blue | `rgb(0, 0, 255)` ✅ |
-| `<Link href="#sometesttarget">` | `/#sometesttarget` | blue | `rgba(0, 0, 0, 0)` ❌ |
+Automated check (server must be running on :3000):
 
-Same result in the App Router (`/appExample`), in `next dev` and `next build && next start`.
-Cause: client-side hash navigation uses `history.pushState`, which does not update the
-document's target element (see https://bugs.chromium.org/p/chromium/issues/detail?id=89165).
+```bash
+npm run test:nav
+```
+
+Observed on next@16.3.1-canary.25:
+
+```
+{ "loadingSeenMs": null, "urlChangedMs": 3066, "contentChangedMs": 3068 }
+different-route loading shown at ms: 73
+```

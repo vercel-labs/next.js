@@ -1,20 +1,21 @@
 {
+  "name": "repro-49297",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check": "node check.mjs"
+    "test:nav": "node test.mjs http://localhost:3000 prod"
   },
   "dependencies": {
     "next": "canary",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "latest",
+    "react-dom": "latest"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "playwright": "1.61.0",
-    "typescript": "^5.4.0"
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "typescript": "latest",
+    "playwright": "latest"
   }
 }
