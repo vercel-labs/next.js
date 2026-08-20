@@ -1,6 +1,11 @@
 {
-  "name": "repro-21565",
+  "name": "next-antd-icons-repro",
   "private": true,
-  "scripts": { "dev": "next dev -p 3020", "build": "next build", "start": "next start -p 3021" },
-  "dependencies": { "next": "latest", "react": "latest", "react-dom": "latest" }
+  "scripts": { "dev": "next dev -p 3000", "build": "next build", "start": "next start -p 3001" },
+  "dependencies": {
+    "@ant-design/icons": "5.5.2",
+    "next": "15.1.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
 }
