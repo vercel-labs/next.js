@@ -1,0 +1,15 @@
+{
+  "name": "nextjs-flask-rewrite-localhost-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "flask": "python3 -m flask --app api/index run -p 5328"
+  },
+  "dependencies": {
+    "next": "14.2.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
