@@ -1,0 +1,17 @@
+{
+  "name": "next-65359-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3001"
+  },
+  "dependencies": {
+    "next": "15.6.0-canary.42",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}
