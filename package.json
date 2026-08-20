@@ -1,0 +1,16 @@
+{
+  "name": "nextjs-68950-pino-thread-stream-worker",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "15.5.7",
+    "pino": "9.3.2",
+    "pino-pretty": "11.2.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
