@@ -1,0 +1,11 @@
+{
+  "name": "next-caniuse-lite-license-repro",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "repro": "node check-license.mjs"
+  },
+  "dependencies": {
+    "next": "latest"
+  }
+}
