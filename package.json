@@ -1,0 +1,21 @@
+{
+  "name": "issue-66646-styled-components-streaming",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "styled-components": "6.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.2",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.2",
+    "typescript": "5.4.5"
+  }
+}
