@@ -1,0 +1,25 @@
+{
+  "name": "repro-42159",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "list-rules": "node list-rules.mjs",
+    "lint": "eslint .",
+    "lint:passhref": "eslint . --config eslint.config.passhref.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "eslint-config-next": "^16.3.1",
+    "next": "^16.3.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "typescript": "5.9"
+  },
+  "private": true
+}
