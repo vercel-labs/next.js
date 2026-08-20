@@ -1,0 +1,17 @@
+{
+  "name": "repro-38877",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "check": "node head-check.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}
