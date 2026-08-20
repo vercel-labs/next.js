@@ -1,0 +1,16 @@
+{
+  "name": "next-73948-repro",
+  "private": true,
+  "scripts": { "dev": "next dev" },
+  "dependencies": {
+    "next": "15.1.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "babel-plugin-react-compiler": "19.0.0-beta-df7b47d-20241124",
+    "typescript": "5.7.2"
+  }
+}
