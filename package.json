@@ -1,0 +1,12 @@
+{
+  "name": "next-issue-67541-repro",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Reproduction for https://github.com/vercel/next.js/issues/67541 - standalone output builds mixed-drive paths on Windows",
+  "scripts": {
+    "repro": "node repro.js"
+  },
+  "dependencies": {
+    "next": "14.2.4"
+  }
+}
