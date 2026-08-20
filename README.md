@@ -1,22 +1,19 @@
-# Repro: next/image `placeholder="blur"` with a URL `blurDataURL` renders nothing (#42140)
-
-Next.js inlines the blur placeholder as a `data:image/svg+xml` background-image whose
-inner `<image href="...">` points at the given `blurDataURL`. Browsers block external
-resource loading inside data-URL SVGs, so any non-`data:` `blurDataURL`
-(`https://…`, `http://…`) produces a fully transparent placeholder and the network
-request for that URL is never made. A base64 data URL works.
-
-## Run
+# Repro: vercel/next.js#56511 - `blurwidth` / `blurheight` on `<img>`
 
 ```bash
 npm install
-npm run dev   # or: npm run build && npm start
-# open http://localhost:3000
+npm run dev            # http://localhost:3000
+npx playwright install chromium
+npm run check          # prints img attributes + React warnings
 ```
 
-`/api/slow` serves `public/photo.png` after an 8s delay so the placeholder is visible.
-The first image uses `blurDataURL="http://localhost:3000/blur.png"` (broken, blank),
-the second uses the same PNG as a base64 data URL (blurred placeholder shows).
+`pages/index.tsx` renders three cases from one statically imported PNG:
 
-`node check.js` (with the dev server running) prints the number of non-transparent
-pixels rendered by each placeholder SVG: `0` for the URL case, `1600` for base64.
+- `<Image src={img} />` and `<Image src={img} placeholder="blur" />` -> **no** `blurwidth`/`blurheight`
+  in the DOM (verified on next@16.3.1-canary.25, 13.5.4 and 12.3.4).
+- `<img {...img} />` (spreading `StaticImageData`, as the documented import shape suggests) ->
+  DOM gets `blurwidth="8" blurheight="8" blurdataurl="data:image/png;base64,..."` and React logs
+  "React does not recognize the `blurWidth` prop on a DOM element".
+
+The `<pre>` on the page shows the imported object still contains `blurWidth`, `blurHeight`,
+`blurDataURL`, which is the source of the unsupported attributes.

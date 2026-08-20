@@ -1,19 +1,21 @@
 {
-  "name": "repro",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "next-56511-repro",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check": "node check.mjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "next": "^16.3.1-canary.25",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "next": "canary",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "playwright": "^1.49.0",
+    "typescript": "^5"
   }
 }
