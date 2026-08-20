@@ -1,0 +1,18 @@
+{
+  "name": "next-72555-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "13.5.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.16.3",
+    "@types/react": "18.2.79",
+    "@types/react-dom": "18.2.0",
+    "typescript": "5.0.4"
+  }
+}
