@@ -1,0 +1,18 @@
+.summary,
+.nativeTokenBlock {
+  margin-bottom: 20px;
+}
+
+.validatorsAndEpoch {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 800px) {
+    grid-template-columns: 3fr minmax(240px, 1fr);
+  }
+}
+
+.validators {
+  height: 362px;
+}

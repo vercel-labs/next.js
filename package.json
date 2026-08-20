@@ -1,0 +1,25 @@
+{
+  "name": "next-42082-css-order-repro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "clsx": "2.0.0",
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sass": "1.66.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.4",
+    "@types/react": "19",
+    "@types/react-dom": "19",
+    "typescript": "5.4.3",
+    "playwright": "^1.62.1"
+  }
+}
