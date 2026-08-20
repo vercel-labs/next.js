@@ -1,0 +1,5 @@
+{
+  "name": "repro-40760",
+  "private": true,
+  "packageManager": "pnpm@9.15.0"
+}
