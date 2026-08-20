@@ -1,0 +1,5 @@
+@import './theme.css' layer(theme);
+
+body {
+  background: white;
+}
