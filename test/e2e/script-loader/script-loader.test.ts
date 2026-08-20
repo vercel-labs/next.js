@@ -243,6 +243,30 @@ describe('script-loader', () => {
     })
   })
 
+  // https://github.com/vercel/next.js/issues/39141
+  it('inline script with an id re-executes when the page is re-mounted (issue #39141)', async () => {
+    const browser = await next.browser('/page11')
+
+    await retry(async () => {
+      expect(
+        await browser.eval(`window.__inlineRemountCalls`)
+      ).toBeGreaterThanOrEqual(1)
+    })
+    const initialCalls = await browser.eval(`window.__inlineRemountCalls`)
+
+    // Navigate away and back with client-side navigation
+    await browser.waitForElementByCss('[href="/page12"]').click()
+    await browser.waitForElementByCss('#page12')
+    await browser.waitForElementByCss('[href="/page11"]').click()
+    await browser.waitForElementByCss('#page11')
+
+    await retry(async () => {
+      expect(await browser.eval(`window.__inlineRemountCalls`)).toBeGreaterThan(
+        initialCalls
+      )
+    })
+  })
+
   // https://github.com/vercel/next.js/issues/39993
   it('onReady should only fires once after loaded (issue #39993)', async () => {
     const browser = await next.browser('/page10')
