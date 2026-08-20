@@ -459,3 +459,52 @@ async fn resolve_node_bindings_files(
         .await?;
     Ok(*ModuleResolveResult::modules(modules))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::NodePreGypConfigJson;
+
+    /// `napi_versions` is optional in node-pre-gyp: it only exists to drive the
+    /// `{napi_build_version}` substitution. Packages like `duckdb` ship a
+    /// `binary` config without it, which must still deserialize instead of
+    /// failing the whole compilation.
+    /// Regression test for https://github.com/vercel/next.js/issues/97600
+    #[test]
+    fn deserialize_node_pre_gyp_config_without_napi_versions() {
+        let config: NodePreGypConfigJson = serde_json::from_str(
+            r#"{
+                "binary": {
+                    "module_name": "duckdb",
+                    "module_path": "./lib/binding/",
+                    "host": "https://npm.duckdb.org/duckdb"
+                }
+            }"#,
+        )
+        .expect("node-pre-gyp config without `napi_versions` should deserialize");
+
+        assert_eq!(config.binary.module_name, "duckdb");
+        assert_eq!(config.binary.module_path, "./lib/binding/");
+        assert!(config.binary.napi_versions.is_empty());
+    }
+
+    #[test]
+    fn deserialize_node_pre_gyp_config_with_napi_versions() {
+        let config: NodePreGypConfigJson = serde_json::from_str(
+            r#"{
+                "binary": {
+                    "module_name": "my_addon",
+                    "module_path": "./lib/binding/napi-v{napi_build_version}",
+                    "napi_versions": [6, 8]
+                }
+            }"#,
+        )
+        .expect("node-pre-gyp config with `napi_versions` should deserialize");
+
+        assert_eq!(config.binary.module_name, "my_addon");
+        assert_eq!(
+            config.binary.module_path,
+            "./lib/binding/napi-v{napi_build_version}"
+        );
+        assert_eq!(config.binary.napi_versions, vec![6, 8]);
+    }
+}
