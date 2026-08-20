@@ -1,0 +1,18 @@
+{
+  "name": "next-69401-stale-segment",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start -p 3001",
+    "dev": "next dev -p 3001",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1"
+  }
+}
