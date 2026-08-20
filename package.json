@@ -1,0 +1,13 @@
+{
+  "name": "repro-48017-standalone-pnpm-symlinks",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "repro": "./repro.sh"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
