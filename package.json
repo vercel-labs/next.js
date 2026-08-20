@@ -1,0 +1,13 @@
+{
+  "name": "repro-standalone-pnp",
+  "private": true,
+  "scripts": {
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "packageManager": "yarn@4.9.2"
+}
