@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "issue-70703-server-action-deployment-skew",
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "build:versions": "bash build-versions.sh",
+    "repro": "node run-skew.mjs action"
+  },
+  "dependencies": {
+    "next": "14.2.14",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
