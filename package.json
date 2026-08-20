@@ -1,0 +1,22 @@
+{
+  "name": "repro-54012",
+  "private": true,
+  "scripts": {
+    "prebuild": "node generate-images.mjs",
+    "build": "next build",
+    "build:webpack": "node generate-images.mjs && next build --webpack",
+    "check": "node check-bundle.mjs",
+    "dev": "node generate-images.mjs && next dev",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
