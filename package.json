@@ -1,0 +1,6 @@
+{
+  "name": "repro-61923-isr-revalidate",
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start", "poll": "./poll.sh" },
+  "dependencies": { "next": "canary", "react": "latest", "react-dom": "latest" }
+}
