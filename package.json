@@ -1,0 +1,6 @@
+{
+  "name": "watcher-tdz-repro",
+  "private": true,
+  "scripts": { "dev": "next dev" },
+  "dependencies": { "next": "canary", "react": "latest", "react-dom": "latest" }
+}
