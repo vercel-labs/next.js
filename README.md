@@ -1,15 +1,16 @@
-# Check for vercel/next.js#46126 — camelCase pages/api route on Vercel
+# Repro for vercel/next.js#65764 — Route Handler requested twice (once with `?_rsc=`)
 
-Minimal Pages Router app with `pages/api/getAll.js` (camelCase) and `pages/api/lower.js`.
+```bash
+npm install
+npx playwright install chromium
+npm run dev            # or: npm run build && npm start
+npm run check          # playwright: counts requests to /api/redirect
+```
 
-Run:
-    npm install && npm run build && npm start
-    curl -i localhost:3000/api/getAll
+Observed (next@16.2.1-canary.26, dev and prod):
 
-Result (next@canary, local prod build and a Vercel deployment):
-- `/api/getAll` -> 200 `{"route":"/api/getAll","ok":true}`
-- `/api/getall` -> 404 (routing is case-sensitive, as expected)
-
-The reported failure does not reproduce. In the reporter's repo the committed file is
-`pages/api/tweets/getall.js` (all lowercase) while the client fetched `/api/getAll`,
-i.e. git on a case-insensitive filesystem never recorded the rename.
+* `/from` -> click `<Link prefetch={false} href="/api/redirect">` =>
+  **2** requests: `GET /api/redirect?_rsc=...` **and** `GET /api/redirect`.
+  Server logs `redirect called` twice. Removing `app/loading.tsx` does not change this.
+* `/` -> `redirect('/api/redirect')` in a server component => **1** request
+  (this part of the original report is fixed; it produced 2 on next@14.2.3).

@@ -1,14 +1,21 @@
 {
-  "name": "camelcase-api-repro",
   "private": true,
+  "name": "issue-65764-repro",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check": "node check.mjs"
   },
   "dependencies": {
     "next": "canary",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "playwright": "1.62.1",
+    "typescript": "7.0.2"
   }
 }
