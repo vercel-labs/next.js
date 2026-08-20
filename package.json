@@ -1,0 +1,25 @@
+{
+  "name": "rsc-client-chunk-bundling-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "jquery": "3.7.1",
+    "moment": "2.30.1",
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/jquery": "^4.0.1",
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "playwright": "^1.62.1",
+    "typescript": "7.0.2"
+  }
+}
