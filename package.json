@@ -1,0 +1,21 @@
+{
+  "name": "url-parse-polyfill-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "verify": "node verify-polyfill.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "playwright": "^1.62.1",
+    "typescript": "^5.9.2"
+  }
+}
