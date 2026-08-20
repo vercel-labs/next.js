@@ -114,3 +114,21 @@ describe('Valid and Invalid Global CSS with Custom App', () => {
     }
   })
 })
+
+// A dependency that ships pre-scoped (already namespaced) plain `.css` files and
+// imports them itself is rejected as "Global CSS" without `transpilePackages`.
+// x-ref: https://github.com/vercel/next.js/issues/39516
+describe('Global CSS imported by a node_modules package', () => {
+  const { next } = nextTestSetup({
+    files: join(__dirname, 'fixtures', 'nm-scoped-global-css'),
+    skipStart: true,
+  })
+
+  it('should build successfully', async () => {
+    const { exitCode, cliOutput } = await next.build()
+    expect(cliOutput).not.toMatch(
+      /Global CSS.*cannot.*be imported from within.*node_modules/
+    )
+    expect(exitCode).toBe(0)
+  })
+})
