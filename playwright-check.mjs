@@ -1,0 +1,16 @@
+import { chromium } from 'playwright';
+const base = process.argv[2] || 'http://localhost:3000';
+const out = process.argv[3] || 'dev';
+const b = await chromium.launch();
+const p = await b.newPage();
+const reqs = [];
+p.on('response', r => reqs.push(`${r.status()} ${r.url()}`));
+await p.goto(base + '/');
+await p.click('a[href="/200"]');
+await p.waitForTimeout(3000);
+console.log('URL:', p.url());
+console.log('H1:', await p.locator('h1').first().textContent().catch(()=>null));
+console.log('BODY:', (await p.locator('body').innerText()).slice(0,300).replace(/\n/g,' | '));
+console.log('NETWORK:'); reqs.filter(r=>!r.includes('/_next/static')).forEach(r=>console.log('  '+r));
+await p.screenshot({path:`/workspace/.next-maintainer/reproduction-artifacts/playwright/${out}-after-client-nav.png`, fullPage:true});
+await b.close();
