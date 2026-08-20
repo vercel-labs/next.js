@@ -1,0 +1,13 @@
+{
+  "name": "codemod-line-endings-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "repro:linux": "bash ./run-linux.sh",
+    "repro:windows-emulated": "node ./emulate-windows-eol.js"
+  },
+  "devDependencies": {
+    "@next/codemod": "canary",
+    "jscodeshift": "0.14.0"
+  }
+}
