@@ -1,0 +1,16 @@
+{
+  "name": "with-docker-yarnrc-repro",
+  "private": true,
+  "packageManager": "yarn@4.5.1",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@repro/private-lib": "1.0.0",
+    "next": "15.0.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
