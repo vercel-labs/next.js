@@ -1100,4 +1100,44 @@ describe('getImageProps()', () => {
       deploymentId = undefined
     }
   })
+  // https://github.com/vercel/next.js/issues/42140
+  it('should render a usable blur placeholder for a remote blurDataURL', async () => {
+    const blurDataURL = 'https://example.com/blur.png'
+    const { props } = getImageProps({
+      alt: 'a nice desc',
+      src: 'https://example.com/test.png',
+      width: 400,
+      height: 400,
+      unoptimized: true,
+      placeholder: 'blur',
+      blurDataURL,
+    })
+    const backgroundImage = (props.style as Record<string, string>)
+      .backgroundImage
+
+    // Browsers refuse to load external resources referenced from inside a
+    // `data:` URL SVG, so wrapping a remote blurDataURL in the blur SVG
+    // renders a fully transparent (invisible) placeholder.
+    expect(backgroundImage).not.toContain('data:image/svg+xml')
+    expect(backgroundImage).toContain(blurDataURL)
+  })
+
+  it('should inline a base64 blurDataURL into the blur placeholder svg', async () => {
+    const blurDataURL =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8P4nhDwAGuAKPn6cicwAAAABJRU5ErkJggg=='
+    const { props } = getImageProps({
+      alt: 'a nice desc',
+      src: 'https://example.com/test.png',
+      width: 400,
+      height: 400,
+      unoptimized: true,
+      placeholder: 'blur',
+      blurDataURL,
+    })
+    const backgroundImage = (props.style as Record<string, string>)
+      .backgroundImage
+
+    expect(backgroundImage).toContain('data:image/svg+xml')
+    expect(backgroundImage).toContain(blurDataURL)
+  })
 })
