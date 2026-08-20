@@ -1,0 +1,22 @@
+{
+  "name": "next-51949-fontawesome-hydration",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "6.5.2",
+    "@fortawesome/free-brands-svg-icons": "6.5.2",
+    "@fortawesome/react-fontawesome": "0.2.2",
+    "next": "16.3.1-canary.25",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
