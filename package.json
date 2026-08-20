@@ -1,0 +1,20 @@
+{
+  "name": "repro-57415-css-modules-nonce",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "build:inline": "INLINE_CSS=1 next build",
+    "start:inline": "INLINE_CSS=1 next start -p 3001",
+    "check": "node check.js http://localhost:3001/ result"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
