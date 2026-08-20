@@ -1,0 +1,14 @@
+{
+  "name": "repro-73913-experimental-https-network-url",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --experimental-https",
+    "dev:hostflag": "next dev --experimental-https -H $HOST",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
