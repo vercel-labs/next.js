@@ -1,0 +1,17 @@
+{
+  "name": "issue-71365-static-export-query-params",
+  "private": true,
+  "scripts": {
+    "build": "next build --webpack",
+    "serve": "npx --yes serve@14 out -l 3000",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.9",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
