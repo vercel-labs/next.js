@@ -1,0 +1,22 @@
+{
+  "name": "next-53329-blur-placeholder",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "test": "node test/blur.mjs",
+    "test:dev": "node test/blur.mjs http://localhost:3000 dev",
+    "test:dev:throttled": "node test/blur.mjs http://localhost:3000 dev-throttled --throttle-js",
+    "test:prod": "node test/blur.mjs http://localhost:3001 prod",
+    "test:prod:throttled": "node test/blur.mjs http://localhost:3001 prod-throttled --throttle-js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
