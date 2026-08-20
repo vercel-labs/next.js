@@ -1,0 +1,14 @@
+{
+  "name": "repro-72389",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "15.0.2",
+    "react": "19.0.0-rc-02c0e824-20241028",
+    "react-dom": "19.0.0-rc-02c0e824-20241028"
+  }
+}
