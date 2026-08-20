@@ -1,0 +1,10 @@
+{
+  "name": "repro-59823",
+  "private": true,
+  "scripts": {
+    "check": "pnpm --filter web run typecheck"
+  },
+  "devDependencies": {
+    "typescript": "5.3.3"
+  }
+}
