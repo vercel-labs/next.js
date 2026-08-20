@@ -1,22 +1,40 @@
-# Repro: next/image `placeholder="blur"` with a URL `blurDataURL` renders nothing (#42140)
+# next/image emits an inline `style` attribute that a strict CSP blocks (vercel/next.js#61388)
 
-Next.js inlines the blur placeholder as a `data:image/svg+xml` background-image whose
-inner `<image href="...">` points at the given `blurDataURL`. Browsers block external
-resource loading inside data-URL SVGs, so any non-`data:` `blurDataURL`
-(`https://…`, `http://…`) produces a fully transparent placeholder and the network
-request for that URL is never made. A base64 data URL works.
+Minimal reproduction. Verified on `next@16.3.1-canary.25` (also reported on 14.1.x).
 
 ## Run
 
 ```bash
 npm install
-npm run dev   # or: npm run build && npm start
-# open http://localhost:3000
+npm run build && npm start   # or: npm run dev
+# open http://localhost:3000 in Chrome and check the console
 ```
 
-`/api/slow` serves `public/photo.png` after an 8s delay so the placeholder is visible.
-The first image uses `blurDataURL="http://localhost:3000/blur.png"` (broken, blank),
-the second uses the same PNG as a base64 data URL (blurred placeholder shows).
+`middleware.js` sends `style-src 'self'` (no `'unsafe-inline'`, no `'unsafe-hashes'`).
+`script-src` is intentionally permissive so the only violation reported is the image one.
 
-`node check.js` (with the dev server running) prints the number of non-transparent
-pixels rendered by each placeholder SVG: `0` for the URL case, `1600` for base64.
+## Expected
+
+No CSP violation.
+
+## Actual
+
+`next/image` always renders an inline style attribute:
+
+```html
+<img alt="Next.js Logo" loading="lazy" width="180" height="38" decoding="async"
+     data-nimg="1" style="color:transparent" src="/next.svg">
+```
+
+Chrome console:
+
+> Refused to apply inline style because it violates the following Content Security Policy
+> directive: "style-src 'self'". Either the 'unsafe-inline' keyword, a hash
+> ('sha256-zlqnbDt84zf1iSefLU/ImC54isoprH/MRiVZGskwexk='), or a nonce ('nonce-...') is required
+> to enable inline execution. Note that hashes do not apply to event handlers, style attributes
+> and javascript: navigations unless the 'unsafe-hashes' keyword is present.
+
+Source: `packages/next/src/shared/lib/get-img-props.ts` – `showAltText ? {} : { color: 'transparent' }`
+(and the `fill` / `placeholder` branches add more inline styles).
+
+Known workarounds: pass `style={{ color: undefined }}`, or build the tag manually with `getImageProps`.
