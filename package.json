@@ -1,0 +1,9 @@
+{
+  "name": "repro-root",
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter web build",
+    "dev": "pnpm --filter web dev",
+    "build:webpack": "pnpm --filter web exec next build --webpack"
+  }
+}

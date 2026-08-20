@@ -1,0 +1,7 @@
+{
+  "name": "@repro/native",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "exports": { ".": { "default": "./index.js" } }
+}
