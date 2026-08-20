@@ -1,26 +1,35 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Repro: next#67296 — non-`NEXT_PUBLIC_` `.env` vars missing in Edge Middleware on Vercel
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+`.env` contains:
 
-## Run
+```
+MY_SECRET=from-dotenv
+NEXT_PUBLIC_MY_PUBLIC=public-from-dotenv
+```
 
-```bash
+`middleware.js` (matcher `/mw`), `app/edge/route.js` (edge runtime) and
+`app/node/route.js` (node runtime) all return the same env values as JSON.
+
+## Local
+
+```
 npm install
 npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+curl localhost:3000/mw     # MY_SECRET = "from-dotenv"
+curl localhost:3000/edge   # MY_SECRET = "from-dotenv"
+curl localhost:3000/node   # MY_SECRET = "from-dotenv"
 ```
 
-## Observed
+## Deployed to Vercel
 
 ```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
+curl https://<deployment>/mw     # {"MY_SECRET":null,...,"NEXT_PUBLIC_MY_PUBLIC":"public-from-dotenv"}
+curl https://<deployment>/edge   # {"MY_SECRET":null,...}
+curl https://<deployment>/node   # {"MY_SECRET":"from-dotenv",...}
 ```
 
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+Reproduced with Next.js 16.3.1 (issue originally filed on 14.2.4).
+
+Note: `generate-env.js` (run from the `build` script) writes the `.env` file at
+build time only because the upload pipeline used here strips `.env` files; it is
+equivalent to committing a `.env` file to the repo.
