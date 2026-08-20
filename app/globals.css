@@ -1,0 +1,5 @@
+.bg {
+  width: 100px;
+  height: 100px;
+  background-image: url('https://example.com/image.png?a=1!!b=2');
+}
