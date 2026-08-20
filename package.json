@@ -1,0 +1,14 @@
+{
+  "name": "repro-45659",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "next build --webpack",
+    "repro": "bash repro.sh"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
