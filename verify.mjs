@@ -1,0 +1,21 @@
+import { chromium } from 'playwright'
+const ART='/workspace/.next-maintainer/reproduction-artifacts/playwright'
+const b = await chromium.launch()
+const p = await b.newPage()
+const nav=[]
+p.on('framenavigated', f => { if (f === p.mainFrame()) nav.push(f.url()) })
+p.on('console', m => console.log('CONSOLE:', m.text().slice(0,200)))
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+console.log('loaded home')
+await p.click('#to-other')
+await p.waitForTimeout(6000)
+console.log('URL after 1st click:', p.url())
+console.log('h1:', await p.locator('h1').first().innerText())
+await p.screenshot({ path: ART+'/after-first-click.png' })
+await p.click('#to-other').catch(e=>console.log('no link:',e.message.slice(0,80)))
+await p.waitForTimeout(4000)
+console.log('URL after 2nd click:', p.url())
+console.log('h1:', await p.locator('h1').first().innerText())
+await p.screenshot({ path: ART+'/after-second-click.png' })
+console.log('navigations:', JSON.stringify(nav, null, 1))
+await b.close()
