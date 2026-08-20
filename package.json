@@ -1,0 +1,19 @@
+{
+  "name": "repro-25456-css-modules-duplicated",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:webpack": "next dev --webpack -p 3001",
+    "dev:turbopack": "next dev -p 3000",
+    "build:webpack": "next build --webpack",
+    "check": "node nav.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.57.0"
+  }
+}
