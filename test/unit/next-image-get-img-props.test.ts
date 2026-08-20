@@ -397,6 +397,28 @@ describe('getImageProps()', () => {
       ['src', '/_next/image?url=%2Ftest.png&w=3840&q=75'],
     ])
   })
+  // Regression test for https://github.com/vercel/next.js/issues/44244
+  it('should handle sizes with vw inside calc()', async () => {
+    const { props: expected } = getImageProps({
+      alt: 'a nice desc',
+      src: '/test.png',
+      fill: true,
+      sizes: '33vw',
+    })
+    const { props } = getImageProps({
+      alt: 'a nice desc',
+      src: '/test.png',
+      fill: true,
+      sizes: 'calc(33vw - 6rem)',
+    })
+    expect(warningMessages).toStrictEqual([])
+    // The smallest candidate must be derived from the 33vw inside calc(),
+    // not fall back to every configured image/device size.
+    expect(props.srcSet).toBe(
+      '/_next/image?url=%2Ftest.png&w=256&q=75 256w, /_next/image?url=%2Ftest.png&w=384&q=75 384w, /_next/image?url=%2Ftest.png&w=640&q=75 640w, /_next/image?url=%2Ftest.png&w=750&q=75 750w, /_next/image?url=%2Ftest.png&w=828&q=75 828w, /_next/image?url=%2Ftest.png&w=1080&q=75 1080w, /_next/image?url=%2Ftest.png&w=1200&q=75 1200w, /_next/image?url=%2Ftest.png&w=1920&q=75 1920w, /_next/image?url=%2Ftest.png&w=2048&q=75 2048w, /_next/image?url=%2Ftest.png&w=3840&q=75 3840w'
+    )
+    expect(props.srcSet).toBe(expected.srcSet)
+  })
   it('should handle sizes', async () => {
     const { props } = getImageProps({
       alt: 'a nice desc',
