@@ -1,0 +1,19 @@
+{
+  "name": "nextjs-48627-safari12-syntax",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3010",
+    "build": "next build",
+    "start": "next start -p 3011",
+    "scan:dev": "node scan.mjs http://localhost:3010 /",
+    "scan:prod": "node scan.mjs http://localhost:3011 /"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "acorn": "^8.12.0"
+  }
+}
