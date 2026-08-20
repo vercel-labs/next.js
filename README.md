@@ -48,5 +48,6 @@ the very same failure surfaces as `TypeError: a[e] is not a function` from the s
 ## Versions
 
 - `next@14.2.14` + webpack: reproduces (error thrown, app crashes).
+- `next@15.5.4` + webpack: reproduces (same `TypeError` from the webpack runtime frame).
 - `next@16.3.1` + `next build --webpack`: does **not** crash; the router aborts the action request and
   hard-reloads the page onto the new deployment instead.
