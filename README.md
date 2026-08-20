@@ -1,10 +1,48 @@
-# Repro: #53717 generateStaticParams does not pass parent params to child
+# Repro for vercel/next.js#58171 — `output: export` + `generateStaticParams()`
 
-Parent `generateStaticParams` lives in `app/[slug]/page.js`.
+Issue: https://github.com/vercel/next.js/issues/58171
 
-    npm install && npx next build
+Reporter's repo (https://github.com/meds/nextjs-broken-export, `next@14.0.1`) fails
+`next build` with:
 
-Observed (Next 16.3.1-canary.25): child `generateStaticParams` logs `received params: {}`
-and no `/[slug]/[id]` routes are prerendered. Moving the parent `generateStaticParams`
-into `app/[slug]/layout.js` makes the child receive `{"slug":"1"}` / `{"slug":"2"}` and
-prerenders 4 pages. With `next dev`, `/12314/iasd` returns 200 despite `dynamicParams = false`.
+```
+Error: Page "/test/[id]" is missing "generateStaticParams()" so it cannot be used with "output: export" config.
+```
+
+even though the page *does* export `generateStaticParams()`. Root cause: it returns
+`['test']` (strings) instead of `[{ id: 'test' }]`, so no params are produced and Next.js
+reported the generic "missing" message. Same generic message was reported when
+`generateStaticParams()` returns `[]`.
+
+## Cases
+
+| script | `generateStaticParams()` |
+| --- | --- |
+| `npm run case-a` | returns `['test']` (reporter's original code) |
+| `npm run case-b` | returns `[]` |
+| `npm run case-c` | not exported at all |
+
+## Run
+
+```bash
+npm install
+npm run all
+```
+
+## Result on `next@canary` (16.3.1-canary.25)
+
+Each case now fails with an accurate, distinct message — the misleading "missing" wording
+is no longer used for A or B:
+
+```
+case-a: Error: Invalid value at index 0 returned from generateStaticParams for "/test/[id]".
+        Expected an object, but received type string.
+case-b: Error: Page "/test/[id]" returned an empty array from "generateStaticParams()".
+        With "output: export", at least one route must be generated.
+case-c: Error: Page "/test/[id]" is missing "generateStaticParams()" so it cannot be used
+        with "output: export" config.
+```
+
+All three link to https://nextjs.org/docs/messages/generate-static-params.
+
+Reproduced original wording only on `next@14.0.1` (case A).

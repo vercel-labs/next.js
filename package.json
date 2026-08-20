@@ -1,6 +1,20 @@
 {
-  "name": "gsp-53717",
+  "name": "nextjs-58171-repro",
   "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
-  "dependencies": { "next": "canary", "react": "19.2.0", "react-dom": "19.2.0" }
+  "scripts": {
+    "case-a": "next build cases/a",
+    "case-b": "next build cases/b",
+    "case-c": "next build cases/c",
+    "all": "npm run case-a; npm run case-b; npm run case-c"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
 }
