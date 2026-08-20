@@ -1,0 +1,19 @@
+{
+  "name": "next-51540-font-hinting-repro",
+  "private": true,
+  "scripts": {
+    "fonts": "node scripts/fetch-google-fonts.mjs",
+    "dev": "next dev -p 3000",
+    "compare": "node scripts/compare.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.62.1",
+    "pngjs": "^7.0.0"
+  }
+}
