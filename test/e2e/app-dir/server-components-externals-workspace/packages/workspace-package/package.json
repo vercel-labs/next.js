@@ -1,0 +1,10 @@
+{
+  "name": "workspace-package",
+  "version": "1.0.0",
+  "description": "Workspace package that is linked into node_modules",
+  "main": "index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./index.js"
+  }
+}
