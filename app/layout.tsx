@@ -1,11 +1,7 @@
-import { ReactNode } from "react";
-
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
-        <div>{children}</div>
-      </body>
+      <body style={{ margin: 0, fontFamily: 'sans-serif' }}>{children}</body>
     </html>
-  );
+  )
 }
