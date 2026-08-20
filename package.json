@@ -1,0 +1,19 @@
+{
+  "name": "repro-61213",
+  "private": true,
+  "scripts": {
+    "build:export": "NEXT_OUTPUT=export next build",
+    "build:ssr": "next build",
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/react": "19.2.7",
+    "@types/node": "22.19.2"
+  }
+}
