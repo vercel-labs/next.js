@@ -1,0 +1,15 @@
+{
+  "name": "next-concat-perf-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build:concat": "node select.js concat && rm -rf .next && next build",
+    "build:plus": "node select.js plus && rm -rf .next && next build",
+    "bench": "npm run build:plus && npm run build:concat"
+  },
+  "dependencies": {
+    "next": "14.2.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
