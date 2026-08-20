@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "scripts": {
+    "collector": "node collector.mjs",
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "1.9.0",
+    "@vercel/otel": "1.13.0",
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
