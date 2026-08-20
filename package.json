@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "nextjs-esi-hydration-42461",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "proxy": "node esi-proxy.js",
+    "check": "node check.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
