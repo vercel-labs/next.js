@@ -1,0 +1,15 @@
+{
+  "name": "issue-67573-next-mdx-remote-older-react",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "next-mdx-remote": "5.0.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
