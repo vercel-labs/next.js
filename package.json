@@ -1,0 +1,21 @@
+{
+  "name": "next-60687-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000"
+  },
+  "dependencies": {
+    "isomorphic-form-data": "2.0.0",
+    "next": "canary",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "playwright": "^1.62.1",
+    "typescript": "7.0.2"
+  }
+}
