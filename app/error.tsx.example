@@ -1,0 +1,13 @@
+'use client'
+
+// Optional: rename to app/error.tsx to see that an App Router error boundary
+// only relocates the failure — the whole route segment is still replaced,
+// the failed `next/dynamic` component cannot fail in isolation.
+export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+  return (
+    <div>
+      <h2>error.tsx boundary caught: {error.message}</h2>
+      <button onClick={() => reset()}>Retry</button>
+    </div>
+  )
+}
