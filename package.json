@@ -1,0 +1,14 @@
+{
+  "name": "nextjs-66210-strictmode-effect-hydration",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "check": "node check.mjs 3000"
+  },
+  "dependencies": {
+    "next": "16.0.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}
