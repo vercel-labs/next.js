@@ -1,0 +1,8 @@
+{
+  "name": "issue-53562-repro",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "emulate-windows-paths": "node scripts/emulate-windows-paths.mjs"
+  }
+}
