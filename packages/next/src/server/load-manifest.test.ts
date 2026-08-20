@@ -1,4 +1,4 @@
-import { loadManifest } from './load-manifest.external'
+import { evalManifest, loadManifest } from './load-manifest.external'
 import { readFileSync } from 'fs'
 
 jest.mock('fs')
@@ -78,5 +78,46 @@ describe('loadManifest', () => {
     expect(Object.isFrozen(result2)).toBe(true)
 
     expect(result).toBe(result2)
+  })
+
+  it('should treat an empty manifest file like a missing one when handling missing manifests', () => {
+    // The dev server re-reads its manifests from disk on every request while the
+    // bundler rewrites them on every rebuild, so a reader can observe the file
+    // after it was created but before its contents were written.
+    ;(readFileSync as jest.Mock).mockReturnValue('')
+
+    const result = loadManifest(
+      'path/to/manifest',
+      false,
+      cache,
+      false,
+      // handleMissing
+      true
+    )
+
+    expect(result).toBeUndefined()
+  })
+})
+
+describe('evalManifest', () => {
+  const cache = new Map<string, unknown>()
+
+  afterEach(() => {
+    jest.resetAllMocks()
+    cache.clear()
+  })
+
+  it('should treat an empty manifest file like a missing one when handling missing manifests', () => {
+    ;(readFileSync as jest.Mock).mockReturnValue('')
+
+    const result = evalManifest(
+      'path/to/manifest',
+      false,
+      cache,
+      // handleMissing
+      true
+    )
+
+    expect(result).toBeUndefined()
   })
 })
