@@ -1,14 +1,15 @@
 {
-  "name": "unstable-cache-date-repro",
+  "name": "unstable-cache-isr-stale-persist-67751",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check": "node poll.mjs http://localhost:3000/cached/5s 30",
+    "repro": "./test-version.sh 15.5.4 3000"
   },
   "dependencies": {
-    "next": "canary",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "next": "15.5.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   }
 }
