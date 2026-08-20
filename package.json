@@ -1,0 +1,5 @@
+{
+  "name": "next-67375-repro",
+  "private": true,
+  "devDependencies": { "playwright": "1.55.1" }
+}
