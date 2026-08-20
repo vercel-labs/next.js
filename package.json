@@ -1,0 +1,14 @@
+{
+  "name": "next-export-txt-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "npx serve@14 out -l 3000"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
