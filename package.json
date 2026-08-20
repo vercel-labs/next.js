@@ -1,0 +1,19 @@
+{
+  "name": "issue-63520-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3001"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5",
+    "@types/react": "19.2.0",
+    "@types/node": "20.12.7"
+  }
+}
