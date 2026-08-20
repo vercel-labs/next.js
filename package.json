@@ -1,0 +1,9 @@
+{
+  "name": "repro-71561",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "pnpm --filter web build",
+    "verify": "node verify.mjs"
+  }
+}
