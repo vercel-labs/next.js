@@ -1,0 +1,10 @@
+{
+  "name": "browserslist-current-node-repro",
+  "private": true,
+  "scripts": { "build": "next build" },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
