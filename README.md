@@ -1,31 +1,28 @@
-# Reproduction for vercel/next.js#49297
+# Repro: issue #66751 — page remounted / loading boundary re-triggered when params of an (optional) catch-all change
 
-`loading.tsx` is not shown when navigating to the **same route** with different
-search params; the URL only updates once the full server response arrives.
+App structure:
+- `app/[[...catchAll]]/page.tsx` — main slot, optional catch-all, 1.5s artificial delay, client `Counter` state
+- `app/[[...catchAll]]/loading.tsx` — loading boundary of the main slot
+- `app/@modal/default.tsx`, `app/@modal/photo/[id]/page.tsx` — parallel slot
 
 ## Run
 
 ```bash
 npm install
-npx playwright install chromium
-npm run build && npm start   # or: npm run dev
+npm run dev        # or: npm run build && npm start
+# then:
+node check.mjs     # requires `npm i playwright` and `npx playwright install chromium`
 ```
 
-Open http://localhost:3000/a?page=1 (3s server delay per render).
+Manual: open `/`, click the counter twice, then click "+ open modal".
 
-- Click **A?page=2** (same route, new search params) -> no `app/a/loading.tsx`,
-  URL stays `?page=1` for ~3s, then content swaps.
-- Click **to B** (different route) -> `app/b/loading.tsx` appears immediately.
+## Observed (next@16.3.1-canary.25, dev and start)
+Clicking the link navigates `/` -> `/photo/1`. The main slot's `loading.tsx` is shown and the
+client counter resets from `count: 2` to `count: 0`; params go from `[]` to `["photo","1"]`.
 
-Automated check (server must be running on :3000):
+## Expected
+Only the `@modal` slot navigation matters; the catch-all page should keep local state and
+receive new params without remounting or re-triggering its loading boundary.
 
-```bash
-npm run test:nav
-```
-
-Observed on next@16.3.1-canary.25:
-
-```
-{ "loadingSeenMs": null, "urlChangedMs": 3066, "contentChangedMs": 3068 }
-different-route loading shown at ms: 73
-```
+On next@14.2.14 and 14.2.15 the counter is preserved and no loading boundary appears
+(there params stay `[]`, i.e. the page is not re-rendered at all).
