@@ -1,0 +1,13 @@
+{
+  "name": "nextjs-46296-standalone-env-local",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start:standalone": "node .next/standalone/server.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
