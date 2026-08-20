@@ -1,0 +1,7 @@
+.late-import {
+  color: rgb(0, 0, 255);
+}
+
+/* `@import` written after another rule must still end up at the top of the
+   emitted stylesheet, otherwise browsers ignore it. */
+@import url('/imported.css');
