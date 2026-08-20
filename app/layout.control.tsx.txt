@@ -1,0 +1,11 @@
+// Control: no Suspense boundary -> /gone returns 404 and /redirect returns 307.
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <nav>global nav</nav>
+        {children}
+      </body>
+    </html>
+  );
+}
