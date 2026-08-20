@@ -1,0 +1,7 @@
+{
+  "name": "@test/cjs-module",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "commonjs",
+  "dependencies": { "undici": "6.18.2" }
+}

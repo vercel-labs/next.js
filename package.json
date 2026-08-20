@@ -1,0 +1,14 @@
+{
+  "name": "nextjs-66572-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build"
+  },
+  "dependencies": {
+    "@test/cjs-module": "file:packages/cjs-module",
+    "next": "16.3.1-canary.25",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
