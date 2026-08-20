@@ -1,0 +1,14 @@
+{
+  "name": "repro-59092",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
