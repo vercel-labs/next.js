@@ -1,0 +1,6 @@
+.sprite-css {
+  height: 200px;
+  width: 200px;
+  background: url('./sprite.svg#passport') no-repeat;
+  background-size: contain;
+}
