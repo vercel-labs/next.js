@@ -10,10 +10,10 @@ npm install
 
 # 1. deterministic: reproduces all three reported failures every run
 npx next dev --webpack --port 5177 > dev.log 2>&1 &
-curl -s -o /dev/null http://localhost:5177/          # warm the dev server
-node race.js                                          # prints REPRODUCED, exit 0
+node race.js          # warms each route, then prints REPRODUCED (exit 0)
 
 # 2. proves the bundler really creates that state on every rebuild
+curl -s -o /dev/null http://localhost:5177/
 node measure-window.js 40
 ```
 

@@ -19,9 +19,10 @@ const get = async (route) => {
 ;(async () => {
   let failures = 0
   for (const t of targets) {
-    const original = fs.readFileSync(t.file)
-    // warm the route so the only variable is the manifest content
+    // warm the route first so the manifest exists and the only variable
+    // afterwards is its content
     await get(t.route)
+    const original = fs.readFileSync(t.file)
     fs.writeFileSync(t.file, '') // <- zero bytes, file present: the rebuild window
     const status = await get(t.route)
     fs.writeFileSync(t.file, original)
