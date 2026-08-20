@@ -411,6 +411,56 @@ async function readNormalizedNFT(next, name) {
          ]
         `)
       })
+
+      // Regression test for https://github.com/vercel/next.js/issues/97598:
+      // `@swc/helpers` >= 0.5.23 lists a `module-sync` export condition, which
+      // Node >= 22.12 prefers over `default` for `require()`. That makes
+      // `next/dist/server/require-hook.js` load
+      // `@swc/helpers/esm/_interop_require_default.js` at runtime, while tracing
+      // only recorded the `cjs/` variant, so a copied `.next/standalone` exited
+      // with MODULE_NOT_FOUND before the server started listening.
+      it('should copy the module-sync variant of @swc/helpers into .next/standalone', async () => {
+        const helperPackageDirs: string[] = []
+        const visited = new Set<string>()
+        const stack = [path.join(next.testDir, '.next/standalone')]
+
+        while (stack.length > 0) {
+          const dir = stack.pop()!
+          let real: string
+          try {
+            real = fs.realpathSync(dir)
+          } catch {
+            continue
+          }
+          // node_modules is full of symlinks, don't walk anything twice.
+          if (visited.has(real)) continue
+          visited.add(real)
+
+          for (const entry of fs.readdirSync(dir)) {
+            const child = path.join(dir, entry)
+            try {
+              if (!fs.statSync(child).isDirectory()) continue
+            } catch {
+              continue
+            }
+            if (entry === 'helpers' && path.basename(dir) === '@swc') {
+              helperPackageDirs.push(child)
+            } else {
+              stack.push(child)
+            }
+          }
+        }
+
+        expect(helperPackageDirs.length).toBeGreaterThan(0)
+
+        for (const helperDir of helperPackageDirs) {
+          expect(
+            fs.existsSync(
+              path.join(helperDir, 'esm/_interop_require_default.js')
+            )
+          ).toBe(true)
+        }
+      })
     })
 
     describe('default mode', () => {
