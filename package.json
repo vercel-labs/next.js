@@ -1,19 +1,11 @@
 {
-  "name": "repro",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "name": "repro-35110",
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build" },
   "dependencies": {
-    "next": "^16.3.1-canary.25",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "my-lib": "file:./packages/my-lib",
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
   }
 }
