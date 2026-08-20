@@ -1,20 +1,21 @@
 {
+  "name": "repro-56344-loading-mismatch",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start",
-    "check": "node check.mjs"
+    "start": "next start -p 3000",
+    "check": "node scripts/check-loading.mjs"
   },
   "dependencies": {
     "next": "canary",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "latest",
+    "react-dom": "latest"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "playwright": "1.61.0",
-    "typescript": "^5.4.0"
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "playwright": "^1.49.0",
+    "typescript": "^5"
   }
 }
