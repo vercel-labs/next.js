@@ -1,0 +1,7 @@
+{
+  "include": [
+    "dot-access.ts"
+  ],
+  "extends": "./tsconfig.json",
+  "exclude": []
+}
