@@ -1,0 +1,19 @@
+{
+  "name": "issue-69467-performanceobserver-check",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "start": "next start -p 3000",
+    "dev": "next dev -p 3000",
+    "check": "node ff.mjs http://localhost:3000/ https://nextjs.org/"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.57.0"
+  }
+}
