@@ -1,0 +1,15 @@
+{
+  "name": "repro-70661",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start -p 3130",
+    "check": "node navigation-requests.mjs"
+  },
+  "dependencies": {
+    "next": "15.0.0-rc.0",
+    "react": "19.0.0-rc-fb9a90fa48-20240614",
+    "react-dom": "19.0.0-rc-fb9a90fa48-20240614"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}
