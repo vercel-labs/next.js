@@ -1,0 +1,23 @@
+{
+  "name": "repro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "dev:custom-server": "node server.cjs",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1",
+    "next": "^16.3.1-canary.25",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "private": true
+}
