@@ -1,26 +1,26 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Reproduction attempt: next.js#66660
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+`basePath: '/admin'`, App Router, `<Link href="/">` clicked after a hard load of `/admin/about`.
+Reported behavior: navigation lands on `/admin/admin`.
 
 ## Run
 
 ```bash
 npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+npx playwright install chromium
+npm run dev            # terminal 1
+npm run verify         # terminal 2 (or: node verify.mjs http://localhost:3000)
 ```
 
-## Observed
+Also tested with `npm run build && npm run start`, and with `next@canary`.
 
-```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
-```
+## Result observed here
 
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+`next@14.2.3` (the version in the issue) and `next@16.3.1-canary.25`, `next dev` and
+`next build && next start`: the hover href is `/admin` and the click navigates to
+`/admin` — the double `basePath` was not reproduced.
+
+Additional variants that also did NOT reproduce:
+`redirects()` in config (client router filter populated), `middleware.js`,
+`trailingSlash: true`, distinct root layouts (MPA navigation), and hybrid
+`app/` + `pages/` projects (pages -> app and app -> pages navigation).
