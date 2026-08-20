@@ -1,0 +1,17 @@
+{
+  "name": "next-65995-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "dev:turbo": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "styled-jsx": "5.1.7",
+    "babel-plugin-react-compiler": "1.0.0"
+  }
+}
