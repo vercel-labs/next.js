@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "issue-62903-repro",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.4.5",
+    "@types/react": "^19.0.0",
+    "typescript": "5.1.3"
+  }
+}
