@@ -1,0 +1,16 @@
+{
+  "name": "repro-old",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "dependencies": {
+    "my-lib": "*",
+    "next": "13.1.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "typescript": "4.9.5",
+    "@types/node": "18.13.0",
+    "@types/react": "18.0.28"
+  }
+}
