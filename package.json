@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "repro-51870",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repro": "bash repro.sh"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.13",
+    "@types/react": "^18.0.26",
+    "typescript": "^5"
+  }
+}
