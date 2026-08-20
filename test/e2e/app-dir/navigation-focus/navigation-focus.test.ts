@@ -71,4 +71,23 @@ describe('navigation-focus', () => {
     // Fragment URI not targetted unlike native behavior
     expect(await browser.locator(':target').isVisible()).toEqual(false)
   })
+
+  // Regression test for https://github.com/vercel/next.js/issues/33060
+  // The clicked `next/link` anchor must not stay focused once the new segment
+  // rendered, otherwise its :focus/:focus-visible styles stay stuck on the
+  // previous nav item. Note that this contradicts the current behavior
+  // asserted above, which only documents the status quo.
+  it('does not keep focus on the clicked link after navigation', async () => {
+    const browser = await next.browser('/')
+    await browser.elementByCss('a[href="/interactive-segment"]').click()
+    // Wait until the new segment rendered.
+    await browser.waitForElementByCss('textarea')
+
+    expect(
+      await browser.eval(() => ({
+        tagName: document.activeElement.tagName,
+        href: document.activeElement.getAttribute('href'),
+      }))
+    ).not.toEqual({ tagName: 'A', href: '/interactive-segment' })
+  })
 })
