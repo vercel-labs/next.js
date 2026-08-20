@@ -1,0 +1,13 @@
+{
+  "name": "repro-74488-docker-hostname",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start:standalone": "node scripts/run-standalone.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
