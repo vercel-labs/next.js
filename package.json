@@ -1,0 +1,22 @@
+{
+  "name": "issue-64882-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4010",
+    "build": "next build",
+    "serve": "http-server -p 4011 -c-1 out",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "14.2.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "http-server": "14.1.1",
+    "playwright": "1.62.1",
+    "typescript": "7.0.2"
+  }
+}
