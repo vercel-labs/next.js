@@ -1,26 +1,36 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Repro: "Malformed PostCSS Configuration" with an ESM postcss.config.js exporting instantiated plugins
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+Issue: https://github.com/vercel/next.js/issues/68887
 
 ## Run
 
 ```bash
-npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+npm install --legacy-peer-deps
+npm run build          # next build --webpack  -> FAILS
+npm run dev            # next dev --webpack    -> 500 + build error in browser
+npm run build:turbopack # next build (Turbopack) -> succeeds
 ```
 
-## Observed
+## Observed (Next.js 16.3.1, webpack)
 
 ```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
+Error: An unknown PostCSS plugin was provided ([object Object]).
+Read more: https://nextjs.org/docs/messages/postcss-shape
+Failed to compile.
+./app/layout.module.css
+Error: Malformed PostCSS Configuration
+    at .../next/dist/build/webpack/config/blocks/css/plugins.js:178:41
 ```
 
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+## Notes
+
+- Not ESM-specific: the same config written as CommonJS (`postcss.config.cjs` with
+  `module.exports = { plugins: [presetEnv({stage:2})] }`) fails identically.
+- Root cause is Next's webpack PostCSS config normalization
+  (`build/webpack/config/blocks/css/plugins.js`), which only accepts string /
+  `[string, options]` / object-map plugin entries and rejects already-instantiated
+  plugin objects that plain PostCSS accepts.
+- Object-map form (`plugins: { 'postcss-preset-env': { stage: 2 } }`) works, so ESM
+  config loading itself is fine.
+- Turbopack (default in Next 16) loads the same config successfully; only the
+  webpack path errors.
