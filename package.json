@@ -1,0 +1,19 @@
+{
+  "name": "next-lint-config-import-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "lint": "next lint",
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "some-package": "file:./packages/some-package"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-next": "15.1.0"
+  }
+}
