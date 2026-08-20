@@ -1,0 +1,19 @@
+{
+  "name": "repro-31021",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "next build",
+    "build:notrace": "NEXT_REPRO_TRACING=false next build"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest",
+    "@mui/material": "^5.15.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "lodash": "^4.17.21",
+    "date-fns": "^2.30.0"
+  }
+}
