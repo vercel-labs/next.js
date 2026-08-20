@@ -1,0 +1,18 @@
+{
+  "name": "repro-middleware-treeshaking",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "build:webpack": "next build --webpack"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
