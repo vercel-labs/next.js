@@ -1,0 +1,4 @@
+node_modules
+.next
+components/Icon.tsx
+package-lock.json

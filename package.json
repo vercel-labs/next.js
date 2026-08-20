@@ -1,0 +1,19 @@
+{
+  "name": "nextjs-67386-icon-object-treeshaking",
+  "private": true,
+  "scripts": {
+    "prebuild": "node generate-icons.mjs",
+    "build": "next build",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
