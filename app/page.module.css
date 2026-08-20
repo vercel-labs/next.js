@@ -1,0 +1,4 @@
+/* imported after square.module.css by page.js, so this must win */
+.square {
+  background: green;
+}
