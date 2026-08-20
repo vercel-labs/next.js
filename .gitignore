@@ -1,0 +1,4 @@
+node_modules
+.next
+axe-artifacts
+package-lock.json
