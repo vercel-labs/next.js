@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+const out='/workspace/.next-maintainer/reproduction-artifacts/playwright';
+const b = await chromium.launch();
+const p = await (await b.newContext()).newPage();
+const msgs=[];
+p.on('console', m => { if(m.type()==='error') msgs.push(m.text()); });
+await p.goto('http://localhost:3000/adasd', {waitUntil:'networkidle'});
+const bg = await p.evaluate(()=>getComputedStyle(document.body).backgroundColor);
+const styleNonce = await p.evaluate(()=>[...document.querySelectorAll('style')].map(s=>s.nonce||'(none)'));
+const sheetRules = await p.evaluate(()=>[...document.styleSheets].map(s=>{try{return s.cssRules.length}catch(e){return 'err'}}));
+console.log(JSON.stringify({bg, styleNonce, sheetRules, errors:msgs}, null, 2));
+await p.screenshot({path: out+'/not-found-csp-blocked.png', fullPage:true});
+await b.close();
