@@ -1,0 +1,9 @@
+{
+  "name": "@libraries/teaser",
+  "main": "src/index.tsx",
+  "version": "1.0.0",
+  "dependencies": {
+    "@segments/carousel": "workspace:*"
+  },
+  "sideEffects": false
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@applications/base",
+  "version": "1.0.0",
+  "dependencies": {
+    "@libraries/teaser": "workspace:*",
+    "next": "canary",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "dev:turbopack": "next dev --turbopack --port 3000",
+    "dev:webpack": "next dev --webpack --port 3000",
+    "build:turbopack": "next build",
+    "build:webpack": "next build --webpack",
+    "start": "next start"
+  }
+}

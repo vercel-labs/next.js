@@ -1,0 +1,6 @@
+packages:
+  - '@applications/*'
+  - '@libraries/*'
+  - '@segments/*'
+allowBuilds:
+  sharp: set this to true or false

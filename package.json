@@ -1,0 +1,11 @@
+{
+  "name": "pnpm-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:webpack": "pnpm --filter @applications/base build:webpack",
+    "build:turbopack": "pnpm --filter @applications/base build:turbopack",
+    "dev:webpack": "pnpm --filter @applications/base dev:webpack",
+    "dev:turbopack": "pnpm --filter @applications/base dev:turbopack"
+  }
+}

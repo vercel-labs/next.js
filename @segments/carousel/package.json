@@ -1,0 +1,6 @@
+{
+  "name": "@segments/carousel",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "sideEffects": false
+}
