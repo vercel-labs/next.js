@@ -1,0 +1,19 @@
+{
+  "name": "next-73845-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001"
+  },
+  "dependencies": {
+    "next": "^16.3.1-canary.25",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.0.1",
+    "typescript": "^5.7.2"
+  }
+}
