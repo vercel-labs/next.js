@@ -69,6 +69,22 @@ describe('acceptLanguage', () => {
     )
   })
 
+  // https://github.com/vercel/next.js/issues/18676
+  it('matches a less specific preference when the header tag is more specific', () => {
+    // A region qualified header tag must fall back to the configured language
+    // locale instead of being dropped, which made locale detection use the
+    // default locale for e.g. `Accept-Language: fr-FR` with locales en, fr.
+    expect(acceptLanguage('fr-FR', ['en', 'fr'])).toEqual('fr')
+    expect(acceptLanguage('fr-XX,en', ['fr', 'en'])).toEqual('fr')
+    expect(acceptLanguage('en-US,fr', ['en', 'fr'])).toEqual('en')
+    expect(acceptLanguage('es-419', ['en', 'es'])).toEqual('es')
+    // tags that already match a configured locale keep working
+    expect(acceptLanguage('fr', ['en', 'fr'])).toEqual('fr')
+    expect(acceptLanguage('fr-FR,fr;q=0.9,en;q=0.8', ['en', 'fr'])).toEqual(
+      'fr'
+    )
+  })
+
   it('explicit preference overrides range match', () => {
     expect(acceptLanguage('da, en-GB', ['da-DK', 'en-GB', 'da'])).toEqual(
       'en-GB'
