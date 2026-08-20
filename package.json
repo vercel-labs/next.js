@@ -1,0 +1,20 @@
+{
+  "name": "nextjs-73382-missing-cache-control",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start:a": "PORT=3001 SERVER_NAME=A next start",
+    "start:b": "PORT=3002 SERVER_NAME=B next start",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
