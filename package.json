@@ -1,0 +1,13 @@
+{
+  "name": "repro-86598-process-listener-leak",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "repro": "NODE_ENV=production node serverless-sim.mjs 12"
+  },
+  "dependencies": {
+    "next": "16.0.7",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
