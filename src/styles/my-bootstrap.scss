@@ -1,0 +1,6 @@
+@import "bootstrap/scss/functions";
+// bootstrap/scss/_variables.scss internally does `@import "variables-dark"`,
+// which is what fails on Windows with --turbopack.
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/bootstrap";

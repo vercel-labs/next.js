@@ -1,0 +1,22 @@
+{
+  "name": "turbopack-bootstrap-scss-windows",
+  "private": true,
+  "scripts": {
+    "build": "next build --turbopack",
+    "build:webpack": "next build --webpack",
+    "dev": "next dev --turbopack"
+  },
+  "dependencies": {
+    "bootstrap": "5.3.3",
+    "next": "16.0.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "sass": "1.94.2"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/react": "19.2.6",
+    "@types/node": "20.19.0",
+    "@types/react-dom": "19.2.3"
+  }
+}
