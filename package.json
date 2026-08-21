@@ -1,0 +1,13 @@
+{
+  "name": "next-build-worker-oom",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "build:webpack": "next build --webpack"
+  },
+  "dependencies": {
+    "next": "16.3.0-preview.5",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
