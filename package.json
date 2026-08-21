@@ -1,0 +1,26 @@
+{
+  "name": "repro-95528-standalone-proxy-rerun",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "repro": "PORT=3000 HOSTNAME=127.0.0.1 node .next/standalone/server.js"
+  },
+  "dependencies": {
+    "next": "16.2.10",
+    "next-intl": "4.9.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2",
+    "@types/node": "24.3.0",
+    "@types/react": "19.2.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "sharp",
+      "@parcel/watcher"
+    ]
+  }
+}
