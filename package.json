@@ -1,0 +1,13 @@
+{
+  "name": "turbopack-monorepo-repro",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "build": "yarn workspace frontend build",
+    "dev": "yarn workspace frontend dev"
+  }
+}
