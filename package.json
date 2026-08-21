@@ -1,0 +1,13 @@
+{
+  "name": "next-76704-build-trace-oom",
+  "private": true,
+  "scripts": {
+    "setup": "node generate.mjs",
+    "build": "node generate.mjs && next build"
+  },
+  "dependencies": {
+    "next": "15.1.7",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
