@@ -1,0 +1,7 @@
+{
+  "name": "next-75960-repro",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": { "build": "next build", "repro": "node setup-fixture.mjs && node repro.mjs" },
+  "dependencies": { "next": "15.1.6", "react": "18.3.1", "react-dom": "18.3.1" }
+}
