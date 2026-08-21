@@ -1,0 +1,21 @@
+{
+  "name": "next-97668-devtools-drag-touch",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "repro": "node scripts/drag.mjs touch",
+    "repro:mouse": "node scripts/drag.mjs mouse"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "playwright": "^1.57.0",
+    "typescript": "^5"
+  }
+}
