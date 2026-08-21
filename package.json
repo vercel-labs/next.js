@@ -1,0 +1,19 @@
+{
+  "name": "repro-77319-empty-slot-dir",
+  "private": true,
+  "scripts": {
+    "setup": "node -e \"require('fs').mkdirSync('src/app/@slot',{recursive:true})\"",
+    "build": "npm run setup && next build"
+  },
+  "dependencies": {
+    "next": "15.2.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19"
+  }
+}
