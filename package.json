@@ -1,0 +1,20 @@
+{
+  "name": "repro-84363",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19"
+  }
+}
