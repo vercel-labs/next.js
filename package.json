@@ -1,0 +1,20 @@
+{
+  "name": "nextjs-92339-static-export-segment-windows",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "next build",
+    "repro": "next build && node repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5"
+  }
+}
