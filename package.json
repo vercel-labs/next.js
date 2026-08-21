@@ -1,0 +1,22 @@
+{
+  "name": "next-83509-repro",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "algoliasearch": "4.24.0",
+    "next": "14.2.30",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-instantsearch": "7.16.2",
+    "react-instantsearch-router-nextjs": "7.16.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}
