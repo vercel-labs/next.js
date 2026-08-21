@@ -1,0 +1,5 @@
+{
+  "name": "repro-85470-prefetch-request-doubling",
+  "private": true,
+  "devDependencies": { "playwright": "1.61.0" }
+}
