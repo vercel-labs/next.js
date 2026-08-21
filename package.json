@@ -1,0 +1,6 @@
+{
+  "name": "repro-82233",
+  "private": true,
+  "type": "module",
+  "scripts": { "repro": "node repro.mjs" }
+}
