@@ -1,0 +1,16 @@
+{
+  "name": "issue-82729-favicon-hmr",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "measure": "xvfb-run -a node hmr-favicon-test.mjs"
+  },
+  "dependencies": {
+    "next": "15.3.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
