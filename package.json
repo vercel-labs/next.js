@@ -1,0 +1,15 @@
+{
+  "name": "repro-76323-og-image-static-params",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "dev": "next dev",
+    "verify": "next build && node ./verify.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
