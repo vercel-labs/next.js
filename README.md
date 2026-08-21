@@ -1,26 +1,25 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Repro: antd cssinjs SSR extraction + `__dirname` broken under Turbopack (next.js#77513)
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
-
-## Run
+Pages Router + `@ant-design/cssinjs` `extractStyle()` inside `pages/_document.js`.
 
 ```bash
 npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+
+# Turbopack (default on Next 16)
+npx next build            # -> cssinjs cache entries after SSR = 1 ... extractStyle() length = 41
+# webpack
+npx next build --webpack  # -> cssinjs cache entries after SSR = 5 ... extractStyle() length = 72631
 ```
 
-## Observed
+Also compare `next dev` vs `next dev --webpack` and look at the `[repro]` log lines.
 
-```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
-```
-
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+Observed with Turbopack:
+* `extractStyle(cache, true)` returns an empty stylesheet (`.data-ant-cssinjs-cache-path{content:"";}`),
+  even though the rendered HTML contains antd's `css-<hash>` class names. antd's own copy of
+  `@ant-design/cssinjs` never writes into the cache created in `_document`
+  (a direct `useStyleRegister` call from the app *does* land in that cache), i.e. there are two
+  module instances of `@ant-design/cssinjs` on the server.
+* `__dirname` inside server code is the virtual path `/ROOT/pages`, which does not exist on disk,
+  so any `fs` read relative to `__dirname` (as done by setups that read a pre-generated
+  `antd.min.css`) fails with `ENOENT`. With webpack `__dirname` is
+  `<project>/.next/server/pages` (a real directory).
