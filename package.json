@@ -1,0 +1,17 @@
+{
+  "name": "turbopack-worklet-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack --port 3000",
+    "build": "next build --turbopack",
+    "start": "next start --port 3000"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

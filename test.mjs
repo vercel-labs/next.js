@@ -1,0 +1,16 @@
+import { chromium } from "playwright";
+const OUT = "/workspace/.next-maintainer/reproduction-artifacts/playwright";
+const b = await chromium.launch({ args: ["--autoplay-policy=no-user-gesture-required"] });
+const p = await b.newPage();
+const msgs = [];
+p.on("console", (m) => msgs.push(`[console:${m.type()}] ${m.text()}`));
+p.on("pageerror", (e) => msgs.push(`[pageerror] ${e.message}`));
+await p.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+await p.click("#worker");
+await p.click("#worklet-url");
+await p.waitForTimeout(4000);
+const log = await p.textContent("#log");
+console.log("=== page log ===\n" + log);
+console.log("=== console ===\n" + msgs.join("\n"));
+await p.screenshot({ path: OUT + "/result.png", fullPage: true });
+await b.close();
