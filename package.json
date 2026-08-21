@@ -1,0 +1,11 @@
+{
+  "name": "next-81667-decorator-accessor-repro",
+  "private": true,
+  "scripts": { "dev": "next dev --turbopack", "build": "next build" },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": { "typescript": "^5", "@types/node": "^20", "@types/react": "^19" }
+}
