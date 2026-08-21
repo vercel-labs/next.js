@@ -1,13 +1,20 @@
 {
-  "name": "vercheck",
+  "name": "nextjs-84232-hmr-assetprefix",
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev --port 3300",
+    "dev:prefix": "ASSET_PREFIX=http://localhost:8888/app1/20250924.1 next dev --port 3300",
+    "proxy:strip": "PROXY_MODE=strip node proxy.mjs",
+    "proxy:passthrough": "PROXY_MODE=passthrough node proxy.mjs",
+    "check": "node check.mjs"
   },
   "dependencies": {
-    "next": "^16.3.1-canary.26",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "next": "15.5.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
   }
 }
