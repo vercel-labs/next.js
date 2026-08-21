@@ -1,0 +1,17 @@
+import { chromium } from 'playwright';
+const OUT='/workspace/.next-maintainer/reproduction-artifacts/playwright';
+const base=process.argv[2]; const tag=process.argv[3];
+const b=await chromium.launch(); const p=await b.newPage();
+const log=[]; p.on('load',()=>log.push('load '+p.url()));
+const docs=[]; p.on('response',r=>{if(r.request().resourceType()==='document')docs.push(r.status()+' '+r.url())});
+await p.goto(base+'/test/42',{waitUntil:'networkidle'});
+await p.getByRole('link',{name:'Go to /test/42/new'}).click();
+await p.waitForURL('**/test/42/new'); await p.waitForSelector('text=Update Tag');
+log.push('modal open '+p.url());
+await p.getByRole('button',{name:'Update Tag'}).click();
+await p.waitForTimeout(4000);
+log.push('after '+p.url());
+log.push('BODY: '+(await p.locator('body').innerText()).slice(0,200).replace(/\n/g,' | '));
+await p.screenshot({path:OUT+`/${tag}-control-after.png`});
+log.push('DOCS '+JSON.stringify(docs));
+console.log(log.join('\n')); await b.close();
