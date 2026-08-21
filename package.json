@@ -1,0 +1,11 @@
+{
+  "name": "repro-87877-streaming-closing-tags",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.1.1-canary.7"
+  }
+}
