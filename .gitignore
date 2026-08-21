@@ -1,0 +1,4 @@
+node_modules
+.next
+test-results
+action-ran.log
