@@ -1,0 +1,10 @@
+/* Case 1: relative `@use './rem'` reached through an `@forward` chain */
+@use '../src/case1-forward.scss';
+
+/* Case 2: relative `@use './css-content'` inside a node_modules package (ag-grid-community) */
+@use '../src/case2-nodemodules.scss';
+
+/* Case 3: bare `@use 'rem'` that relies on sassOptions. Uncomment to test.
+   Fails with sassOptions.includePaths, works with sassOptions.loadPaths,
+   identically under Turbopack and --webpack. */
+/* @use '../src/case3-includepaths.scss'; */
