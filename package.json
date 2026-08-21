@@ -1,0 +1,18 @@
+{
+  "name": "next-87630-bun-cache-components-settimeout",
+  "private": true,
+  "scripts": {
+    "dev": "bun --bun next dev"
+  },
+  "dependencies": {
+    "next": "16.1.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}
