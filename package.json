@@ -1,0 +1,11 @@
+{
+  "name": "issue-96470-turbopack-dev-404-probes",
+  "private": true,
+  "scripts": { "dev": "next dev -p 3200" },
+  "dependencies": {
+    "next": "16.3.0-canary.105",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": { "@types/react": "19.2.18", "@types/node": "26.1.2", "typescript": "6.0.3" }
+}
