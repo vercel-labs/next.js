@@ -1,0 +1,15 @@
+[package]
+name = "comment_probe"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+swc_plugin_macro = "=1.1.0"
+swc_core = { version = "=45.0.1", features = ["ecma_plugin_transform", "ecma_visit", "ecma_ast", "common"] }
+
+[profile.release]
+opt-level = "z"
+lto = false

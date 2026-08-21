@@ -1,0 +1,19 @@
+{
+  "name": "next-86844-swc-plugin-comments",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "dev:webpack": "next dev --webpack --port 3001"
+  },
+  "dependencies": {
+    "comment-probe-plugin": "file:./plugin",
+    "next": "16.0.7",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}

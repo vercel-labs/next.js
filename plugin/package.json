@@ -1,0 +1,6 @@
+{
+  "name": "comment-probe-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "main": "comment_probe.wasm"
+}
