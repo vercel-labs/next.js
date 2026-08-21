@@ -1,26 +1,23 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Repro: Turbopack does not expand `${configDir}` in an extended tsconfig
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+Upstream issue: https://github.com/vercel/next.js/issues/86143
+
+`config/tsconfig-base.json` sets `"baseUrl": "${configDir}/src"` (TypeScript 5.5+ template variable)
+and `tsconfig.json` extends it. `tsc --noEmit` resolves `@/components/Center` fine; Turbopack does not.
 
 ## Run
 
 ```bash
 npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+npx next build          # FAILS: Module not found '@/components/Center'
+npx next build --webpack # PASSES
 ```
 
-## Observed
+Turbopack error:
 
 ```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
+Module not found: Can't resolve '@/components/Center'
+Import map: aliased to relative './components/Center' inside of [project]/config/${configDir}/src
 ```
 
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+Reproduced with next 16.0.3 and 16.3.1-canary.26.
