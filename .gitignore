@@ -1,0 +1,6 @@
+node_modules
+.next
+dev.log
+memory.csv
+components
+app/r
