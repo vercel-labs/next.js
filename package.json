@@ -1,0 +1,19 @@
+{
+  "name": "next-85374-export-rsc-404",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "next build",
+    "emulate-windows": "node scripts/emulate-windows-export.mjs",
+    "serve": "serve out -l 3000",
+    "repro": "npm run build && npm run emulate-windows && npm run serve"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "serve": "14.2.4"
+  }
+}
