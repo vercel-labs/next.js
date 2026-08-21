@@ -1,0 +1,19 @@
+{
+  "name": "repro-77531-cache-control-stale",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "repro": "bash repro.sh"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
