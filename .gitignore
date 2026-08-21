@@ -1,0 +1,4 @@
+node_modules
+.next
+logs
+next-env.d.ts

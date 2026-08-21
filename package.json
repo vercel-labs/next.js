@@ -1,0 +1,20 @@
+{
+  "name": "issue-75423-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "repro": "next build && node repro.mjs"
+  },
+  "dependencies": {
+    "next": "14.2.23",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/react": "18.3.3",
+    "typescript": "5.7.3"
+  }
+}
