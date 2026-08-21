@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "dev:bigheaders": "NODE_OPTIONS=--max-http-header-size=65536 next dev -p 3000",
+    "repro": "node repro-431.mjs 3000"
+  },
+  "dependencies": {
+    "next": "16.0.2-canary.21",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "playwright": "1.62.1",
+    "typescript": "^5"
+  }
+}
