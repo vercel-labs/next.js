@@ -1,0 +1,20 @@
+{
+  "name": "repro",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "dev:webpack": "next dev --webpack",
+    "build": "next build --turbopack"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "next": "^16.3.1-canary.26",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "raw-loader": "^4.0.2"
+  }
+}
