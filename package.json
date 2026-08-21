@@ -1,0 +1,18 @@
+{
+  "name": "repro-88032",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "serve out -p 3000",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "next": "16.1.1-canary.10",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1",
+    "serve": "14.2.4"
+  }
+}
