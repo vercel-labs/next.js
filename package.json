@@ -1,0 +1,27 @@
+{
+  "name": "repro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "storybook": "storybook dev -p 6006 --no-open"
+  },
+  "dependencies": {
+    "next": "15.5.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@storybook/nextjs-vite": "9.1.5",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "storybook": "9.1.5",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vite": "7.1.5"
+  }
+}
