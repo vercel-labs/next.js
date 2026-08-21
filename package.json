@@ -1,0 +1,14 @@
+{
+  "name": "nextjs-91845-standalone-rewrite",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start:standalone": "cp -r .next/static .next/standalone/.next/ && PORT=3000 HOSTNAME=127.0.0.1 node .next/standalone/server.js",
+    "dev": "next dev -p 3000"
+  },
+  "dependencies": {
+    "next": "16.2.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  }
+}
