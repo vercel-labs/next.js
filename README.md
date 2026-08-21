@@ -1,26 +1,36 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Repro: vercel/next.js#86035 — intercepting-route modal shows stale background
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+Minimal copy of the reporter's app (https://github.com/smitkhanparaZuru/parallel-old, MIT-less demo)
+pinned to `next@15` (reporter used 15.1.4; confirmed on 15.5.23).
 
 ## Run
 
 ```bash
 npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+npm run build && npm start          # local: does NOT reproduce
+# deploy to Vercel, then run against a FRESH (cold-cache) deployment URL:
+npm i playwright && npx playwright install chromium-headless-shell
+BASE=https://<fresh-deployment-url> node repro-steps.mjs
 ```
 
-## Observed
+`repro-steps.mjs` walks the reporter's 11 steps and prints, for each step, the URL, the
+background page (`children` slot) and the modal page (`@modal` slot).
+
+## Observed (next@15.5.23, Vercel, first visit to a fresh deployment)
 
 ```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
+7  discover     | url=/dark/discover | background=Discover Page | modal=none
+8  profile      | url=/dark/profile  | background=Discover Page | modal=Profile Modal Page
+9  ->setting    | url=/dark/setting  | background=Discover Page | modal=Setting Modal Page
+10 ->changelog  | url=/dark/changelog| background=Discover Page | modal=Changelog Modal Page
+11 ->profile    | url=/dark/profile  | background=Chat Page     | modal=Profile Modal Page   <-- BUG
 ```
 
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+Expected at step 11: `background=Discover Page`.
+
+## Notes
+
+- Only reproduces on Vercel and only on the first run against a freshly deployed URL
+  (cold CDN/prefetch cache); repeated runs against a warm deployment pass.
+- `next start` locally (15.1.4 and 15.5.23) does not reproduce.
+- Not reproducible on `next@16.3.1` (cold, freshly deployed) with the same script.

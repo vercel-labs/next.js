@@ -1,0 +1,33 @@
+import { chromium } from 'playwright';
+const BASE = process.env.BASE;
+const W = Number(process.env.W || 2500);
+const b = await chromium.launch();
+const p = await b.newPage();
+const state = async (n) => {
+  const s = await p.evaluate(() => {
+    const root = document.getElementById('modal-root');
+    const modal = root ? root.innerText : '';
+    const main = document.body.innerText.replace(modal, '');
+    const bg = (main.match(/(Chat|Discover|Profile|Setting|Changelog) Page/g)||['none']).join(',');
+    const md = (modal.match(/(Profile|Setting|Changelog) Modal Page/g)||['none']).join(',');
+    return bg + ' | modal=' + md;
+  });
+  console.log(`${n} | url=${new URL(p.url()).pathname} | background=${s}`);
+};
+const hover = async () => { for (const t of ['Profile','Setting','Chat','Discover','Changelog']) { try { await p.hover(`div.border-green-500 >> text="${t}"`);} catch{} } await p.waitForTimeout(1500); };
+const click = async (n, sel) => { await p.click(sel); await p.waitForTimeout(W); await state(n); };
+await p.goto(BASE + '/dark/chat'); await p.waitForTimeout(2000); await hover(); await state('1 initial chat');
+await click('2 profile modal', 'div.border-green-500 >> text="Profile"');
+await click('3 ->setting', '#modal-root >> text="Setting"');
+await click('4 ->changelog', '#modal-root >> text="Changelog"');
+await click('5 ->profile', '#modal-root >> text="Profile"');
+await click('6 close', '#modal-root button');
+await hover();
+await click('7 discover', 'div.border-green-500 >> text="Discover"');
+await hover();
+await click('8 profile modal', 'div.border-green-500 >> text="Profile"');
+await click('9 ->setting', '#modal-root >> text="Setting"');
+await click('10 ->changelog', '#modal-root >> text="Changelog"');
+await click('11 ->profile', '#modal-root >> text="Profile"');
+await p.screenshot({path: (process.env.OUT||'/tmp')+'/step11-'+(process.env.TAG||'x')+'.png', fullPage:true});
+await b.close();
