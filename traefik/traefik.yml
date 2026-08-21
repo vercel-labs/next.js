@@ -1,0 +1,11 @@
+entryPoints:
+  web:
+    address: ":8080"
+  websecure:
+    address: ":8443"
+providers:
+  file:
+    filename: ./traefik/dynamic.yml
+log:
+  level: INFO
+accessLog: {}

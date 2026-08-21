@@ -1,0 +1,25 @@
+tls:
+  certificates:
+    - certFile: ./traefik/cert.pem
+      keyFile: ./traefik/key.pem
+http:
+  routers:
+    app:
+      rule: "PathPrefix(`/`)"
+      entryPoints: [web]
+      service: app
+      middlewares: [compress]
+    apptls:
+      rule: "PathPrefix(`/`)"
+      entryPoints: [websecure]
+      tls: {}
+      service: app
+      middlewares: [compress]
+  middlewares:
+    compress:
+      compress: {}
+  services:
+    app:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:3002"
