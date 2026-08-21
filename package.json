@@ -1,11 +1,16 @@
 {
-  "name": "next-caniuse-lite-license-repro",
+  "name": "csp-prefetch-matcher-repro",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "scripts": {
-    "repro": "node check-license.mjs"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "verify": "node scripts/verify.mjs"
   },
   "dependencies": {
-    "next": "latest"
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   }
 }
