@@ -1,0 +1,20 @@
+{
+  "name": "turbopack-file-loader-wasm-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "build:webpack": "next build"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "file-loader": "^6.2.0",
+    "typescript": "^5.8.3",
+    "@types/react": "^19.1.2",
+    "@types/node": "^22"
+  }
+}
