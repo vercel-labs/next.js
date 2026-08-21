@@ -1,0 +1,13 @@
+{
+  "name": "repro-74646",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "NODE_OPTIONS=--enable-source-maps next start"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "canary",
+    "react-dom": "canary"
+  }
+}
