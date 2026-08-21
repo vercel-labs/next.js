@@ -1,0 +1,20 @@
+{
+  "name": "issue-86383-tbt-harness",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "measure": "node measure.js"
+  },
+  "dependencies": {
+    "next": "16.0.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "playwright": "1.55.1",
+    "typescript": "5.9.3"
+  }
+}
