@@ -1,0 +1,24 @@
+{
+  "name": "repro-93144",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "build:webpack": "next build --webpack"
+  },
+  "dependencies": {
+    "@types/dagre": "^0.7.54",
+    "@xyflow/react": "^12.11.3",
+    "dagre": "0.8.5",
+    "framer-motion": "12.38.0",
+    "next": "16.2.3",
+    "next-sanity": "10.1.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "typescript": "5.9.2"
+  }
+}
