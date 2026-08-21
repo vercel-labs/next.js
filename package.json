@@ -1,0 +1,22 @@
+{
+  "name": "repro-82170",
+  "private": true,
+  "scripts": {
+    "dev:turbo": "next dev --turbopack -p 3001",
+    "dev:webpack": "next dev -p 3002",
+    "build:turbo": "next build --turbopack",
+    "build:webpack": "next build"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "browserslist": [
+    "chrome 64",
+    "edge 79",
+    "firefox 67",
+    "opera 51",
+    "safari 12"
+  ]
+}
