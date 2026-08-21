@@ -1,0 +1,16 @@
+{
+  "name": "repro-85810-nodejs-proxy-truncated-body",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repro": "node scripts/run.mjs"
+  },
+  "dependencies": {
+    "next": "16.0.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
