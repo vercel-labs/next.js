@@ -1,0 +1,5 @@
+@media (width >= 768px) and (width < 1280px) {
+  .d-only-tablet-none {
+    display: none;
+  }
+}
