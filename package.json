@@ -1,0 +1,18 @@
+{
+  "name": "next-export-og-image-extension",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "serve": "npx --yes serve@14 out -p 3000"
+  },
+  "dependencies": {
+    "next": "15.4.4",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "typescript": "^5.8.3"
+  }
+}
