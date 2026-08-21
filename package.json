@@ -1,0 +1,8 @@
+{
+  "name": "repro-79770-swc-binary-duplication",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "repro": "bash repro.sh"
+  }
+}
