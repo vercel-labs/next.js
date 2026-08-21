@@ -1,26 +1,23 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Repro: CSS Modules break selective hydration (FOUC) — vercel/next.js#77239
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+A `React.lazy` component (resolved after a 5s delay) inside `<Suspense>` imports a CSS Module.
+The component IS server-rendered (its hashed class name is in the HTML), but its stylesheet is
+NOT referenced by the initial document — it is only fetched when the lazy client chunk loads,
+so the content is unstyled for ~5s (FOUC).
+
+Routes:
+- `/` — Pages Router
+- `/app-demo` — App Router
 
 ## Run
 
 ```bash
 npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+npm run build
+npm run start
+# then open http://localhost:3000/ and http://localhost:3000/app-demo
 ```
 
-## Observed
-
-```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
-```
-
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+Observed with next@16.3.1-canary.26 + react@19 (Turbopack build): initial
+`getComputedStyle(#footer).color === rgb(0,0,0)`, no `link[rel=stylesheet]` in the document,
+and the CSS chunk is requested only at ~5.1s, after which the color becomes `rgb(255,0,0)`.

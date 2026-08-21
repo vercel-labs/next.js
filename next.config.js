@@ -1,2 +1,2 @@
 /** @type {import('next').NextConfig} */
-export default {};
+module.exports = {};
