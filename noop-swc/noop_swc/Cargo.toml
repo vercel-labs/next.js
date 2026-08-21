@@ -1,0 +1,16 @@
+[package]
+name = "noop_swc"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["plugin"]
+plugin = ["swc_core/ecma_plugin_transform"]
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+swc_core = { workspace = true, features = ["common", "ecma_ast", "ecma_visit", "ecma_parser"]}

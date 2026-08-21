@@ -1,0 +1,24 @@
+{
+  "name": "noop-swc",
+  "version": "0.0.1",
+  "description": "A noop SWC plugin that prints filenames being processed",
+  "license": "MIT",
+  "keywords": [
+    "swc-plugin",
+    "noop",
+    "development"
+  ],
+  "main": "target/wasm32-wasip1/release/noop_swc.wasm",
+  "scripts": {
+    "build": "cargo build --release --target=wasm32-wasip1",
+    "test": "cargo test"
+  },
+  "files": [],
+  "preferUnplugged": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": {
+    "name": "Jan Nicklas"
+  }
+}
