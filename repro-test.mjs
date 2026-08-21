@@ -1,0 +1,25 @@
+import { chromium } from 'playwright';
+const base = process.argv[2] || 'http://localhost:3000';
+const out = process.argv[3] || 'local';
+const b = await chromium.launch();
+const p = await b.newPage();
+await p.goto(base + '/photos/1', { waitUntil: 'networkidle' });
+console.log('entry modal present:', await p.locator('dialog.modal').count());
+await p.getByText('Home').click();
+await p.waitForURL('**/');
+await p.waitForTimeout(1500);
+await p.locator('a.card', { hasText: '1' }).first().click();
+await p.waitForURL('**/photos/1');
+await p.waitForTimeout(1500);
+const dlg = await p.locator('dialog.modal').count();
+const url = p.url();
+console.log('after back-nav to /photos/1 -> url', url, 'modal count', dlg);
+await p.screenshot({ path: `/workspace/.next-maintainer/reproduction-artifacts/playwright/${out}-photo1-revisit.png` });
+// control: photo 2
+await p.goto(base + '/', { waitUntil: 'networkidle' });
+await p.waitForTimeout(1000);
+await p.locator('a.card', { hasText: '2' }).first().click();
+await p.waitForURL('**/photos/2');
+await p.waitForTimeout(1000);
+console.log('control photo2 modal count', await p.locator('dialog.modal').count());
+await b.close();
