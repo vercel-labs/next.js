@@ -1,0 +1,38 @@
+[
+  {
+    "edit": 1,
+    "rebuilding": 1,
+    "done": 1,
+    "msgs": [
+      "[Fast Refresh] rebuilding",
+      "[Fast Refresh] done in 26ms"
+    ]
+  },
+  {
+    "edit": 2,
+    "rebuilding": 1,
+    "done": 1,
+    "msgs": [
+      "[Fast Refresh] rebuilding",
+      "[Fast Refresh] done in 15ms"
+    ]
+  },
+  {
+    "edit": 3,
+    "rebuilding": 1,
+    "done": 1,
+    "msgs": [
+      "[Fast Refresh] rebuilding",
+      "[Fast Refresh] done in 10ms"
+    ]
+  },
+  {
+    "edit": 4,
+    "rebuilding": 1,
+    "done": 1,
+    "msgs": [
+      "[Fast Refresh] rebuilding",
+      "[Fast Refresh] done in 4ms"
+    ]
+  }
+]

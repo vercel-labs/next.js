@@ -1,0 +1,10 @@
+{
+  "name": "issue-89530-fast-refresh-counter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "count:bun": "node run.mjs bun-turbopack \"bun --bun ./node_modules/next/dist/bin/next dev --turbopack --port 3000\" 3000",
+    "count:node": "node run.mjs node-turbopack \"node ./node_modules/next/dist/bin/next dev --turbopack --port 3003\" 3003"
+  },
+  "devDependencies": { "playwright": "^1.50.0" }
+}
