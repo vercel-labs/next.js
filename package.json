@@ -1,0 +1,13 @@
+{
+  "name": "next-76269-escaped-space-css",
+  "private": true,
+  "scripts": {
+    "build": "next build --webpack",
+    "build:turbopack": "next build"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
