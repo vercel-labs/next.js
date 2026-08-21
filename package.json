@@ -1,0 +1,21 @@
+{
+  "name": "next-83034-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "playwright": "^1.55.0",
+    "typescript": "5.9.2"
+  }
+}
