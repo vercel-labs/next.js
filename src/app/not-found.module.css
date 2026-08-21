@@ -1,0 +1,51 @@
+.page {
+  padding: 64px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  max-width: 520px;
+  width: 100%;
+  padding: 32px;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(15, 23, 42, 0.04);
+  text-align: center;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.title {
+  font-size: 32px;
+  margin-top: 8px;
+}
+
+.subtitle {
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 12px;
+}
+
+.actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (prefers-color-scheme: dark) {
+  .eyebrow,
+  .subtitle {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .card {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+}

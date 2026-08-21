@@ -1,0 +1,42 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.primary {
+  background: #111827;
+  color: #fff;
+}
+
+.secondary {
+  background: transparent;
+  color: inherit;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.ghost {
+  background: transparent;
+  color: inherit;
+  border-color: rgba(0, 0, 0, 0.12);
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .primary {
+    background: #22c55e;
+    color: #04150a;
+  }
+  .secondary,
+  .ghost {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
