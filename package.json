@@ -1,0 +1,16 @@
+{
+  "name": "repro-78509",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "dev:webpack": "next dev",
+    "build": "next build",
+    "setup": "mkdir -p docker-data/postgres && chmod 000 docker-data/postgres"
+  },
+  "dependencies": {
+    "@sentry/nextjs": "9.47.1",
+    "next": "15.3.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  }
+}
