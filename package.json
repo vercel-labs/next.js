@@ -1,0 +1,19 @@
+{
+  "name": "repro-84095",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "build:turbopack": "next build --turbopack",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "15.6.0-canary.21",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
