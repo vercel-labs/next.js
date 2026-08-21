@@ -1,0 +1,21 @@
+{
+  "name": "turbopack-react-native-flow-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "dev:webpack": "next dev --webpack",
+    "build": "next build --turbopack"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.26",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.4",
+    "react-native-safe-area-context": "5.6.1",
+    "react-native-web": "0.21.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
