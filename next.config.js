@@ -1,4 +1,7 @@
-/** @type {import('next').NextConfig} */
 module.exports = {
-  cacheComponents: true,
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'de', 'fr'],
+    localeDetection: false,
+  },
 }

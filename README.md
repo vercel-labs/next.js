@@ -1,43 +1,30 @@
-# Repro: `cacheComponents` Activity reappear breaks imperative DOM/WebGL libraries
+# Minimal repro for vercel/next.js#95637
 
-Issue: https://github.com/vercel/next.js/issues/93495
+`NextRouter was not mounted` (500) when a **webpack** production build is served through the
+documented programmatic custom-server API (`next({ dev: false })`), if `useRouter()` is called
+from an **external** (non-bundled, `node_modules`) component rendered inside `pages/_app`.
 
-`FakeMap` in `app/fake-map-gl.js` is a ~20 line stand-in for Mapbox GL / Leaflet /
-Three.js: its `remove()` drops the internal DOM reference (`this._container = null`),
-just like `mapboxgl.Map#remove()`.
+No `next-translate`, no `i18n` config, no `output: 'standalone'` needed.
 
-`/map` uses the very common "create once, keep it in a ref" pattern. With
-`cacheComponents: true` the previous route is kept alive in `<Activity mode="hidden">`,
-so refs/state survive while effects are cleaned up. On reappear the effect re-runs,
-sees a non-null ref, reuses the *destroyed* instance and crashes:
-
-```
-TypeError: Cannot read properties of null (reading 'appendChild')
-```
-
-`/map-fixed` shows the recommended pattern: create the instance inside the effect
-(or force a remount with a `key`) so a reappear always builds a fresh instance.
-
-## Steps
+## Run
 
 ```bash
 npm install
-npm run build && npm start   # production build is required to see the Activity path
+npm run build          # next build --webpack
+npm run start:custom   # NODE_ENV=production node server.js
+curl -i http://localhost:3000/     # => 500 "NextRouter was not mounted"
+
+npm run start:next     # same build via `next start`
+curl -i http://localhost:3000/     # => 200
 ```
 
-1. open http://localhost:3000
-2. click "Go to /map"  -> `map created`, `marker added`
-3. click "Go to /" -> `map cleanup -> map.remove()`
-4. click "Go to /map" again -> `map effect re-ran, reusing existing instance` +
-   `TypeError: Cannot read properties of null (reading 'appendChild')`, the map
-   subtree is gone.
+## Matrix (observed, next 16.2.10 / react 19.2.6 / node 24)
 
-Repeat with "Go to /map-fixed": the instance is recreated and nothing crashes.
+| build | server | result |
+|---|---|---|
+| `next build --webpack` | `node server.js` (custom) | **500 NextRouter was not mounted** |
+| `next build --webpack` | `next start` | 200 |
+| `next build` (Turbopack) | `node server.js` (custom) | 200 |
 
-## Notes
-
-- Removing `cacheComponents: true` from `next.config.js` makes step 4 fully remount
-  the client component (`map created` again) and the crash disappears, i.e. the crash
-  is specific to the Activity-based route preservation.
-- `next dev` hits the same crash on first mount because Strict Mode double-invokes
-  effects, which is a cheap way to detect the pattern.
+The `useRouter()` call must come from a package that webpack leaves external in the server build
+(here `vendor/router-wrapper`, copied into `node_modules` by `setup.js` on postinstall); an inline component in `_app` is bundled and does not trigger it.
