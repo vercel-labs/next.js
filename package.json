@@ -1,0 +1,21 @@
+{
+  "name": "repro-84649",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev --turbopack -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
