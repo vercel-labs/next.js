@@ -1,0 +1,10 @@
+{
+  "name": "repro-89773-agents-md-range",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "next": "^16",
+    "react": "^19",
+    "react-dom": "^19"
+  }
+}
