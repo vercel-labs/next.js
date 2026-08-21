@@ -1,0 +1,15 @@
+{
+  "name": "next-78118-font-hinting-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check": "python3 scripts/compare-hinting.py"
+  },
+  "dependencies": {
+    "next": "15.3.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
