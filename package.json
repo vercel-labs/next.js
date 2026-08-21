@@ -1,0 +1,26 @@
+{
+  "name": "next-86785-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "browserslist": [
+    "chrome 111",
+    "edge 111",
+    "firefox 111",
+    "safari 16.4"
+  ],
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
