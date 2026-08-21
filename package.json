@@ -1,0 +1,22 @@
+{
+  "name": "repro-78323",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "15.3.1",
+    "next-rspack": "15.3.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "sass": "^1.86.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4",
+    "typescript": "^5"
+  }
+}

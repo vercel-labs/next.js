@@ -1,0 +1,4 @@
+:root {
+    --value: #fff;
+    --test-variable: var(var(--value)); // mistake here
+}
