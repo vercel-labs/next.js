@@ -1,26 +1,56 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Reproduction for vercel/next.js#77568 — infinite "failed to forward action response" loop
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+Minimal reproduction of the self-sustaining server action forwarding loop reported in
+https://github.com/vercel/next.js/issues/77568.
 
-## Run
+## Setup
 
 ```bash
 npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
 ```
+
+## Reproduce (dev)
+
+```bash
+npm run dev          # terminal 1
+npm run loop         # terminal 2
+```
+
+## Reproduce (production)
+
+```bash
+npm run build && npm start   # terminal 1
+npm run loop                 # terminal 2
+```
+
+## What happens
+
+`npm run loop` sends a single `POST /foo` with a `next-action` header whose action id
+belongs to `app/[locale]/page.js` (this is what a client does when a fetch action is
+posted to a route the action is not associated with).
+
+The `middleware.js` rewrite (next-intl style locale rewrite) means the action is not
+found in the current worker, so `handleAction` forwards the request to the worker
+pathname from the server actions manifest — the *literal* `/[locale]` path with
+unresolved dynamic segments. That forwarded request hits middleware again, the action
+is again not found for that page, and it is forwarded again, forever:
+
+```
+[middleware] POST /[locale] next-action=<id> x-action-forwarded=1
+[middleware] POST /[locale] next-action=<id> x-action-forwarded=1
+... thousands of times ...
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+```
+
+The loop continues after the client disconnects and only ends when the process crashes
+or is restarted, matching the reports of servers needing cron-based restarts.
 
 ## Observed
 
-```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
-```
+* next 15.4.6 (`next dev` and `next start`): thousands of forwarded `POST /[locale]`
+  requests per single client request, ending in a V8 heap OOM crash.
+* next 16.3.1-canary.26: fixed — the request returns `404` with
+  `x-nextjs-action-not-found: 1` and exactly one forward, no loop.
+  (`handleAction` now skips forwarding when `x-action-forwarded` is already set.)
 
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+To check canary: `npm install next@canary react@19.2.0 react-dom@19.2.0` and rerun.
