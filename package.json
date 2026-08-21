@@ -1,0 +1,21 @@
+{
+  "name": "repro-88662-relay-eager-esmodules-turbopack",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "dev:webpack": "next dev --webpack",
+    "build": "next build --turbopack",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "relay-runtime": "21.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
