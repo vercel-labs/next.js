@@ -1,0 +1,13 @@
+{
+  "name": "repro-77243-no-async-client-component",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint fixtures"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "canary",
+    "eslint": "^9"
+  }
+}
