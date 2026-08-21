@@ -1,0 +1,17 @@
+{
+  "name": "use-cache-iframe-hmr-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "host": "node host-server.js",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.0-canary.50",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "playwright": "^1.50.0"
+  }
+}
