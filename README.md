@@ -1,28 +1,15 @@
-# `<Link href="#hash">` does not activate the CSS `:target` selector
+# Repro: next#93419 — spurious Lightning CSS warning for `:target-current`
 
-Reproduction for https://github.com/vercel/next.js/issues/51346
-
-Repaired from the reporter's repro (https://github.com/tilman/nextlink-css-target-selector-bug):
-React bumped to 19 and the stale `experimental.appDir` key removed so it installs/runs on `next@canary`.
+Mirror of the reporter's zip (https://github.com/vercel/next.js/issues/93419).
 
 ## Run
-
-```bash
+```
 npm install
-npm run dev            # http://localhost:3000 (Pages Router) and /appExample (App Router)
-npx playwright install chromium   # only needed for the automated check
-npm run check          # drives Chromium and prints the computed background colour
+npm run dev
+# open http://localhost:3000
 ```
 
-## Expected vs actual
-
-`#sometesttarget:target { background: blue }`
-
-| action | url | expected bg | actual bg |
-| --- | --- | --- | --- |
-| `<a href="#sometesttarget">` | `/#sometesttarget` | blue | `rgb(0, 0, 255)` ✅ |
-| `<Link href="#sometesttarget">` | `/#sometesttarget` | blue | `rgba(0, 0, 0, 0)` ❌ |
-
-Same result in the App Router (`/appExample`), in `next dev` and `next build && next start`.
-Cause: client-side hash navigation uses `history.pushState`, which does not update the
-document's target element (see https://bugs.chromium.org/p/chromium/issues/detail?id=89165).
+## Observed (next 16.2.4, Turbopack)
+`next dev` prints "Parsing CSS source code failed" / "'target-current' is not
+recognized as a valid pseudo-class..." for `src/app/page.module.css:32`, even
+though the selector is valid CSS and the emitted stylesheet contains the rule.
