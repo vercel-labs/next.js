@@ -1,0 +1,5 @@
+.next
+.pnp.*
+.yarn/*
+!.yarn/patches
+node_modules
