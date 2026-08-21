@@ -1,0 +1,20 @@
+{
+  "name": "issue-83288-next-config-ts-prod-start",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "repro": "bash ./repro.sh"
+  },
+  "dependencies": {
+    "next": "15.5.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2",
+    "@types/node": "22.10.0",
+    "@types/react": "19.1.0"
+  }
+}
