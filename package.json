@@ -1,0 +1,22 @@
+{
+  "name": "repro-77064-prefetch-after-server-action",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "15.2.2",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "playwright": "1.62.1",
+    "typescript": "^5.9.3"
+  }
+}
