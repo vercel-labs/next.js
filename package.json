@@ -1,0 +1,8 @@
+{
+  "name": "next-eslint-plugin-named-exports-repro",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": { "repro": "node repro.mjs" },
+  "dependencies": { "@next/eslint-plugin-next": "16.0.4" }
+}
