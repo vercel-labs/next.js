@@ -1,0 +1,15 @@
+{
+  "name": "next-77240-repro",
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "dependencies": {
+    "next": "15.2.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.24",
+    "@types/react": "19.0.10",
+    "typescript": "5.8.2"
+  }
+}
