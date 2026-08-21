@@ -1,0 +1,45 @@
+{
+  "name": "nextjs-bun-runtime-regression",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "bun --bun next dev",
+    "build": "bun --bun next build",
+    "start": "bun --bun next start",
+    "lint": "eslint",
+    "build:adapter": "node scripts/build-with-adapter.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@next-community/adapter-vercel": "0.0.1-beta.14",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vercel/build-utils": "13.6.2",
+    "@vercel/routing-utils": "5.2.1",
+    "async-sema": "3.1.1",
+    "bytes": "3.1.2",
+    "convert-source-map": "1.8.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.0",
+    "fs-extra": "11.2.0",
+    "picomatch": "4.0.1",
+    "source-map": "0.7.4",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "webpack-sources": "3.2.3"
+  },
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
+}
