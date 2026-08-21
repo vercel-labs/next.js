@@ -1,0 +1,10 @@
+{
+  "name": "issue-84402-repro",
+  "private": true,
+  "scripts": { "dev": "next dev -p 3000", "build": "next build", "start": "next start -p 3000" },
+  "dependencies": {
+    "next": "15.6.0-canary.38",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}
