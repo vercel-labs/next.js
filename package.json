@@ -1,0 +1,20 @@
+{
+  "name": "repro-91312-windows-app-route-sep",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "sim": "node windows-sim.mjs",
+    "build": "next build --webpack",
+    "build:turbopack": "next build"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
