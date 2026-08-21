@@ -1,0 +1,41 @@
+{
+  "trailingComma": "none",
+  "semi": false,
+  "singleQuote": false,
+  "tabWidth": 2,
+  "jsxSingleQuote": false,
+  "endOfLine": "lf",
+  "printWidth": 80,
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "tailwindFunctions": [
+    "clsx",
+    "cn",
+    "twMerge",
+    "cva"
+  ],
+  "importOrder": [
+    "^(react)$",
+    "^(next)(/.*)?$",
+    "^(react-dom|react-hook-form)(/.*)?$",
+    "<THIRD_PARTY_MODULES>",
+    "^@tanstack/.*$",
+    "^@/components/.*$",
+    "^@/components/ui/.*$",
+    "^@/config/.*$",
+    "^@/hooks/.*$",
+    "^@/lib/.*$",
+    "^@/types/.*$",
+    "^@/.*$",
+    "^[./]"
+  ],
+  "importOrderSortSpecifiers": true,
+  "importOrderParserPlugins": [
+    "typescript",
+    "jsx",
+    "decorators-legacy"
+  ],
+  "importOrderCaseInsensitive": true
+}
