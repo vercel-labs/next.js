@@ -1,0 +1,7 @@
+enableGlobalVirtualStore: true
+strictDepBuilds: false
+onlyBuiltDependencies:
+  - sharp
+  - unrs-resolver
+allowBuilds:
+  sharp: set this to true or false
