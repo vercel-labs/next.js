@@ -1,0 +1,21 @@
+{
+  "name": "next-86898-repro",
+  "private": true,
+  "scripts": {
+    "origin": "node scripts/origin-server.js",
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/node": "22.10.2",
+    "@types/react": "19.2.1"
+  }
+}
