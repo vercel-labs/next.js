@@ -1,0 +1,10 @@
+@layer base {
+  .paragraph {
+    background-color: green;
+    color: white;
+    font-size: 2rem;
+    padding: 2em;
+    margin: .5em auto;
+    width: max-content;
+  }
+}

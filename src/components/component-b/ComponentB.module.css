@@ -1,0 +1,7 @@
+
+@layer base {
+  .paragraph {
+    background-color: red;
+    composes: paragraph from '../component-a/ComponentA.module.css';
+  }
+}
