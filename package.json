@@ -1,0 +1,19 @@
+{
+  "name": "next-80720-sourcemap-names",
+  "private": true,
+  "scripts": {
+    "build": "next build --webpack",
+    "check": "node check-sourcemap.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.26",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "source-map": "0.7.4",
+    "typescript": "5.9.2",
+    "@types/react": "19.2.0",
+    "@types/node": "22.15.3"
+  }
+}
