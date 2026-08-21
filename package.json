@@ -1,0 +1,13 @@
+{
+  "name": "next-75372-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
