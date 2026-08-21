@@ -1,0 +1,18 @@
+{
+  "name": "repro-77823-next-cache-duplicate-autoimport",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "check": "node check-completions.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
