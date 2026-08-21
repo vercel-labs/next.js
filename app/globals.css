@@ -1,0 +1,6 @@
+.box {
+  --my-bg: light-dark(hsl(0deg 0% 97.5%), hsl(0deg 0% 10.5%));
+  background-color: var(--my-bg);
+  width: 200px;
+  height: 100px;
+}
