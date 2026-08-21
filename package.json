@@ -1,0 +1,14 @@
+{
+  "name": "repro-78591-duckdb-wasm-turbopack-hang",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "1.29.0",
+    "next": "16.3.1-canary.26",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  }
+}
