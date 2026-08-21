@@ -1,0 +1,16 @@
+{
+  "name": "repro-80299-dev-overlay-select-hit-area",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.26",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}
