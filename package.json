@@ -1,0 +1,20 @@
+{
+  "name": "hmr-404-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "setup": "node scripts/gen.mjs",
+    "dev": "next dev",
+    "repro": "node scripts/repro.mjs"
+  },
+  "dependencies": {
+    "next": "15.4.5",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "typescript": "^5.8.3"
+  }
+}
