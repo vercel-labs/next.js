@@ -1,0 +1,13 @@
+{
+  "name": "repro-77093",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_OPTIONS=\"--require ./node-require.js\" next dev --turbopack"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sass": "^1.85.1"
+  }
+}
