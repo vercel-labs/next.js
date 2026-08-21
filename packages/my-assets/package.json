@@ -1,0 +1,7 @@
+{
+  "name": "my-assets",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.js",
+  "exports": { ".": "./index.js", "./logo.png": "./logo.png" }
+}
