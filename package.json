@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "next-76782-hmr-after-suspend",
+  "scripts": {
+    "dev": "next dev",
+    "dev-turbopack": "next dev --turbopack",
+    "proxy": "node suspend-proxy.mjs",
+    "test": "node hmr-sleep-test.mjs"
+  },
+  "dependencies": {
+    "next": "15.2.2-canary.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "playwright": "^1.49.0",
+    "typescript": "^5"
+  }
+}
