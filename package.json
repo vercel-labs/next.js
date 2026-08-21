@@ -1,0 +1,15 @@
+{
+  "name": "next-91984-matchresource-css-url",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "next build --webpack",
+    "dev": "next dev --webpack"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "next": "^16.3.1-canary.26",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "private": true
+}
