@@ -1,0 +1,17 @@
+{
+  "name": "scroll-restoration-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
