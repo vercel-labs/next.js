@@ -1,7 +1,17 @@
 {
-  "name": "repro-64346",
+  "name": "issue-84067-repro",
   "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
-  "dependencies": { "next": "canary", "react": "19.1.0", "react-dom": "19.1.0" },
-  "devDependencies": { "typescript": "^5", "@types/node": "^20", "@types/react": "^19" }
+  "scripts": {
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
 }

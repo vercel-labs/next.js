@@ -1,26 +1,15 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Issue #84067 — build lifecycle hooks
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+Reporter asked for build hooks (e.g. `runAfterProductionCompile`) to copy static
+files after `next build`. The requested `compiler.runAfterProductionCompile`
+hook already exists (Next.js >= 15.2, PR #77345).
 
-## Run
+Run:
 
-```bash
-npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
-```
+    npm install
+    npm run build
 
-## Observed
+Observed on next@16.3.1-canary.26: the hook fires after compilation and before
+type-check/static generation, and the copied files land in `.next/copied-static`.
 
-```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
-```
-
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+Still missing: a post-static-generation hook (`runAfterStaticPageGeneration`).
