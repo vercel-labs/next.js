@@ -1,0 +1,10 @@
+// Drives the reproduction: node repro.mjs (requires `npm run dev` on :3000 and `npm i -D playwright`)
+import { chromium } from 'playwright'
+const b = await chromium.launch()
+const p = await b.newPage()
+await p.goto('http://localhost:3000/a/detail')
+await p.click('#push-b'); await p.waitForTimeout(800)
+console.log('after push to [b]:', p.url())
+await p.click('#push-c'); await p.waitForTimeout(800)
+console.log('after push to [c]:', p.url(), '(expected /c/detail?fromId=b)')
+await b.close()
