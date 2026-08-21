@@ -1,0 +1,16 @@
+{
+  "name": "repro-next-85071",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "repro": "./run-repro.sh"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
