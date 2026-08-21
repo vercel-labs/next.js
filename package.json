@@ -1,0 +1,22 @@
+{
+  "name": "repro-75137-css-order",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack --port 3000",
+    "dev:turbopack": "next dev --port 3000",
+    "build": "next build --webpack",
+    "start": "next start --port 3000",
+    "check": "node check.mjs http://localhost:3000 screenshot.png"
+  },
+  "dependencies": {
+    "next": "16.3.1-canary.25",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.5",
+    "@types/react": "19.0.7",
+    "playwright": "1.62.1",
+    "typescript": "5.7.3"
+  }
+}
