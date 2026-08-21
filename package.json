@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "build:turbopack": "next build --turbopack"
+  },
+  "dependencies": {
+    "@swc/plugin-react-remove-properties": "^12.19.0",
+    "next": "canary",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
