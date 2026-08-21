@@ -1,0 +1,15 @@
+{
+  "name": "next-92797-dynamic-preload-crossorigin",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "start": "next start -p 3000",
+    "repro": "next build && (next start -p 3000 & sleep 6; curl -s localhost:3000 | grep -o '<link[^>]*>'; kill %1)"
+  },
+  "dependencies": {
+    "next": "16.2.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
