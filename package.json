@@ -1,0 +1,21 @@
+{
+  "name": "next-86511-ppr-postponed-zbuf",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "repro": "bash repro.sh"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.18",
+    "typescript": "^5.9.0"
+  }
+}
