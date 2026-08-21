@@ -1,0 +1,19 @@
+{
+  "name": "next-95199-memory-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
+    "measure": "node measure.mjs"
+  },
+  "dependencies": {
+    "next": "16.0.10",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
