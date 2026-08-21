@@ -1,0 +1,16 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await b.newPage();
+const reqs = [];
+p.on('request', r => { if (r.url().includes('/api/brands')) reqs.push(r.url()); });
+await p.goto('http://localhost:3000/', { waitUntil: 'networkidle' });
+console.log('after load:', await p.textContent('#data'), 'reqs=', reqs.length);
+await p.click('#next-page');
+await p.waitForTimeout(1500);
+console.log('after click page2:', await p.textContent('#state'), '|', await p.textContent('#data'), 'reqs=', reqs.length);
+await p.fill('#search', 'abc');
+await p.waitForTimeout(1500);
+console.log('after search:', await p.textContent('#state'), '|', await p.textContent('#data'), 'reqs=', reqs.length);
+console.log('requests:', reqs);
+await p.screenshot({ path: '/workspace/.next-maintainer/reproduction-artifacts/playwright/next16-prod.png' });
+await b.close();
