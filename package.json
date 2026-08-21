@@ -1,0 +1,11 @@
+{
+  "name": "clerk-cachecomponents-repro",
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "dependencies": {
+    "@clerk/nextjs": "6.34.0",
+    "next": "16.0.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
