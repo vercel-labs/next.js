@@ -1,0 +1,4 @@
+/* No @use here on purpose: `additionalData` should prepend it. */
+.test {
+  background-color: $background;
+}
