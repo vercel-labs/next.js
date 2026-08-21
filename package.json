@@ -1,0 +1,15 @@
+{
+  "name": "next-95450-standalone-abs-symlink-repro",
+  "private": true,
+  "scripts": {
+    "junctionize": "node scripts/junctionize.mjs",
+    "build": "next build",
+    "verify": "node scripts/verify.mjs",
+    "repro": "pnpm junctionize && pnpm build && pnpm verify"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}
