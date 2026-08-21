@@ -1,0 +1,8 @@
+{
+  "name": "repro-86478",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "repro": "./repro.sh"
+  }
+}
