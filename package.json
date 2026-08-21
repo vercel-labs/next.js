@@ -1,0 +1,15 @@
+{
+  "name": "next-86507-swagger-turbopack",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "16.0.4",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "swagger-ui-react": "5.30.3"
+  }
+}
