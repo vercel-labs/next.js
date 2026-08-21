@@ -1,0 +1,15 @@
+{
+  "name": "nextjs-77504-router-refresh",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "playwright": "^1.62.1",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}
