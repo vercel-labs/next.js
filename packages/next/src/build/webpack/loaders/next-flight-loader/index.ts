@@ -120,30 +120,23 @@ export default function transformSource(
         return
       }
 
+      // Instead of registering each client reference on its own, we create a
+      // client module proxy and read the individual references off of it. React
+      // wraps them in a proxy that throws a helpful error when a server
+      // component tries to dot into a client module (e.g. namespace/compound
+      // components), instead of silently resolving to `undefined`. This matches
+      // the behavior of the CommonJS branch below.
       let esmSource =
         prefix +
         `\
-import { registerClientReference } from "react-server-dom-webpack/server";
+import { createClientModuleProxy } from "react-server-dom-webpack/server";
+const proxy = createClientModuleProxy(${stringifiedResourceKey});
 `
       for (const ref of clientRefs) {
         if (ref === 'default') {
-          esmSource += `export default registerClientReference(
-function() { throw new Error(${JSON.stringify(`Attempted to call the default \
-export of ${stringifiedResourceKey} from the server, but it's on the client. \
-It's not possible to invoke a client function from the server, it can only be \
-rendered as a Component or passed to props of a Client Component.`)}); },
-${stringifiedResourceKey},
-"default",
-);\n`
+          esmSource += `export default proxy.default;\n`
         } else {
-          esmSource += `export const ${ref} = registerClientReference(
-function() { throw new Error(${JSON.stringify(`Attempted to call ${ref}() from \
-the server but ${ref} is on the client. It's not possible to invoke a client \
-function from the server, it can only be rendered as a Component or passed to \
-props of a Client Component.`)}); },
-${stringifiedResourceKey},
-${JSON.stringify(ref)},
-);`
+          esmSource += `export const ${ref} = proxy[${JSON.stringify(ref)}];\n`
         }
       }
 
