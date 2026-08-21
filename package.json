@@ -1,0 +1,18 @@
+{
+  "name": "repro-84995",
+  "private": true,
+  "scripts": {
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "dd-trace": "5.72.0",
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.0",
+    "@types/react": "19.0.0",
+    "typescript": "5.3.3"
+  }
+}

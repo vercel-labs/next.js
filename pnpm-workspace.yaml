@@ -1,0 +1,8 @@
+allowBuilds:
+  '@datadog/native-appsec': set this to true or false
+  '@datadog/native-iast-taint-tracking': set this to true or false
+  '@datadog/native-metrics': set this to true or false
+  '@datadog/pprof': set this to true or false
+  dd-trace: set this to true or false
+  protobufjs: set this to true or false
+  sharp: set this to true or false
