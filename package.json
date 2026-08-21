@@ -1,0 +1,16 @@
+{
+  "name": "repro-76592",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "inspect": "node inspect-bundle.mjs"
+  },
+  "dependencies": {
+    "next": "15.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "15.2.0"
+  }
+}
