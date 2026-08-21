@@ -1,26 +1,33 @@
-# Repro: `encode` option ignored by cookie setters (vercel/next.js#64346)
+# Repro: next.js #82000 — CSS still processed as a stylesheet when imported via `!!raw-loader!`
 
-Next.js `canary` (verified on 16.3.1-canary.25). Cookie values are always
-`encodeURIComponent`-encoded; the `encode` option is ignored (and absent from the types).
+Issue: https://github.com/vercel/next.js/issues/82000
 
 ## Run
 
 ```bash
 npm install
-npm run dev
-# server action (Playwright or click the button on http://localhost:3000)
-curl -sD - -o /dev/null http://localhost:3000/api/route-set | grep -i set-cookie
-curl -sD - -o /dev/null http://localhost:3000/mw | grep -i set-cookie
+npm run dev   # http://localhost:3000
+# or
+npm run build
 ```
 
-## Observed
+## Expected
 
-```
-set-cookie: rh_cookie=qwerty123%3D; Path=/     # cookies().set(..., { encode: String })
-set-cookie: mw_cookie=qwerty123%3D; Path=/     # NextResponse.cookies.set(..., { encode: String })
-set-cookie: sa_cookie=qwerty123%3D; Path=/     # server action cookies().set(..., { encode: String })
-```
+`import fooRaw from '!!raw-loader!./foo.css'` should only return the file source.
+The leading `!!` should disable all configured loaders/rules for that request, so no
+CSS chunk should be emitted and `body` should keep the default background.
 
-Expected `qwerty123=`. `npx tsc --noEmit` passes with the `@ts-expect-error` comments,
-i.e. `encode` is not part of the public option types.
-Root cause: bundled `@edge-runtime/cookies` `serialize()` hardcodes `encodeURIComponent`.
+## Actual (next 15.4.2 and 16.3.1-canary.26, webpack)
+
+`fooRaw` contains the source AND Next also emits a real stylesheet:
+
+- dev HTML: `<link rel="stylesheet" href="/_next/static/css/app/page.css?v=...">`
+  whose contents show Next's own CSS pipeline ran on the file:
+  `css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!...postcss-loader...!./app/foo.css`
+- `next build`: `.next/static/css/<hash>.css` => `body{background:rgb(255,0,0)}` and the
+  prerendered `index.html` links it.
+- Browser: `getComputedStyle(document.body).backgroundColor === 'rgb(255, 0, 0)'`.
+
+Note: with Turbopack the same import fails to resolve entirely
+(`Module not found: Can't resolve '!!raw-loader!./foo.css'`), so inline loader syntax
+is unsupported there.
