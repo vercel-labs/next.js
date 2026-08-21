@@ -1,0 +1,20 @@
+{
+  "name": "next-otel-http-instrumentation-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "node .next/standalone/server.js",
+    "start:preload": "NODE_OPTIONS='--require ./otel-preload.cjs' node .next/standalone/server.js"
+  },
+  "dependencies": {
+    "next": "16.2.10",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "@opentelemetry/api": "1.9.0",
+    "@opentelemetry/sdk-node": "0.219.0",
+    "@opentelemetry/sdk-trace-node": "2.2.0",
+    "@opentelemetry/resources": "2.2.0",
+    "@opentelemetry/semantic-conventions": "1.41.1",
+    "@opentelemetry/instrumentation-http": "0.219.0"
+  }
+}
