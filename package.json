@@ -1,0 +1,15 @@
+{
+  "name": "issue-76073-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:debug": "next build --debug",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
