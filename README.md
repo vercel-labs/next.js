@@ -1,11 +1,11 @@
-# Reproduction: vercel/next.js#48642
+# Repro: next#82451 — static export client-side nav breaks when `.txt` has no `Content-Type`
 
-App Router `output: 'export'` client navigation when the host serves the RSC
-payload (`*.txt`) **without a `Content-Type` header** — this is exactly what
-Tauri's asset protocol does (see tauri-apps/tauri#6762).
-
-`server.js` is a ~30 line static file server for `out/` that intentionally omits
-`Content-Type` for `.txt` files and sets it correctly for everything else.
+`output: 'export'` app served by a static server that returns the RSC payload
+`.txt` files **without** a `Content-Type` header. The prefetch of `/about.txt`
+succeeds (HTTP 200, correct body), but clicking `<Link prefetch>` performs a
+full document reload instead of a client-side navigation, because
+`fetch-server-response.ts` only accepts the response when
+`content-type` starts with `text/plain`.
 
 ## Run
 
@@ -13,20 +13,34 @@ Tauri's asset protocol does (see tauri-apps/tauri#6762).
 npm install
 npx playwright install chromium
 npm run build
-npm run serve &          # http://localhost:3123
-npm run verify           # clicks <Link> and router.push('/example')
+
+# A: broken — .txt served with NO Content-Type
+npm run serve:no-ct            # http://localhost:3000
+BASE_URL=http://localhost:3000 npm test   # FAILS: full page reload
+
+# B: control — same server, .txt served as text/plain
+PORT=3001 npm run serve:with-ct
+BASE_URL=http://localhost:3001 npm test   # PASSES: client-side navigation
 ```
 
-## Results (headless Chromium)
+The Playwright test sets `window.__SPA_MARKER` before clicking and checks that it
+survives the navigation (soft nav) plus that the document was not re-created.
 
-| next | URL after navigation | rendered |
+## Observed (next@15.5.4)
+
+| case | prefetch | click result |
 | --- | --- | --- |
-| 13.4.0 / 13.4.4 | `/example.txt` | no — raw RSC flight text is displayed |
-| 13.4.8 | `/exa` (truncated) | no — 404 |
-| 13.4.12, 13.5.11, 14.2.35, 16.3.1-canary.25 | `/example` | yes |
+| `.txt` without `Content-Type` | `GET /about.txt?_rsc=...` → 200 | hard reload: new document, `window.__SPA_MARKER` lost, `/index.txt` re-fetched |
+| `.txt` as `text/plain` | `GET /about.txt?_rsc=...` → 200 | soft nav: same document, marker kept |
 
-So the reported behaviour reproduces on the versions from the issue era and is
-fixed on current versions: when the payload response has no RSC content type,
-Next.js no longer hard-navigates the browser to the `.txt` URL.
+Only the response header differs between the two runs.
 
-Change `next` in package.json to try other versions.
+Source of the check:
+https://github.com/vercel/next.js/blob/v15.5.4/packages/next/src/client/components/router-reducer/fetch-server-response.ts
+
+## Note on next@16.3.1
+
+With `next@16.3.1` the same app does not navigate at all in either case: the
+navigation request goes to `/about?_rsc=...` (the `.txt` suffix is never
+appended), receives HTML, and the click silently no-ops on the current page.
+Set `"next": "16.3.1"` in package.json to see it.

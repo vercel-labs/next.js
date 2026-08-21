@@ -1,17 +1,19 @@
 {
-  "name": "repro-48642",
+  "name": "next-82451-repro",
   "private": true,
+  "version": "1.0.0",
   "scripts": {
     "build": "next build",
-    "serve": "node server.js",
-    "verify": "node verify.js"
+    "serve:no-ct": "node server-no-content-type.mjs",
+    "serve:with-ct": "node server-no-content-type.mjs --with-content-type",
+    "test": "playwright test"
   },
   "dependencies": {
-    "next": "13.4.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "next": "15.5.4",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "playwright": "^1.49.0"
+    "@playwright/test": "^1.50.0"
   }
 }
