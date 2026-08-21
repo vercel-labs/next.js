@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await b.newPage();
+p.on('pageerror', (e) => console.log('pageerror:', e.message));
+p.on('response', (r) => { if (r.request().method() === 'POST') console.log('POST', r.url(), '->', r.status()); });
+await p.goto('http://localhost:3333/', { waitUntil: 'load' });
+await p.waitForTimeout(5000);
+console.log('before:', await p.textContent('p'));
+await p.click('button');
+await p.waitForTimeout(5000);
+console.log('after:', await p.textContent('p'));
+await b.close();

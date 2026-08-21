@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "name": "repro-77556",
+  "devDependencies": { "playwright": "^1.62.1" }
+}
