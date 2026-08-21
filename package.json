@@ -1,0 +1,22 @@
+{
+  "name": "next-93942-ios15-static-blocks",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check": "node check-es2021.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "acorn": "^8.14.0",
+    "typescript": "^5"
+  }
+}
