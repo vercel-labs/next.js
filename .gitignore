@@ -1,0 +1,6 @@
+node_modules
+.next
+out
+out-v1
+out-v2
+*.png
