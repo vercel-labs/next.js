@@ -1,0 +1,19 @@
+{
+  "name": "repro-92836",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start:dev": "npm run build:server && node --watch-path=.server .server/index.js",
+    "build:server": "tsc -p src/server/tsconfig.server.json"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "25.6.0",
+    "@types/react": "19.2.14",
+    "typescript": "^5.9.3"
+  }
+}
