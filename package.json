@@ -1,0 +1,22 @@
+{
+  "name": "nextjs-91448-currentscript-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p 3100",
+    "palemoon": "bash scripts/run-palemoon.sh",
+    "check": "node scripts/check.js"
+  },
+  "dependencies": {
+    "next": "16.2.0-canary.100",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5",
+    "playwright": "^1.56.0"
+  }
+}
