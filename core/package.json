@@ -1,0 +1,1 @@
+{"name":"core","private":true,"version":"0.0.0","dependencies":{"mylib":"workspace:*","next":"16.1.6","react":"19.1.5","react-dom":"19.1.5"},"devDependencies":{"@types/node":"^22","@types/react":"^19.2.18","@types/react-dom":"^19.2.4","typescript":"^5.8.3"}}
