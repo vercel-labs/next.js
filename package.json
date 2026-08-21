@@ -1,0 +1,19 @@
+{
+  "name": "issue-94989-repro",
+  "private": true,
+  "scripts": {
+    "build:compile": "next build --experimental-build-mode compile",
+    "build:full": "next build",
+    "verify": "bash verify.sh"
+  },
+  "dependencies": {
+    "next": "16.2.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "5.8.3"
+  }
+}
