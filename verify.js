@@ -1,0 +1,22 @@
+const { chromium } = require('playwright');
+const btn = process.argv[2] || 'push';
+(async () => {
+  const b = await chromium.launch();
+  const ctx = await b.newContext();
+  const p = await ctx.newPage();
+  const reqs = [];
+  p.on('request', r => reqs.push(`> ${r.method()} ${r.url()} rsc=${r.headers()['rsc']||'-'} prefetch=${r.headers()['next-router-prefetch']||'-'}`));
+  p.on('response', async r => reqs.push(`< ${r.status()} ${r.url()} loc=${(await r.headerValue('location'))||'-'} xmw=${(await r.headerValue('x-middleware-cache'))||'-'}`));
+  p.on('console', m => console.log('[console]', m.text()));
+  await p.goto('http://localhost:3000/process', { waitUntil: 'networkidle' });
+  await p.waitForTimeout(1500);
+  console.log('=== prefetch phase requests:'); reqs.filter(r=>r.includes('_rsc')||r.includes('/?')).forEach(r=>console.log('  ',r));
+  reqs.length = 0;
+  await p.click('#'+btn);
+  await p.waitForTimeout(5000);
+  console.log('=== FINAL URL:', p.url());
+  console.log('=== H1:', await p.textContent('h1').catch(()=>'?'));
+  console.log('=== requests after click:'); reqs.forEach(r=>console.log('  ',r));
+  await p.screenshot({ path: `/workspace/.next-maintainer/reproduction-artifacts/playwright/canary-after-${btn}.png`, fullPage: true });
+  await b.close();
+})();
