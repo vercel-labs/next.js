@@ -1,0 +1,21 @@
+{
+  "name": "mui-pages-turbopack-hydration",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack -p 3000",
+    "dev:webpack": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.13.5",
+    "@emotion/react": "^11.13.5",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.13.5",
+    "@mui/material": "^7.0.0",
+    "@mui/material-nextjs": "^7.0.0",
+    "next": "15.4.6",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
