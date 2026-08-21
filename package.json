@@ -1,0 +1,18 @@
+{
+  "name": "repro-86060",
+  "private": true,
+  "scripts": {
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "playwright": "^1.50.0",
+    "typescript": "7.0.2"
+  }
+}
