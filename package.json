@@ -1,0 +1,21 @@
+{
+  "name": "turbopack-nft-root-repro",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build --turbopack",
+    "build:webpack": "next build --webpack"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2"
+  }
+}
