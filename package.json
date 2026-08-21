@@ -1,0 +1,20 @@
+{
+  "name": "table0-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build"
+  },
+  "dependencies": {
+    "@tanstack/react-table": "8.21.3",
+    "next": "16.3.1-canary.26",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "24.0.0",
+    "@types/react": "19.2.0",
+    "@types/react-dom": "19.2.0",
+    "typescript": "5.9.2"
+  }
+}
