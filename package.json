@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": { "build": "next build", "start": "next start" },
+  "dependencies": { "next": "16.0.4", "react": "19.2.0", "react-dom": "19.2.0" },
+  "browserslist": ["chrome 120", "safari 17", "firefox 120", "edge 120"]
+}
