@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "node20",
+    "moduleResolution": "node20",
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
