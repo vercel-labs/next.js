@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "issue-75859-repro",
+  "scripts": { "dev": "next dev", "build": "next build" },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "server-act": "^1.3.1",
+    "zod": "^3.23.8",
+    "zod-form-data": "^2.0.2"
+  },
+  "devDependencies": { "typescript": "5.9.2", "@types/node": "20.12.12", "@types/react": "19.2.0" }
+}
