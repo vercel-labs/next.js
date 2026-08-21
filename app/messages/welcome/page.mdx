@@ -1,0 +1,107 @@
+export const metadata = {
+	title: 'Webpack cache warning from @next/mdx',
+	description:
+		'Minimal reproduction for a webpack cache warning from @next/mdx during next build with MDX in the App Router.',
+}
+
+import Link from 'next/link'
+
+## Webpack cache warning from `@next/mdx` during `next build` with MDX in App Router
+
+This page explains the purpose of this repository: a **minimal reproduction** for a webpack cache warning that appears when using the official `@next/mdx` integration in a Next.js App Router project during a production build.
+
+The goal of this repo is to provide a clean, focused example that can be used when filing or debugging a Next.js issue.
+
+---
+
+## What this reproduction shows
+
+This project was created from:
+
+-   `npx create-next-app -e reproduction-template`
+-   App Router enabled
+-   MDX configured via `@next/mdx`
+-   A single MDX page at `app/messages/welcome/page.mdx`
+
+No custom webpack configuration has been added beyond what is required to enable MDX.
+
+---
+
+## How to reproduce the warning
+
+1. Install dependencies:
+
+    ```bash
+    pnpm install
+    ```
+
+2. Run a production build:
+
+    ```bash
+    pnpm build
+    # or
+    pnpm next build --webpack
+    ```
+
+3. Observe the build output. The build **succeeds**, but webpack prints the following warning:
+
+    ```text
+    [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of /.../node_modules/@next/mdx/mdx-js-loader.js for build dependencies failed at 'import(process.platform === 'win32' ? pathToFileURL(path) : path)'.
+    Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+    ```
+
+This warning is emitted on every production build as long as MDX is enabled in this way.
+
+---
+
+## Current vs expected behavior
+
+### Current behavior
+
+-   `next build` completes successfully.
+-   A webpack cache warning is printed for `@next/mdx`’s `mdx-js-loader.js`, indicating that webpack cannot fully analyze a dynamic `import(...)` expression and therefore may not correctly track all cache dependencies.
+
+### Expected behavior
+
+-   Using the official `@next/mdx` integration in a standard App Router project should not produce persistent webpack cache warnings in a clean production build.
+-   Either:
+    -   No warning is emitted at all, or
+    -   The loader is implemented in a way that allows webpack to properly analyze its dependencies without this cache warning.
+
+From a user perspective, this repo shows that simply enabling MDX with `@next/mdx` in an otherwise default App Router project is enough to trigger the warning.
+
+---
+
+## Environment information (summary)
+
+The reproduction was run on macOS (Darwin arm64) with Node 25, pnpm 10, and the following key packages:
+
+-   `next`: `16.1.6`
+-   `react`: `19.2.4`
+-   `react-dom`: `19.2.4`
+-   `typescript`: `5.9.3`
+
+For exact details you can run:
+
+```bash
+npx --no-install next info
+```
+
+in this repo and paste the output into a bug report.
+
+---
+
+## Scope of this reproduction
+
+-   **Focuses on:** build system / compilation, MDX / content handling
+-   **Stage affected:** production build (`next build`)
+
+Development mode (`pnpm dev`) and runtime behavior (rendered pages) are not the focus; they should work normally. The key point is the **persistent webpack cache warning during production builds** when using `@next/mdx` with MDX pages in the App Router.
+
+---
+
+## Back to home
+
+<Link href='/'>
+	Go back to the <strong>homepage</strong>.
+</Link>
