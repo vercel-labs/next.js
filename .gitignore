@@ -1,0 +1,5 @@
+node_modules
+.next
+tsconfig.json
+tsconfig.tsbuildinfo
+next-env.d.ts
