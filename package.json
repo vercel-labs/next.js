@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "next-76806-jest-route-handler-repro",
+  "scripts": {
+    "test": "jest --ci",
+    "test:projects": "jest --ci -c jest.projects.config.js"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "jest": "29.7.0",
+    "jest-environment-jsdom": "29.7.0"
+  }
+}
