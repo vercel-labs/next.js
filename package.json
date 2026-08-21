@@ -1,0 +1,16 @@
+{
+  "name": "repro-74978-set-union-polyfill",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "dev": "next dev",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": { "playwright": "^1.62.1" }
+}
