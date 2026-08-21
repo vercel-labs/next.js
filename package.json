@@ -1,0 +1,20 @@
+{
+  "name": "typed-routes-link-dts-repro",
+  "private": true,
+  "scripts": {
+    "typegen": "next typegen",
+    "check": "tsc --noEmit",
+    "repro": "next typegen && tsc --noEmit",
+    "check:with-link": "tsc --noEmit -p tsconfig.with-link.json"
+  },
+  "dependencies": {
+    "next": "16.2.4",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.4",
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
