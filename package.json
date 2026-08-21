@@ -1,0 +1,17 @@
+{
+  "name": "repro-83275-dev-memory-threshold-restart",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "NODE_OPTIONS='--expose-gc' next dev -p 3000",
+    "dev:webpack": "NODE_OPTIONS='--expose-gc' next dev --webpack -p 3000",
+    "load": "node load.mjs",
+    "generate": "node gen-app.mjs",
+    "crawl": "node crawl.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
