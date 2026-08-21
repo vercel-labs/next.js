@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+.hero {
+  border-radius: 28px;
+  background: #f3f4f6;
+  padding: 24px;
+  width: 320px;
+  height: 160px;
+  margin: 40px;
+}
