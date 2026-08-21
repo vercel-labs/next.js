@@ -1,0 +1,23 @@
+{
+  "name": "repro-75525-css-module-precedence",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "next": "canary",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "playwright": "^1.49.1",
+    "typescript": "^5"
+  }
+}
