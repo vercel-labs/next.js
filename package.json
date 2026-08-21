@@ -1,0 +1,16 @@
+{
+  "name": "repro-88544-sass-export",
+  "private": true,
+  "scripts": {
+    "dev:turbo": "next dev --turbopack -p 3000",
+    "dev:webpack": "next dev --webpack -p 3001",
+    "build:turbo": "next build --turbopack",
+    "build:webpack": "next build --webpack"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "sass": "latest"
+  }
+}
