@@ -1,0 +1,6 @@
+node_modules
+js-debug
+js-debug.tar.gz
+Visual Studio Code.app
+*.log
+.next
