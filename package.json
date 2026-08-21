@@ -1,0 +1,23 @@
+{
+  "name": "next-88463-image-abort-pending",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "setup": "node scripts/generate-images.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repro": "node scripts/generate-images.mjs && node scripts/repro.mjs"
+  },
+  "dependencies": {
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "sharp": "^0.34.4",
+    "typescript": "^5"
+  }
+}
