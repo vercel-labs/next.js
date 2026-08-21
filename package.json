@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repro": "node scripts/simulate-macos-vscodium.mjs",
+    "dev:fake-macos": "env -u EDITOR -u VISUAL -u REACT_EDITOR NODE_OPTIONS=\"--require ./scripts/fake-macos.cjs\" ./node_modules/.bin/next dev",
+    "click-open-in-editor": "node scripts/hit-launch-editor.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.0-canary.28",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
