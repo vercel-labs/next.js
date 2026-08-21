@@ -1,0 +1,14 @@
+{
+  "name": "repro-82387-custom-server-setheader",
+  "private": true,
+  "scripts": {
+    "dev": "node server.mjs",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "fastify": "4.11.0",
+    "next": "14.2.14",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
