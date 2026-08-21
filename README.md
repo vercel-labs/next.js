@@ -37,3 +37,8 @@ back navigation is **correct**. Every back step (real toolbar back-button click 
 Xvfb, `Alt+ArrowLeft`, `history.back()`, and Playwright `page.goBack()`) returns
 `/dog/3 -> /dog/2 -> /dog/1 -> / -> about:blank`, and `history.length` grows with each auto push.
 The reported "blank new tab page" was not observed.
+
+## Live copy
+
+Deployed (same app, `next@16.3.1-canary.26` because Vercel refuses to build the pinned canary):
+https://nma-deploy-reproduction-bf143551d1ea-issue-77828-m4ino7g23.playground-vercel.tools/dog/1
