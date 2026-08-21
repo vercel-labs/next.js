@@ -1,0 +1,15 @@
+{
+  "name": "next-94740-frozen-image-config",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "postinstall": "node scripts/install-vendor.js"
+  },
+  "dependencies": {
+    "next": "16.2.9",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
