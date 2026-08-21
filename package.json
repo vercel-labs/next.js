@@ -1,0 +1,14 @@
+{
+  "name": "repro-89377",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start:standalone": "node .next/standalone/server.js",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.2.0-canary.23",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  }
+}
