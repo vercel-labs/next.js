@@ -1,0 +1,12 @@
+{
+  "name": "repro-83459-vendored-cross-spawn",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.2"
+  }
+}
