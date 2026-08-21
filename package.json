@@ -1,0 +1,22 @@
+{
+  "name": "next-image-abort-hang",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Reproduction: aborting a cold /_next/image transform permanently hangs that URL on self-hosted next start",
+  "scripts": {
+    "make-image": "node scripts/make-image.mjs",
+    "build": "next build",
+    "start": "next start",
+    "repro": "./repro.sh"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  }
+}
