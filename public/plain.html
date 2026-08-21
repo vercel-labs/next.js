@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+  <body style="font-family: system-ui; padding: 24px">
+    <h1 id="t">plain pushState control</h1>
+    <p>Same loop, no Next.js router. Compare back-button behavior with /dog/1.</p>
+    <script>
+      let n = parseInt(location.hash.slice(1) || '1', 10);
+      const render = () => (document.getElementById('t').textContent = 'plain pushState #' + n + ' (history.length ' + history.length + ')');
+      render();
+      setInterval(() => { n++; history.pushState({ n }, '', '/plain.html#' + n); render(); }, 3000);
+    </script>
+  </body>
+</html>
