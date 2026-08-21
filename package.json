@@ -1,0 +1,17 @@
+{
+  "name": "app-check",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "next": "16.1.1-canary.7",
+    "react": "19.3.0-canary-65eec428-20251218",
+    "react-dom": "19.3.0-canary-65eec428-20251218"
+  }
+}
