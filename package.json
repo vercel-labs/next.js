@@ -1,0 +1,11 @@
+{
+  "name": "repro-86719",
+  "private": true,
+  "scripts": { "dev": "node server.js" },
+  "dependencies": {
+    "express": "4.21.2",
+    "next": "15.5.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
