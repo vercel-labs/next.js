@@ -1,0 +1,11 @@
+{
+  "name": "next-84456-text-fragment-repro",
+  "private": true,
+  "scripts": {
+    "setup": "npm i --prefix next-app && npm i --prefix next-app-router && npm i && npm run build --prefix next-app && npm run build --prefix next-app-router",
+    "serve": "node serve.js",
+    "check": "node check.mjs",
+    "probe": "node probe.mjs"
+  },
+  "devDependencies": { "playwright": "1.62.1", "serve": "14.2.5" }
+}
