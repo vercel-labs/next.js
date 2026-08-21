@@ -1,0 +1,17 @@
+{
+  "name": "next-75228-stale-rsc-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "next": "15.1.6",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "playwright": "1.52.0"
+  }
+}
