@@ -1,0 +1,16 @@
+{
+  "name": "issue-96140-repro",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "instrument": "node instrument.cjs",
+    "dev": "next dev --turbopack",
+    "load": "node loadgen.mjs",
+    "trickle": "node trickle.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.11",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
