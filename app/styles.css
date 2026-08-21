@@ -1,0 +1,13 @@
+.x\:max-xl\:hidden {
+  @media (width < 80rem) {
+    display: none;
+  }
+}
+.x\:max-lg\:block {
+  @media (width < 64rem) {
+    display: block;
+  }
+}
+.plain\:escaped {
+  color: red;
+}
