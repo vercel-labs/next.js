@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import fs from 'fs';
 const ART='./artifacts';
+fs.mkdirSync(ART,{recursive:true});
 const LOG=process.env.LOG||'dev.log';
 const countFav=()=> (fs.readFileSync(LOG,'utf8').match(/GET \/favicon\.ico/g)||[]).length;
 const b=await chromium.launch({headless:false, args:['--disk-cache-size=1','--disable-application-cache','--media-cache-size=1']});
