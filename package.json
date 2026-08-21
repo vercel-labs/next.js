@@ -1,0 +1,17 @@
+{
+  "name": "next-82625-repro",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "3.13.8",
+    "@sentry/react": "9.44.0",
+    "axios": "1.11.0",
+    "dayjs": "1.11.13",
+    "firebase": "12.1.0",
+    "graphql": "16.11.0",
+    "lodash-es": "4.17.21",
+    "mathjs": "14.6.0",
+    "next": "15.3.5",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}

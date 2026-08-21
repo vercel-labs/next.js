@@ -1,0 +1,13 @@
+# Permutation WITHOUT WORKDIR: everything lands at the container filesystem
+# root (/package.json, /node_modules, /src). "Collecting build traces" is ~2.5x
+# faster than the WORKDIR variant in Dockerfile.
+# Note: next@15.4.x+ cannot be built this way at all (findRootDir loops
+# forever, see vercel/next.js#82577), which is why this repro pins next@15.3.5.
+FROM node:22-slim
+RUN npm i -g pnpm@10
+COPY package.json .
+RUN pnpm install --prod
+COPY src src
+WORKDIR /src
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npx next build
