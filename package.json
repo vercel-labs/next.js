@@ -1,0 +1,22 @@
+{
+  "name": "nextjs-78133-webview-hydration-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "repro": "node scripts/webview-hydration.mjs"
+  },
+  "dependencies": {
+    "next": "15.3.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "playwright": "^1.56.0",
+    "typescript": "^5",
+    "@types/react-dom": "^19"
+  }
+}
