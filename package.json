@@ -1,0 +1,22 @@
+{
+  "name": "next-88501-azure-maps-turbopack",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "azure-maps-control": "^3.7.4",
+    "next": "^16.3.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.0",
+    "@types/react": "18.3.1",
+    "playwright": "^1.62.1",
+    "typescript": "5.8.3"
+  }
+}
