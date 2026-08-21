@@ -1,0 +1,103 @@
+  ▲ Next.js 14.2.23
+
+   Creating an optimized production build ...
+Failed to compile.
+
+./node_modules/onnxruntime-node/bin/napi-v3/darwin/arm64/onnxruntime_binding.node
+Module parse failed: Unexpected character '�' (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+(Source code omitted for this binary file)
+
+Import trace for requested module:
+./node_modules/onnxruntime-node/bin/napi-v3/darwin/arm64/onnxruntime_binding.node
+./node_modules/onnxruntime-node/bin/napi-v3/ sync ^\.\/.*\/.*\/onnxruntime_binding\.node$
+./node_modules/onnxruntime-node/dist/binding.js
+./node_modules/onnxruntime-node/dist/backend.js
+./node_modules/onnxruntime-node/dist/index.js
+./node_modules/@huggingface/transformers/dist/transformers.node.mjs
+./node_modules/@llamaindex/env/multi-model/dist/index.js
+./node_modules/@llamaindex/clip/dist/index.js
+./node_modules/llamaindex/dist/storage/StorageContext.js
+./node_modules/llamaindex/dist/index.edge.js
+./node_modules/llamaindex/dist/index.react-server.js
+./app/api/chat/route.js
+
+./node_modules/onnxruntime-node/bin/napi-v3/darwin/x64/onnxruntime_binding.node
+Module parse failed: Unexpected character '�' (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+(Source code omitted for this binary file)
+
+Import trace for requested module:
+./node_modules/onnxruntime-node/bin/napi-v3/darwin/x64/onnxruntime_binding.node
+./node_modules/onnxruntime-node/bin/napi-v3/ sync ^\.\/.*\/.*\/onnxruntime_binding\.node$
+./node_modules/onnxruntime-node/dist/binding.js
+./node_modules/onnxruntime-node/dist/backend.js
+./node_modules/onnxruntime-node/dist/index.js
+./node_modules/@huggingface/transformers/dist/transformers.node.mjs
+./node_modules/@llamaindex/env/multi-model/dist/index.js
+./node_modules/@llamaindex/clip/dist/index.js
+./node_modules/llamaindex/dist/storage/StorageContext.js
+./node_modules/llamaindex/dist/index.edge.js
+./node_modules/llamaindex/dist/index.react-server.js
+./app/api/chat/route.js
+
+./node_modules/onnxruntime-node/bin/napi-v3/linux/arm64/onnxruntime_binding.node
+Module parse failed: Unexpected character '' (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+(Source code omitted for this binary file)
+
+Import trace for requested module:
+./node_modules/onnxruntime-node/bin/napi-v3/linux/arm64/onnxruntime_binding.node
+./node_modules/onnxruntime-node/bin/napi-v3/ sync ^\.\/.*\/.*\/onnxruntime_binding\.node$
+./node_modules/onnxruntime-node/dist/binding.js
+./node_modules/onnxruntime-node/dist/backend.js
+./node_modules/onnxruntime-node/dist/index.js
+./node_modules/@huggingface/transformers/dist/transformers.node.mjs
+./node_modules/@llamaindex/env/multi-model/dist/index.js
+./node_modules/@llamaindex/clip/dist/index.js
+./node_modules/llamaindex/dist/storage/StorageContext.js
+./node_modules/llamaindex/dist/index.edge.js
+./node_modules/llamaindex/dist/index.react-server.js
+./app/api/chat/route.js
+
+./node_modules/onnxruntime-node/bin/napi-v3/linux/x64/onnxruntime_binding.node
+Module parse failed: Unexpected character '' (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+(Source code omitted for this binary file)
+
+Import trace for requested module:
+./node_modules/onnxruntime-node/bin/napi-v3/linux/x64/onnxruntime_binding.node
+./node_modules/onnxruntime-node/bin/napi-v3/ sync ^\.\/.*\/.*\/onnxruntime_binding\.node$
+./node_modules/onnxruntime-node/dist/binding.js
+./node_modules/onnxruntime-node/dist/backend.js
+./node_modules/onnxruntime-node/dist/index.js
+./node_modules/@huggingface/transformers/dist/transformers.node.mjs
+./node_modules/@llamaindex/env/multi-model/dist/index.js
+./node_modules/@llamaindex/clip/dist/index.js
+./node_modules/llamaindex/dist/storage/StorageContext.js
+./node_modules/llamaindex/dist/index.edge.js
+./node_modules/llamaindex/dist/index.react-server.js
+./app/api/chat/route.js
+
+./node_modules/onnxruntime-node/bin/napi-v3/win32/arm64/onnxruntime_binding.node
+Module parse failed: Unexpected character '�' (1:2)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+(Source code omitted for this binary file)
+
+Import trace for requested module:
+./node_modules/onnxruntime-node/bin/napi-v3/win32/arm64/onnxruntime_binding.node
+./node_modules/onnxruntime-node/bin/napi-v3/ sync ^\.\/.*\/.*\/onnxruntime_binding\.node$
+./node_modules/onnxruntime-node/dist/binding.js
+./node_modules/onnxruntime-node/dist/backend.js
+./node_modules/onnxruntime-node/dist/index.js
+./node_modules/@huggingface/transformers/dist/transformers.node.mjs
+./node_modules/@llamaindex/env/multi-model/dist/index.js
+./node_modules/@llamaindex/clip/dist/index.js
+./node_modules/llamaindex/dist/storage/StorageContext.js
+./node_modules/llamaindex/dist/index.edge.js
+./node_modules/llamaindex/dist/index.react-server.js
+./app/api/chat/route.js
+
+
+> Build failed because of webpack errors
+EXIT=1
