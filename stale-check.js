@@ -1,0 +1,15 @@
+const { chromium } = require('playwright')
+const OUT = './artifacts'
+;(async () => {
+  const b = await chromium.launch({ executablePath: process.env.CHROME, args: ['--no-sandbox'] })
+  const p = await b.newPage()
+  await p.goto('http://localhost:3000/slow-shell?filter=a')
+  await p.waitForSelector('#card')
+  await p.click('#filter-b')
+  await p.waitForTimeout(800)
+  console.log('800ms after click -> url:', new URL(p.url()).search, '| body:', (await p.textContent('main')).trim())
+  await p.screenshot({ path: `${OUT}/stale-window-800ms.png` })
+  await p.waitForSelector('#fallback')
+  console.log('fallback visible -> body:', (await p.textContent('main')).trim())
+  await b.close()
+})()

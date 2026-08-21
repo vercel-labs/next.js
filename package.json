@@ -1,0 +1,18 @@
+{
+  "name": "repro-76954-suspense-fallback-delay",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "measure": "node measure.js http://localhost:3000"
+  },
+  "dependencies": {
+    "next": "15.2.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
