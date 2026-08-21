@@ -1,0 +1,19 @@
+{
+  "name": "next-95816-nft-external-repro",
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production next build",
+    "check": "node check-nft.mjs"
+  },
+  "dependencies": {
+    "nanoid": "5.1.5",
+    "next": "16.3.0-preview.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "typescript": "^6.0.0"
+  }
+}
