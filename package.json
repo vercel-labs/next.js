@@ -1,0 +1,22 @@
+{
+  "name": "repro-78092",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3100",
+    "build": "next build",
+    "start": "next start -p 3100",
+    "repro": "node scripts/repro.js http://localhost:3100"
+  },
+  "dependencies": {
+    "next": "15.3.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "playwright": "^1.61.0",
+    "typescript": "5.8.3"
+  }
+}
