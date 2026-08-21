@@ -1,0 +1,31 @@
+== Part 1: static check, ref=canary, clone-root length 69, MAX_PATH 260 ==
+tracked blobs 31359, longest repo-relative path 209 chars, per-file budget 190 chars
+paths that cannot be created: 32
+   279  turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/define-property-getter-reads-export/output/1ngs_js-remove-unused-exports_define-property-getter-reads-export_input_index_20zrr4b.js.map
+   276  turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/define-property-getter-reads-export/output/154e_cjs-remove-unused-exports_define-property-getter-reads-export_input_0v-648l._.js.map
+   275  turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/define-property-getter-reads-export/output/1oio_js-remove-unused-exports_define-property-getter-reads-export_input_index_20zrr4b.js
+   272  turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/define-property-getter-reads-export/output/154e_cjs-remove-unused-exports_define-property-getter-reads-export_input_0v-648l._.js
+   272  turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/object-literal-replaces-exports/output/154e_cjs-remove-unused-exports_object-literal-replaces-exports_input_index_0wc-aj0.js.map
+   271  turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-imports/bare-require-define-property/output/0p5q_snapshot_cjs-remove-unused-imports_bare-require-define-property_input_1qxhvhg._.js.map
+   271  turbopack/crates/turbopack-tests/tests/snapshot/intermediate-tree-shake/rename-side-effect-free-facade/output/0p5q_snapshot_intermediate-tree-shake_rename-side-effect-free-facade_input_1nl1qrj._.js.map
+   269  turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/object-literal-accessors/output/1jsg_tests_snapshot_cjs-remove-unused-exports_object-literal-accessors_input_02qvs87._.js.map
+
+== Part 2: real `git clone` into a 69-char root with the MAX_PATH=260 shim ==
+git clone exit code: 128
+errors containing "Filename too long": 33
+  warning: unable to access 'crates/next-custom-transforms/tests/fixture/strip-page-exports/getStaticProps/support-export-named-as-default-with-other-specifiers/support-export-named-as-default-with-a-class/.gitattributes': File name too long
+  error: unable to create file crates/next-custom-transforms/tests/fixture/strip-page-exports/getStaticProps/support-export-named-as-default-with-other-specifiers/support-export-named-as-default-with-a-class/output-data.js: File name too long
+  error: unable to create file crates/next-custom-transforms/tests/fixture/strip-page-exports/getStaticProps/support-export-named-as-default-with-other-specifiers/support-export-named-as-default-with-a-class/output-default.js: File name too long
+  error: unable to create file turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/define-property-getter-reads-export/output/154e_cjs-remove-unused-exports_define-property-getter-reads-export_input_0v-648l._.js: File name too long
+  error: unable to create file turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/define-property-getter-reads-export/output/154e_cjs-remove-unused-exports_define-property-getter-reads-export_input_0v-648l._.js.map: File name too long
+  error: unable to create file turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/define-property-getter-reads-export/output/1ngs_js-remove-unused-exports_define-property-getter-reads-export_input_index_20zrr4b.js.map: File name too long
+  error: unable to create file turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/define-property-getter-reads-export/output/1oio_js-remove-unused-exports_define-property-getter-reads-export_input_index_20zrr4b.js: File name too long
+  error: unable to create file turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/object-literal-accessors/output/0p5q_snapshot_cjs-remove-unused-exports_object-literal-accessors_input_index_17fevvk.js.map: File name too long
+  error: unable to create file turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/object-literal-accessors/output/17f0_snapshot_cjs-remove-unused-exports_object-literal-accessors_input_index_17fevvk.js: File name too long
+  error: unable to create file turbopack/crates/turbopack-tests/tests/snapshot/cjs-remove-unused-exports/object-literal-accessors/output/1jsg_tests_snapshot_cjs-remove-unused-exports_object-literal-accessors_input_02qvs87._.js: File name too long
+  warning: unable to access 'crates/next-custom-transforms/tests/fixture/strip-page-exports/getStaticProps/support-export-named-as-default-with-other-specifiers/support-export-named-as-default-with-a-class/.gitattributes': File name too long
+  fatal: unable to checkout working tree
+  warning: Clone succeeded, but checkout failed.
+
+RESULT: reproduced
+EXIT=0
