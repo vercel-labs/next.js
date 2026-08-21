@@ -1,0 +1,15 @@
+{
+  "name": "next-83284-repro",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "15.5.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "sharp": "^0.35.3"
+  }
+}
