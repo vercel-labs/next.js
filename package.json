@@ -1,0 +1,6 @@
+{
+  "name": "repro-82574",
+  "private": true,
+  "scripts": { "build": "next build", "start": "next start", "dev": "next dev" },
+  "dependencies": { "next": "latest", "react": "19.1.0", "react-dom": "19.1.0" }
+}
