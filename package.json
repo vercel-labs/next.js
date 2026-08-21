@@ -1,0 +1,22 @@
+{
+  "name": "next-79424-turbopack-debugger-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "NODE_OPTIONS=--inspect=9230 next dev --turbopack -p 3000",
+    "dev:webpack": "NODE_OPTIONS=--inspect=9230 next dev --webpack -p 3000",
+    "repro": "node repro.mjs",
+    "repro:webpack": "BUNDLER=webpack node repro.mjs",
+    "sourcemaps": "node check-sourcemaps.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.3",
+    "@types/react": "19.2.0",
+    "typescript": "5.9.2"
+  }
+}
