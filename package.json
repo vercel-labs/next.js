@@ -1,0 +1,12 @@
+{
+  "name": "repro-68177",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack"
+  },
+  "dependencies": {
+    "next": "16.3.2",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}
