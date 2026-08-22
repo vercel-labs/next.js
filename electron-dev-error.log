@@ -1,0 +1,25 @@
+[1841:0822/003907.390318:ERROR:bus.cc(407)] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+App threw an error during load
+Error [ERR_REQUIRE_ESM]: require() of ES Module /workspace/repro-yarn/node_modules/electron-next/node_modules/electron-is-dev/index.js from /workspace/repro-yarn/node_modules/electron-next/index.js not supported.
+Instead change the require of /workspace/repro-yarn/node_modules/electron-next/node_modules/electron-is-dev/index.js in /workspace/repro-yarn/node_modules/electron-next/index.js to a dynamic import() which is available in all CommonJS modules.
+    at Function._load (node:electron/js2c/node_init:2:13357)
+    at Object.<anonymous> (/workspace/repro-yarn/node_modules/electron-next/index.js:7:15)
+    at Function._load (node:electron/js2c/node_init:2:13357)
+    at Object.<anonymous> (/workspace/repro-yarn/main/index.js:12:41)
+    at Function._load (node:electron/js2c/node_init:2:13357)
+    at loadApplicationPackage (/workspace/repro-yarn/node_modules/electron/dist/resources/default_app.asar/main.js:121:16)
+    at Object.<anonymous> (/workspace/repro-yarn/node_modules/electron/dist/resources/default_app.asar/main.js:233:9)
+    at Function._load (node:electron/js2c/node_init:2:13357)
+    at node:electron/js2c/browser_init:2:121197
+    at node:electron/js2c/browser_init:2:121400
+    at node:electron/js2c/browser_init:2:121404
+    at Function._load (node:electron/js2c/node_init:2:13357)
+[1m[47m[31mA JavaScript error occurred in the main process
+[30mUncaught Exception:
+Error [ERR_REQUIRE_ESM]: require() of ES Module /workspace/repro-yarn/node_modules/electron-next/node_modules/electron-is-dev/index.js from /workspace/repro-yarn/node_modules/electron-next/index.js not supported.
+Instead change the require of /workspace/repro-yarn/node_modules/electron-next/node_modules/electron-is-dev/index.js in /workspace/repro-yarn/node_modules/electron-next/index.js to a dynamic import() which is available in all CommonJS modules.
+    at Function._load (node:electron/js2c/node_init:2:13357)
+    at Object.<anonymous> (/workspace/repro-yarn/node_modules/electron-next/index.js:7:15)
+    at Function._load (node:electron/js2c/node_init:2:13357)
+    at Object.<anonymous> (/workspace/repro-yarn/main/index.js:12:41)
+    at Function._load (node:electron/js2c/node_init:2:13357)
