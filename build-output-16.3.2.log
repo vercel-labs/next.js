@@ -1,0 +1,144 @@
+▲ Next.js 16.3.2 (Turbopack)
+✓ Running next.config.mjs took 17ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+- Experiments (use with caution):
+  ✓ turbopackModuleFragments
+
+  Creating an optimized production build ...
+
+thread 'tokio-rt-worker' (718) panicked at turbopack/crates/turbopack-ecmascript/src/module_fragments/graph.rs:746:16:
+index out of bounds: the len is 8 but the index is 9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+> Build error occurred
+Error: Turbopack build failed with 14 errors:
+./node_modules/next/dist/esm/server/app-render/create-error-handler.js:4:1
+Error: Module not found: Can't resolve '../pipe-readable'
+index out of bounds: the len is 8 but the index is 9
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::process_resolve_result failed
+- Execution of <ModuleAssetContext as AssetContext>::process failed
+- Execution of EcmascriptModulePartAsset::select_part failed
+- Execution of split_module failed
+- index out of bounds: the len is 8 but the index is 9
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/next/dist/esm/server/render-result.js
+Error: Module not found: Can't resolve './pipe-readable'
+index out of bounds: the len is 8 but the index is 9
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::process_resolve_result failed
+- Execution of <ModuleAssetContext as AssetContext>::process failed
+- Execution of EcmascriptModulePartAsset::select_part failed
+- Execution of split_module failed
+- index out of bounds: the len is 8 but the index is 9
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/next/dist/esm/server/render-result.js:2:1
+Error: Module not found: Can't resolve './pipe-readable'
+index out of bounds: the len is 8 but the index is 9
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::process_resolve_result failed
+- Execution of <ModuleAssetContext as AssetContext>::process failed
+- Execution of EcmascriptModulePartAsset::select_part failed
+- Execution of split_module failed
+- index out of bounds: the len is 8 but the index is 9
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/next/dist/esm/server/app-render/collect-segment-data.js
+Error: Export HEAD_REQUEST_KEY doesn't exist in target module
+The export HEAD_REQUEST_KEY was not found in module [project]/node_modules/next/dist/esm/shared/lib/segment-cache/segment-value-encoding.js [app-rsc] (ecmascript) <internal part 3>.
+Did you mean to import appendSegmentRequestKeyPart?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/server/resume-data-cache/cache-store.js
+Error: Export MIN_PRERENDERABLE_EXPIRE doesn't exist in target module
+The export MIN_PRERENDERABLE_EXPIRE was not found in module [project]/node_modules/next/dist/esm/server/use-cache/constants.js [app-rsc] (ecmascript) <internal part 2>.
+Did you mean to import a?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/client/route-params.js
+Error: Export ROOT_SEGMENT_REQUEST_KEY doesn't exist in target module
+The export ROOT_SEGMENT_REQUEST_KEY was not found in module [project]/node_modules/next/dist/esm/shared/lib/segment-cache/segment-value-encoding.js [app-ssr] (ecmascript) <internal part 2>.
+Did you mean to import HEAD_REQUEST_KEY?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/server/app-render/collect-segment-data.js
+Error: Export ROOT_SEGMENT_REQUEST_KEY doesn't exist in target module
+The export ROOT_SEGMENT_REQUEST_KEY was not found in module [project]/node_modules/next/dist/esm/shared/lib/segment-cache/segment-value-encoding.js [app-rsc] (ecmascript) <internal part 2>.
+Did you mean to import HEAD_REQUEST_KEY?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/server/app-render/collect-segment-data.js
+Error: Export appendSegmentRequestKeyPart doesn't exist in target module
+The export appendSegmentRequestKeyPart was not found in module [project]/node_modules/next/dist/esm/shared/lib/segment-cache/segment-value-encoding.js [app-rsc] (ecmascript) <internal part 4>.
+Did you mean to import a?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/server/resume-data-cache/cache-store.js
+Error: Export arrayBufferToString doesn't exist in target module
+The export arrayBufferToString was not found in module [project]/node_modules/next/dist/esm/server/app-render/encryption-utils.js [app-rsc] (ecmascript) <internal part 3>.
+Did you mean to import encrypt?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/server/response-cache/index.js
+Error: Export fromResponseCacheEntry doesn't exist in target module
+The export fromResponseCacheEntry was not found in module [project]/node_modules/next/dist/esm/server/response-cache/utils.js [app-rsc] (ecmascript) <internal part 9>.
+Did you mean to import routeKindToIncrementalCacheKind?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/client/components/layout-router.js
+Error: Export getParamValueFromCacheKey doesn't exist in target module
+The export getParamValueFromCacheKey was not found in module [project]/node_modules/next/dist/esm/client/route-params.js [app-ssr] (ecmascript) <internal part 19>.
+Did you mean to import canonicalizeURLPart?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/client/components/redirect-boundary.js
+Error: Export getRedirectTypeFromError doesn't exist in target module
+The export getRedirectTypeFromError was not found in module [project]/node_modules/next/dist/esm/client/components/redirect.js [app-ssr] (ecmascript) <internal part 10>.
+Did you mean to import getRedirectStatusCodeFromError?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/client/components/redirect-boundary.js
+Error: Export getURLFromRedirectError doesn't exist in target module
+The export getURLFromRedirectError was not found in module [project]/node_modules/next/dist/esm/client/components/redirect.js [app-ssr] (ecmascript) <internal part 9>.
+Did you mean to import getRedirectTypeFromError?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+./node_modules/next/dist/esm/lib/metadata/resolvers/resolve-opengraph.js
+Error: Export isFullStringUrl doesn't exist in target module
+The export isFullStringUrl was not found in module [project]/node_modules/next/dist/esm/lib/url.js [app-rsc] (ecmascript) <internal part 3>.
+Did you mean to import d?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+EXIT:1

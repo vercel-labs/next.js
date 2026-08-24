@@ -1,0 +1,12 @@
+{
+  "name": "repro-97811",
+  "private": true,
+  "scripts": {
+    "build": "next build --turbopack"
+  },
+  "dependencies": {
+    "next": "16.3.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  }
+}
