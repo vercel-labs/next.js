@@ -1,0 +1,14 @@
+{
+  "name": "turbopack-define-typeof-guard-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "matrix": "node run-matrix.mjs"
+  },
+  "dependencies": {
+    "fake-sdk": "file:./fake-sdk",
+    "next": "^16.4.0-canary.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}
