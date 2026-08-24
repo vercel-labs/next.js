@@ -31,7 +31,7 @@ where the chunk item ident string here is `[project]/src/gen/m.js?q<N> [app-rout
 chunk names, and searches query strings for 7-char collisions:
 
 ```bash
-node tools/find-collision.mjs
+node tools/find-collision.mjs   # needs the devDependency @node-rs/xxhash
 # q73518 / q102901 -> 1u45-ck   (the same pair the 120k-file repro in #97765 hits)
 ```
 
