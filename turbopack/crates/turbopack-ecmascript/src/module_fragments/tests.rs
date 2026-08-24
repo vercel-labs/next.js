@@ -4,7 +4,10 @@ use anyhow::Error;
 use serde::Deserialize;
 use swc_core::{
     atoms::{Wtf8Atom, atom},
-    common::{Mark, SourceMap, SyntaxContext, comments::SingleThreadedComments, util::take::Take},
+    common::{
+        FileName, Mark, SourceMap, SyntaxContext, comments::SingleThreadedComments,
+        util::take::Take,
+    },
     ecma::{
         ast::{EsVersion, Id, Module},
         codegen::text_writer::JsWriter,
@@ -369,4 +372,71 @@ fn render_item_id(id: &ItemId) -> Option<String> {
         ItemId::Group(ItemIdGroupKind::Export(_, name)) => Some(format!("export {name}")),
         _ => None,
     }
+}
+
+/// Regression test for https://github.com/vercel/next.js/issues/97811
+///
+/// Fragment groups that only consist of phantom `ImportBinding` items produce
+/// an empty fragment, which is not pushed to `modules`. The entrypoint indices
+/// (`Key::ModuleEvaluation`, `Key::Export(..)`) are group indices though, so
+/// dropping a fragment shifts every following fragment and leaves the
+/// entrypoints pointing at the wrong fragment, or out of bounds.
+///
+/// With `experimental.turbopackModuleFragments` this made `next build` panic
+/// with `index out of bounds` inside `split_module`.
+#[test]
+fn entrypoints_stay_in_bounds_when_empty_fragments_are_dropped() {
+    // Minimized from `next/dist/esm/server/app-render/debug-channel-server.node.js`,
+    // one of the Next.js internal modules that panicked on a bare app.
+    let src =
+        "import { A, B } from 'mod';\nexport { x } from './other';\nexport const f = A + B;\n";
+
+    testing::run_test(false, |cm, _handler| {
+        let fm = cm.new_source_file(FileName::Custom("input.js".into()).into(), src.to_string());
+
+        let comments = SingleThreadedComments::default();
+        let mut module = parse_file_as_module(
+            &fm,
+            swc_core::ecma::parser::Syntax::Es(EsSyntax::default()),
+            EsVersion::latest(),
+            Some(&comments),
+            &mut vec![],
+        )
+        .unwrap();
+
+        let unresolved_mark = Mark::new();
+        let top_level_mark = Mark::new();
+
+        module.visit_mut_with(&mut swc_core::ecma::transforms::base::resolver(
+            unresolved_mark,
+            top_level_mark,
+            false,
+        ));
+
+        let (mut dep_graph, items) = Analyzer::analyze(
+            &module,
+            &comments,
+            SyntaxContext::empty().apply_mark(unresolved_mark),
+            SyntaxContext::empty().apply_mark(top_level_mark),
+        );
+        dep_graph.handle_weak(Mode::Production);
+
+        // This panicked with `index out of bounds: the len is 3 but the index is 3`.
+        let SplitModuleResult {
+            modules,
+            entrypoints,
+            ..
+        } = dep_graph.split_module(&[], &items);
+
+        for (key, &index) in entrypoints.iter() {
+            assert!(
+                (index as usize) < modules.len(),
+                "entrypoint {key:?} points at fragment {index} while there are only {} fragments",
+                modules.len()
+            );
+        }
+
+        Ok(())
+    })
+    .unwrap();
 }
