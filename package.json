@@ -1,0 +1,15 @@
+{
+  "name": "nextjs-97775-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev -p 3007",
+    "start": "next start",
+    "soak": "node soak.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  }
+}
