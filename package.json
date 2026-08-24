@@ -1,0 +1,10 @@
+{
+  "name": "turbopack-chunk-name-hash-collision-minimal",
+  "private": true,
+  "scripts": { "build": "next build" },
+  "dependencies": {
+    "next": "16.4.0-canary.3",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  }
+}
