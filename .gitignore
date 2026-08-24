@@ -1,0 +1,7 @@
+node_modules
+.next
+generated
+results
+app/repro-*
+next-env.d.ts
+tsconfig.tsbuildinfo

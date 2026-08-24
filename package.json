@@ -1,0 +1,19 @@
+{
+  "name": "next-97802-turbopack-build-memory",
+  "private": true,
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "build": "next build",
+    "reproduce": "bash scripts/run.sh"
+  },
+  "dependencies": {
+    "next": "16.4.0-canary.4",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
