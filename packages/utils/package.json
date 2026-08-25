@@ -1,0 +1,1 @@
+{ "name": "@repro/utils", "version": "0.0.0", "main": "./src/index.js", "types": "./src/index.d.ts" }

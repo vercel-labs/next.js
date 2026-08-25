@@ -1,0 +1,10 @@
+{
+  "name": "repro-97847",
+  "private": true,
+  "packageManager": "pnpm@11.23.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:web": "pnpm --filter web dev"
+  },
+  "devDependencies": { "turbo": "2.10.11" }
+}
