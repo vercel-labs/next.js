@@ -1,0 +1,12 @@
+{
+  "name": "repro-turbo-livelock",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.20.0",
+  "scripts": {
+    "build": "turbo build"
+  },
+  "devDependencies": {
+    "turbo": "^2.9.14"
+  }
+}
