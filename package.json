@@ -1,0 +1,15 @@
+{
+  "name": "next-97918-repro",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "repro": "node repro.mjs",
+    "repro:browser": "node browser-check.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.2"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
