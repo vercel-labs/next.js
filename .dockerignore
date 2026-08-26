@@ -1,0 +1,12 @@
+# Copied from examples/with-docker (canary) — note the .env exclusion
+node_modules/
+.next/
+.git/
+Dockerfile*
+.dockerignore
+# Environment variables (only commit template files)
+.env
+.env*.local
+.env.development
+.env.test
+.env.production.local
