@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start", "repro": "node repro.mjs" },
+  "dependencies": { "next": "16.4.0-canary.8", "react": "19.2.8", "react-dom": "19.2.8" },
+  "devDependencies": { "@types/node": "^22", "@types/react": "^19", "playwright": "^1.62.1", "typescript": "^5" }
+}
