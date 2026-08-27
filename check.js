@@ -19,7 +19,7 @@ const { chromium } = require('playwright')
     } catch (e) {
       ok = false; fails++
       console.log('HANG round', i, 'state=', await page.textContent('#state'), 'pending=', await page.textContent('#pending'))
-      await page.screenshot({ path: `/workspace/.next-maintainer/reproduction-artifacts/playwright/hang-${process.env.RUN||0}-${i}.png` })
+      await page.screenshot({ path: `./logs/hang-${process.env.RUN||0}-${i}.png` })
     }
     if (ok) process.stdout.write('.')
     await ctx.close()
