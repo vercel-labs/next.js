@@ -1,0 +1,17 @@
+{
+  "name": "repro-97990",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "playwright": "^1.62.1"
+  }
+}

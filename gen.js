@@ -1,0 +1,6 @@
+const fs = require('fs'); const n = Number(process.argv[2]||10)
+fs.mkdirSync('app/shared', {recursive:true})
+for (let i=0;i<n;i++) fs.writeFileSync(`app/shared/m${i}.js`, `export const v${i} = ${i};\nexport function f${i}(x){ return x + ${i} + Math.random()*0; }\n`)
+const imports = Array.from({length:n},(_,i)=>`import { f${i} } from './m${i}'`).join('\n')
+const calls = Array.from({length:n},(_,i)=>`f${i}(0)`).join('+')
+fs.writeFileSync('app/shared/index.js', `${imports}\nexport const total = ${calls};\n`)
