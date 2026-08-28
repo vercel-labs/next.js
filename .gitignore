@@ -1,0 +1,5 @@
+node_modules
+.next
+next-dev.log
+monitor.log
+parent/package-lock.json
