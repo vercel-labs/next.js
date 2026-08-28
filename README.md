@@ -23,8 +23,8 @@ parent/
 ```sh
 cd parent/app && npm install && cd ../..
 
-./scripts/run.sh            # ancestor package.json only
-./scripts/run.sh lockfile   # ancestor package.json + lockfile -> Next infers the
+bash scripts/run.sh            # ancestor package.json only
+bash scripts/run.sh lockfile   # ancestor package.json + lockfile -> Next infers the
                             # ancestor as the workspace root
 ```
 
@@ -66,7 +66,7 @@ growth occurred. Additional probes on the same setup:
 
 The reported storm (98 processes / 6.8 GB) was measured on 16 cores; this
 machine only has 2, so a core-count dependent amplification cannot be excluded.
-Run `./scripts/run.sh lockfile` on a 16-core box to check that.
+Run `bash scripts/run.sh lockfile` on a 16-core box to check that.
 
 The stack trace in the report points at the app's own
 `node_modules/enhanced-resolve`, which the Turbopack PostCSS worker path does
