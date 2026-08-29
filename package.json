@@ -1,0 +1,12 @@
+{
+  "name": "next-98065-repro",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Reproduction for vercel/next.js#98065 - create-next-app crashes with TypeError: opts.name is not a function",
+  "scripts": {
+    "repro": "node repro.mjs"
+  },
+  "dependencies": {
+    "commander": "12.1.0"
+  }
+}
