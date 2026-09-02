@@ -1,0 +1,1 @@
+{"compilerOptions":{"jsx":"preserve","module":"esnext","moduleResolution":"bundler","target":"es2022","strict":true,"skipLibCheck":true,"noEmit":true,"lib":["dom","esnext"],"allowJs":true,"esModuleInterop":true,"isolatedModules":true,"resolveJsonModule":true}}
