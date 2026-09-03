@@ -18,9 +18,34 @@ export function throwForSearchParamsAccessInUseCache(
   workStore: WorkStore,
   constructorOpt: Function
 ): never {
+  throwSearchParamsAccessInUseCacheError(
+    workStore,
+    createSearchParamsAccessInUseCacheError(workStore, constructorOpt)
+  )
+}
+
+/**
+ * Creates the error for an invalid `searchParams` access inside of
+ * `"use cache"` without throwing it. This allows us to capture the stack trace
+ * where the access is initiated (e.g. when reading the `then` property of the
+ * `searchParams` promise), and to throw the error later (e.g. when the promise
+ * is actually awaited).
+ */
+export function createSearchParamsAccessInUseCacheError(
+  workStore: WorkStore,
+  constructorOpt: Function
+): Error {
   const error = createSearchParamsInUseCacheError(workStore.route)
 
   Error.captureStackTrace(error, constructorOpt)
+
+  return error
+}
+
+export function throwSearchParamsAccessInUseCacheError(
+  workStore: WorkStore,
+  error: Error
+): never {
   workStore.invalidDynamicUsageError ??= error
 
   throw error

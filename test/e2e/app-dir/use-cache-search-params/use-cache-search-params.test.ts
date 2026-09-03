@@ -122,6 +122,25 @@ describe('use-cache-search-params', () => {
       })
     })
 
+    describe('when page props are forwarded to a child component inside of "use cache"', () => {
+      beforeAll(() => {
+        route = '/params-forwarded/[slug]'
+      })
+
+      it('should not show a searchParams error if only params are read', async () => {
+        const outputIndex = next.cliOutput.length
+        const browser = await next.browser('/params-forwarded/foo')
+
+        const cliOutput = stripAnsi(next.cliOutput.slice(outputIndex))
+
+        expect(cliOutput).not.toContain(getExpectedErrorMessage(route))
+
+        await waitForNoRedbox(browser)
+
+        expect(await browser.elementById('slug').text()).toBe('foo')
+      })
+    })
+
     it('should show an error when searchParams are used inside of a cached generateMetadata', async () => {
       const browser = await next.browser(
         '/search-params-used-generate-metadata?title=foo'
