@@ -69,6 +69,20 @@ function getModuleById(
   id: string | undefined,
   compilation: webpack.Compilation
 ) {
+  // This runs from request handlers (e.g. the error overlay's
+  // `POST /__nextjs_original-stack-frames`), i.e. outside of the compile
+  // lifecycle. With webpack, the kept `Stats.compilation` is an inert
+  // JavaScript snapshot, but with Rspack it is a handle into the native
+  // compilation that a rebuild replaces in place. Reading from it while a
+  // rebuild is in flight dereferences an already moved-out artifact and
+  // aborts the dev server with a Rust panic. Skip the lookup instead; the
+  // frame comes back unmapped and maps on a later request. This is not racy
+  // because rebuilds are only ever started from JavaScript and the lookup
+  // below is synchronous.
+  if (compilation.compiler?.watching?.running === true) {
+    return undefined
+  }
+
   const { chunkGraph, modules } = compilation
 
   return [...modules].find((module) => chunkGraph.getModuleId(module) === id)
