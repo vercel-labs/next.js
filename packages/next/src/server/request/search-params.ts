@@ -41,8 +41,11 @@ import {
 } from '../../shared/lib/utils/reflect-utils'
 import {
   throwWithStaticGenerationBailoutErrorWithDynamicError,
+  createSearchParamsAccessInUseCacheError,
   throwForSearchParamsAccessInUseCache,
+  throwSearchParamsAccessInUseCacheError,
 } from './utils'
+import { createSearchParamsInUseCacheError } from '../use-cache/use-cache-messages'
 
 export type SearchParams = { [key: string]: string | string[] | undefined }
 
@@ -508,9 +511,9 @@ function makeErroringSearchParams(
 }
 
 /**
- * This is a variation of `makeErroringSearchParams` that always throws an
- * error on access, because accessing searchParams inside of `"use cache"` is
- * not allowed.
+ * This is a variation of `makeErroringSearchParams` that throws an error when
+ * the search params are accessed, because accessing searchParams inside of
+ * `"use cache"` is not allowed.
  */
 export function makeErroringSearchParamsForUseCache(): Promise<SearchParams> {
   const workStore = workAsyncStorage.getStore()
@@ -522,7 +525,15 @@ export function makeErroringSearchParamsForUseCache(): Promise<SearchParams> {
     return cachedSearchParams
   }
 
-  const promise = Promise.resolve({})
+  // We're marking the promise as rejected so that React does not attach a
+  // `then` callback when it serializes debug info in development for the props
+  // of a cached page that are forwarded to another component, e.g. by
+  // spreading them. Otherwise, this would be reported as an invalid search
+  // params access, even though the app is not reading any search params.
+  const promise = Object.assign(Promise.resolve({}), {
+    status: 'rejected',
+    reason: createSearchParamsInUseCacheError(workStore.route),
+  })
 
   const proxiedPromise = new Proxy(promise, {
     get: function get(target, prop, receiver) {
@@ -534,10 +545,21 @@ export function makeErroringSearchParamsForUseCache(): Promise<SearchParams> {
         return ReflectAdapter.get(target, prop, receiver)
       }
 
-      if (
-        typeof prop === 'string' &&
-        (prop === 'then' || !wellKnownProperties.has(prop))
-      ) {
+      if (prop === 'then') {
+        // Reading the `then` property is not considered an access, and only
+        // calling it is. This is because React reads it when serializing the
+        // props of a cached page that forwards them to another component. The
+        // error is created here though, so that its stack trace points at the
+        // code that initiates the access.
+        const error = createSearchParamsAccessInUseCacheError(workStore, get)
+
+        return {
+          then: (): never =>
+            throwSearchParamsAccessInUseCacheError(workStore, error),
+        }.then
+      }
+
+      if (typeof prop === 'string' && !wellKnownProperties.has(prop)) {
         throwForSearchParamsAccessInUseCache(workStore, get)
       }
 
