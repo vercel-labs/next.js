@@ -1,0 +1,23 @@
+{
+  "name": "repro-96261",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "next": "16.2.11",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "@types/react": "^19",
+    "@types/node": "^22"
+  }
+}
