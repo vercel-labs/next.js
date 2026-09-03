@@ -487,6 +487,7 @@ async function navigateToUnknownRoute(
   switch (freshnessPolicy) {
     case FreshnessPolicy.Default:
     case FreshnessPolicy.HistoryTraversal:
+    case FreshnessPolicy.RedirectRetry:
     case FreshnessPolicy.Gesture:
       dynamicRequestTree = currentFlightRouterState
       break
