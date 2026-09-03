@@ -61,6 +61,30 @@ describe.each(runtimes)('after() in %s runtime', (runtimeValue) => {
     })
   })
 
+  it('sees cookies set in a route handler when reading them in after()', async () => {
+    const res = await next.fetch(pathPrefix + '/route-setting-cookies', {
+      headers: { cookie: 'testCookie=inbound' },
+    })
+    expect(res.status).toBe(200)
+    // the response reflects the cookie that the route handler set
+    expect(res.headers.get('set-cookie')).toContain('testCookie=route-handler')
+    expect(await res.json()).toEqual({
+      inbound: 'inbound',
+      inHandler: 'route-handler',
+    })
+    // and so should a read from within after()
+    await retry(() => {
+      expect(getLogs()).toContainEqual({
+        source: '[route handler] /route-setting-cookies',
+        cookies: {
+          inbound: 'inbound',
+          inHandler: 'route-handler',
+          inAfter: 'route-handler',
+        },
+      })
+    })
+  })
+
   it('runs in server actions', async () => {
     const browser = await next.browser(pathPrefix + '/123/with-action')
     expect(getLogs()).toContainEqual({
