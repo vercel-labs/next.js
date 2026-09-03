@@ -88,6 +88,15 @@ export const enum FreshnessPolicy {
   RefreshAll,
   HMRRefresh,
   Gesture,
+  /**
+   * A navigation that is retried because the original request was redirected
+   * (e.g. by a proxy), so the wrong canonical URL was committed. The data we
+   * already received is correct, so — like a history traversal — the retry
+   * reuses it instead of re-fetching. Unlike a history traversal, though, this
+   * is still a forward navigation, so it scrolls the newly navigated segments
+   * into view.
+   */
+  RedirectRetry,
 }
 
 const enum NavigationTaskStatus {
@@ -349,6 +358,7 @@ function updateCacheNodeOnNavigation(
   switch (freshness) {
     case FreshnessPolicy.Default:
     case FreshnessPolicy.HistoryTraversal:
+    case FreshnessPolicy.RedirectRetry:
     case FreshnessPolicy.Hydration:
     case FreshnessPolicy.Gesture:
       shouldRefreshDynamicData = false
@@ -506,9 +516,10 @@ function updateCacheNodeOnNavigation(
       let newSegmentChild = createSegmentFromRouteTree(newRouteTreeChild)
       let seedHeadChild = seedHead
       if (
-        // Skip this branch during a history traversal. We restore the tree that
-        // was stashed in the history entry as-is.
+        // Skip this branch during a history traversal, or a retry that reuses
+        // the data it already received. We restore the tree as-is.
         freshness !== FreshnessPolicy.HistoryTraversal &&
+        freshness !== FreshnessPolicy.RedirectRetry &&
         newSegmentChild === DEFAULT_SEGMENT_KEY &&
         oldSegmentChild !== DEFAULT_SEGMENT_KEY
       ) {
@@ -625,7 +636,9 @@ function updateCacheNodeOnNavigation(
  * produces a different route).
  *
  * Skipped during hydration (initial render should not scroll) and
- * history traversal (scroll restoration is handled separately).
+ * history traversal (scroll restoration is handled separately). A retry
+ * after a redirect is not skipped: it reuses the data it already received,
+ * but it's still a forward navigation, so it scrolls.
  */
 function accumulateScrollRef(
   freshness: FreshnessPolicy,
@@ -637,6 +650,9 @@ function accumulateScrollRef(
     case FreshnessPolicy.Gesture:
     case FreshnessPolicy.RefreshAll:
     case FreshnessPolicy.HMRRefresh:
+    case FreshnessPolicy.RedirectRetry:
+      // A retry after a redirect is still a forward navigation, so it scrolls
+      // like one, even though it reuses the data it already received.
       if (accumulation.scrollRef === null) {
         accumulation.scrollRef = { current: true }
       }
@@ -1064,6 +1080,7 @@ function createCacheNodeForSegment(
       }
     }
     case FreshnessPolicy.HistoryTraversal:
+    case FreshnessPolicy.RedirectRetry:
       const bfcacheEntry = readFromBFCache(tree.varyPath)
       if (bfcacheEntry !== null) {
         // Only show prefetched data if the dynamic data is still pending. This
@@ -1598,8 +1615,8 @@ async function finishNavigationTask(
     case NavigationTaskExitStatus.RedirectRetry: {
       // The route matched, but the request was redirected, so we committed the
       // wrong canonical URL. Re-resolve the route to invalidate the now-stale
-      // route cache and correct the URL — but reuse the data we already received
-      // (HistoryTraversal) instead of re-fetching it. See issue #95195.
+      // route cache and correct the URL — but reuse the data we already
+      // received instead of re-fetching it. See issue #95195.
       const isHardRetry = false
       const primaryRequestResult = await primaryRequestPromise
       dispatchRetryDueToTreeMismatch(
@@ -1610,7 +1627,7 @@ async function finishNavigationTask(
         task.route,
         routeCacheEntry,
         navigateType,
-        FreshnessPolicy.HistoryTraversal
+        FreshnessPolicy.RedirectRetry
       )
       return
     }
@@ -1705,12 +1722,12 @@ function dispatchRetryDueToTreeMismatch(
   // The original navigation's push/replace intent.
   originalNavigateType: 'push' | 'replace',
   // Freshness policy for the retry navigation. `RefreshAll` re-fetches the
-  // tree's dynamic data (used for genuine tree mismatches). `HistoryTraversal`
+  // tree's dynamic data (used for genuine tree mismatches). `RedirectRetry`
   // reuses the data already in the tree (used when only the URL needs
   // correcting after a redirect).
   retryFreshnessPolicy:
     | FreshnessPolicy.RefreshAll
-    | FreshnessPolicy.HistoryTraversal
+    | FreshnessPolicy.RedirectRetry
 ) {
   // If the navigation used a route prediction, mark it as having a dynamic
   // rewrite since it resulted in a mismatch.
