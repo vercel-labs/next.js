@@ -1,6 +1,21 @@
 {
-  "name": "repro-21565",
+  "name": "refresh-dropped-repro",
   "private": true,
-  "scripts": { "dev": "next dev -p 3020", "build": "next build", "start": "next start -p 3021" },
-  "dependencies": { "next": "latest", "react": "latest", "react-dom": "latest" }
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "next": "16.2.9",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5.9.0"
+  }
 }
