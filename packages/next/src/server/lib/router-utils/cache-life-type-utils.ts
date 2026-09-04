@@ -72,6 +72,7 @@ export function generateCacheLifeTypes(cacheLife: {
   [profile: string]: CacheLife
 }): string {
   let overloads = ''
+  const definedProfileNames: string[] = []
 
   const profileNames = Object.keys(cacheLife)
   for (let i = 0; i < profileNames.length; i++) {
@@ -80,6 +81,8 @@ export function generateCacheLifeTypes(cacheLife: {
     if (typeof profile !== 'object' || profile === null) {
       continue
     }
+
+    definedProfileNames.push(profileName)
 
     let description = ''
 
@@ -136,58 +139,24 @@ export function generateCacheLifeTypes(cacheLife: {
     `
   }
 
-  overloads += `
-    /**
-     * Cache this \`"use cache"\` using a custom timespan.
-     * \`\`\`
-     *   stale: ... // seconds
-     *   revalidate: ... // seconds
-     *   expire: ... // seconds
-     * \`\`\`
-     *
-     * This is similar to Cache-Control: max-age=\`stale\`,s-max-age=\`revalidate\`,stale-while-revalidate=\`expire-revalidate\`
-     *
-     * If a value is left out, the lowest of other cacheLife() calls or the default, is used instead.
-     */
-    export function cacheLife(profile: {
-      /**
-       * This cache may be stale on clients for ... seconds before checking with the server.
-       */
-      stale?: number,
-      /**
-       * If the server receives a new request after ... seconds, start revalidating new values in the background.
-       */
-      revalidate?: number,
-      /**
-       * If this entry has no traffic for ... seconds it will expire. The next request will recompute it.
-       */
-      expire?: number
-    }): void
-  `
+  const profileNameEntries = definedProfileNames
+    .map((profileName) => `\n    ${JSON.stringify(profileName)}: true`)
+    .join('')
 
-  // Redefine the cacheLife() accepted arguments.
+  // Augment the `cacheLife()` overloads of `next/cache` with the configured
+  // profiles. This must stay a module augmentation (hence the `export {}`
+  // above): a standalone ambient `declare module 'next/cache'` would shadow the
+  // types that ship with the package, which makes TypeScript offer every
+  // `next/cache` export twice in auto-import completions.
   return `// Type definitions for Next.js cacheLife configs
 
+export {}
+
 declare module 'next/cache' {
-  export { unstable_cache } from 'next/dist/server/web/spec-extension/unstable-cache'
-  export {
-    updateTag,
-    revalidateTag,
-    revalidatePath,
-    refresh,
-  } from 'next/dist/server/web/spec-extension/revalidate'
-  export { unstable_noStore } from 'next/dist/server/web/spec-extension/unstable-no-store'
-  export { io } from 'next/dist/server/request/io'
-  export { unstable_navigation } from 'next/dist/server/request/cache-stages'
-  export { unstable_prefetch } from 'next/dist/server/request/cache-stages'
+  export interface CacheLifeProfiles {${profileNameEntries}
+  }
 
   ${overloads}
-
-  import { cacheTag } from 'next/dist/server/use-cache/cache-tag'
-  export { cacheTag }
-
-  export const unstable_cacheTag: typeof cacheTag
-  export const unstable_cacheLife: typeof cacheLife
 }
 `
 }
