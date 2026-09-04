@@ -373,6 +373,16 @@ describe('API routes', () => {
     expect(data).toEqual({ a: ['1', '3'], b: '2' })
   })
 
+  it('should not reorder the query string of the incoming request', async () => {
+    // repeated query keys must not be grouped together in `req.url`, as
+    // signature verification depends on the raw query string
+    // https://github.com/vercel/next.js/issues/35983
+    const data = await next
+      .fetch('/api/raw-url?b=1&a=2&b=3&c=4')
+      .then((res) => res.ok && res.json())
+    expect(data).toEqual({ url: '/api/raw-url?b=1&a=2&b=3&c=4' })
+  })
+
   it('should return empty cookies object', async () => {
     const data = await next
       .fetch('/api/cookies')
