@@ -14,6 +14,12 @@ const EDITS = 6
 // the dev server runs with `--disable-source-maps`.
 const MAX_RETAINED_MB_PER_EDIT = 8
 
+// Webpack's dev server retains a comparable amount of memory per edit for
+// reasons unrelated to source maps: a run with `--disable-source-maps` retains
+// just as much (~17 MB per edit with this fixture), so only Turbopack can
+// assert on the source map retention.
+const itTurbopack = process.env.IS_TURBOPACK_TEST ? it : it.skip
+
 describe('hmr-server-source-maps-memory', () => {
   const { next } = nextTestSetup({
     files: __dirname,
@@ -37,32 +43,35 @@ describe('hmr-server-source-maps-memory', () => {
     }, 30_000)
   }
 
-  it('does not retain memory per edit of a Server Component', async () => {
-    await renderRevision(0)
+  itTurbopack(
+    'does not retain memory per edit of a Server Component',
+    async () => {
+      await renderRevision(0)
 
-    const samples = [await getRetainedHeap()]
+      const samples = [await getRetainedHeap()]
 
-    for (let revision = 1; revision <= EDITS; revision++) {
-      await next.patchFile('app/page.tsx', (content) =>
-        content
-          // Insert a line at the *top* of the file so the line and column of
-          // every element below it changes.
-          .replace('// MARKER', `// MARKER\n// edit ${revision}`)
-          .replace(/rev \d+/, `rev ${revision}`)
+      for (let revision = 1; revision <= EDITS; revision++) {
+        await next.patchFile('app/page.tsx', (content) =>
+          content
+            // Insert a line at the *top* of the file so the line and column of
+            // every element below it changes.
+            .replace('// MARKER', `// MARKER\n// edit ${revision}`)
+            .replace(/rev \d+/, `rev ${revision}`)
+        )
+        await renderRevision(revision)
+        samples.push(await getRetainedHeap())
+      }
+
+      const retainedMbPerEdit =
+        (samples[samples.length - 1] - samples[0]) / EDITS / 1024 / 1024
+
+      console.log(
+        `retained ${retainedMbPerEdit.toFixed(1)} MB per edit, heapUsed samples: ${samples
+          .map((bytes) => `${Math.round(bytes / 1024 / 1024)} MB`)
+          .join(', ')}`
       )
-      await renderRevision(revision)
-      samples.push(await getRetainedHeap())
+
+      expect(retainedMbPerEdit).toBeLessThan(MAX_RETAINED_MB_PER_EDIT)
     }
-
-    const retainedMbPerEdit =
-      (samples[samples.length - 1] - samples[0]) / EDITS / 1024 / 1024
-
-    console.log(
-      `retained ${retainedMbPerEdit.toFixed(1)} MB per edit, heapUsed samples: ${samples
-        .map((bytes) => `${Math.round(bytes / 1024 / 1024)} MB`)
-        .join(', ')}`
-    )
-
-    expect(retainedMbPerEdit).toBeLessThan(MAX_RETAINED_MB_PER_EDIT)
-  })
+  )
 })

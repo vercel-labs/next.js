@@ -212,6 +212,49 @@ function bundlerFindSourceMapURL(scriptNameOrSourceURL: string): string | null {
     : implementation(scriptNameOrSourceURL)
 }
 
+let sourceMapsDir: string | undefined
+let sourceMapFileCount = 0
+
+/**
+ * Writes a source map to a temporary file and returns its `file:` URL.
+ *
+ * React concatenates the URL we return into the source of every function it
+ * `eval`s to reconstruct a Server Component owner stack, and those generated
+ * scripts are cached for the lifetime of the process, both by React (keyed by
+ * the source position of the frame) and by Node.js (keyed by the script's
+ * `sourceURL`). Inlining the payload as a `data:` URL therefore retains a copy
+ * of the whole source map, including `sourcesContent`, per stack frame, and
+ * every edit of a Server Component shifts the source positions those caches
+ * are keyed by, so the retained copies accumulate without bound. Referencing
+ * the map by URL keeps the generated scripts small and lets Node.js skip
+ * caching a parsed copy of the map for each of them, while debuggers can still
+ * resolve it.
+ *
+ * The files are written into a temporary directory that is removed when the
+ * process exits.
+ */
+function writeSourceMapFileURL(sourceMapJSON: string): string {
+  const fs = require('fs') as typeof import('fs')
+  const os = require('os') as typeof import('os')
+  const path = require('path') as typeof import('path')
+  const { pathToFileURL } = require('url') as typeof import('url')
+
+  if (sourceMapsDir === undefined) {
+    sourceMapsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'next-source-maps-'))
+    const cleanup = () => {
+      try {
+        fs.rmSync(sourceMapsDir!, { force: true, recursive: true })
+      } catch {}
+    }
+    process.on('exit', cleanup)
+  }
+
+  const sourceMapFile = path.join(sourceMapsDir, `${sourceMapFileCount++}.map`)
+  fs.writeFileSync(sourceMapFile, sourceMapJSON)
+
+  return pathToFileURL(sourceMapFile).href
+}
+
 const invalidSourceMap = Symbol('invalid-source-map')
 const sourceMapURLs = new LRUCache<string | typeof invalidSourceMap>(
   512 * 1024 * 1024,
@@ -237,8 +280,9 @@ export function findSourceMapURLDEV(
     )
   }
 
-  // No bundler implementation (e.g. Webpack): inline the source map Node.js
-  // knows as a `data:` URL.
+  // No bundler implementation for this script (e.g. Webpack, or a Turbopack
+  // server HMR module that was `eval`ed with an inline source map): fall back
+  // to the source map Node.js knows.
   let sourceMapURL = sourceMapURLs.get(scriptNameOrSourceURL)
   if (sourceMapURL === undefined) {
     let sourceMapPayload: ModernSourceMapPayload | undefined
@@ -255,11 +299,7 @@ export function findSourceMapURLDEV(
     } else {
       // TODO: Might be more efficient to extract the relevant section from Index Maps.
       // Unclear if that search is worth the smaller payload we have to stringify.
-      const sourceMapJSON = JSON.stringify(sourceMapPayload)
-      const sourceMapURLData = Buffer.from(sourceMapJSON, 'utf8').toString(
-        'base64'
-      )
-      sourceMapURL = `data:application/json;base64,${sourceMapURLData}`
+      sourceMapURL = writeSourceMapFileURL(JSON.stringify(sourceMapPayload))
     }
 
     sourceMapURLs.set(scriptNameOrSourceURL, sourceMapURL)
