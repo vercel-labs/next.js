@@ -779,6 +779,36 @@ describe('Image Component Default Tests', () => {
     }
   })
 
+  it('should not warn when width and height props are non-integer numbers', async () => {
+    const browser = await next.browser('/fractional-dimensions')
+
+    // The height attribute keeps the fractional value, while the browser
+    // rounds `HTMLImageElement.height` to an integer.
+    expect(await browser.elementById('fractional').getAttribute('width')).toBe(
+      '301'
+    )
+    expect(await browser.elementById('fractional').getAttribute('height')).toBe(
+      '175.58333333333334'
+    )
+
+    if (isNextDev) {
+      await retry(async () => {
+        expect(
+          await browser.eval(
+            `document.getElementById('fractional').complete === true`
+          )
+        ).toBe(true)
+      })
+      await new Promise((r) => setTimeout(r, 1000))
+      const warnings = (await browser.log())
+        .map((log) => log.message)
+        .join('\n')
+      expect(warnings).not.toMatch(
+        /Image with src "\/wide.png" has either width or height modified, but not the other./gm
+      )
+    }
+  })
+
   it('should lazy load with placeholder=blur', async () => {
     const browser = await next.browser('/placeholder-blur')
 
