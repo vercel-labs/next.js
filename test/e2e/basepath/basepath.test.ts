@@ -504,6 +504,28 @@ describe('basePath', () => {
     expect(pathname).toBe(`${basePath}`)
   })
 
+  // https://github.com/vercel/next.js/issues/40481
+  it('should have correct href for a relative link to the parent path', async () => {
+    const browser = await next.browser(`${basePath}/relative-parent`)
+    const href = await browser
+      .elementByCss('#relative-parent-link')
+      .getAttribute('href')
+    const { pathname } = new URL(href, await browser.url())
+    expect(pathname).toBe('/')
+  })
+
+  it('should navigate outside of the basePath for a relative parent path', async () => {
+    const browser = await next.browser(`${basePath}/relative-parent`)
+    const initialPathname = new URL(await browser.url()).pathname
+
+    await browser.elementByCss('#relative-parent-push').click()
+    await browser.waitForCondition(
+      `window.location.pathname !== ` + JSON.stringify(initialPathname)
+    )
+
+    expect(new URL(await browser.url()).pathname).toBe('/')
+  })
+
   it('should show 404 for page not under the /docs prefix', async () => {
     const text = await renderViaHTTP(next.url, '/hello')
     expect(text).not.toContain('Hello World')
