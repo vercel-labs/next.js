@@ -67,6 +67,22 @@ describe('app dir - workers', () => {
     )
   })
 
+  // https://github.com/vercel/next.js/issues/31009
+  it('should support web workers when the module URL is assigned to a variable', async () => {
+    const browser = await next.browser('/hoisted-url', {
+      beforePageLoad,
+    })
+    expect(await browser.elementByCss('#worker-state').text()).toBe('default')
+
+    await browser.elementByCss('button').click()
+
+    await retry(async () =>
+      expect(await browser.elementByCss('#worker-state').text()).toBe(
+        'worker.ts:worker-dep'
+      )
+    )
+  })
+
   it('should not bundle web workers with string specifiers', async () => {
     const browser = await next.browser('/string', {
       beforePageLoad,
