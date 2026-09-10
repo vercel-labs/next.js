@@ -1,0 +1,20 @@
+{
+  "name": "rspack-next-externals-repro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal reproduction of rspack NextExternalsPlugin incorrectly externalizing direct transpilePackages dependencies on Windows + pnpm junction environments",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "bootstrap": "pnpm pack:service && pnpm install",
+    "pack:service": "pnpm -C packages/service pack --pack-destination ../../vendor",
+    "repro:rspack": "pnpm --filter repro-app run dev:rspack",
+    "repro:webpack": "pnpm --filter repro-app run dev:webpack",
+    "build:rspack": "pnpm --filter repro-app run build:rspack",
+    "build:webpack": "pnpm --filter repro-app run build:webpack"
+  },
+  "dependencies": {
+    "@demo/di-core": "workspace:*"
+  }
+}
