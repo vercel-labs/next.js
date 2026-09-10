@@ -1,0 +1,13 @@
+{
+  "name": "@demo/service",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "description": "Simulates referencing the DI core as a peer dependency (same as the real scenario), packed as a tarball for app to install via file: (into the pnpm .pnpm virtual store, simulating a registry package)",
+  "peerDependencies": {
+    "@demo/di-core": "*"
+  },
+  "devDependencies": {
+    "@demo/di-core": "1.0.0"
+  }
+}
