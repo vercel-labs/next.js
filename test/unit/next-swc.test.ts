@@ -1,6 +1,7 @@
 /* eslint-env jest */
 import { transform } from 'next/dist/build/swc'
 import { installBindings } from 'next/dist/build/swc/install-bindings'
+import { execFile } from 'child_process'
 import path from 'path'
 import fsp from 'fs/promises'
 
@@ -118,6 +119,97 @@ describe('next/swc', () => {
        "
       `)
     })
+  })
+
+  describe('styled_jsx', () => {
+    // The styled-jsx transform used to loop forever when a local variable
+    // derived from a non-static expression was used as a JSX element name and
+    // the same component also contained a dynamic interpolation inside
+    // `<style jsx>`, so `next build`/`next dev` never finished.
+    // x-ref: https://github.com/vercel/next.js/issues/97685
+    //
+    // The loop happens on a native thread, so the transform runs in a child
+    // process that can be killed instead of hanging the whole test run.
+    const transformInChildProcess = (code: string, timeout: number) =>
+      new Promise<{ timedOut: boolean; stdout: string; stderr: string }>(
+        (resolve) => {
+          const script = `
+            const swc = require(process.env.__NEXT_SWC_TEST_MODULE)
+            swc
+              .loadBindings()
+              .then(() =>
+                swc.transform(process.env.__NEXT_SWC_TEST_INPUT, {
+                  filename: 'pages/index.tsx',
+                  jsc: { parser: { syntax: 'typescript', tsx: true } },
+                  styledJsx: true,
+                })
+              )
+              .then(
+                (output) => process.stdout.write(output.code),
+                (error) => {
+                  console.error(error)
+                  process.exit(1)
+                }
+              )
+          `
+
+          execFile(
+            process.execPath,
+            ['-e', script],
+            {
+              timeout,
+              env: {
+                ...process.env,
+                __NEXT_SWC_TEST_MODULE: require.resolve('next/dist/build/swc'),
+                __NEXT_SWC_TEST_INPUT: code,
+              },
+            },
+            (error, stdout, stderr) => {
+              const timedOut = Boolean(error && (error as any).killed)
+
+              resolve({
+                timedOut,
+                stdout,
+                stderr: error && !timedOut ? stderr || String(error) : stderr,
+              })
+            }
+          )
+        }
+      )
+
+    it(
+      'should not hang on a dynamic interpolation next to a locally derived component',
+      async () => {
+        const { timedOut, stdout, stderr } = await transformInChildProcess(
+          trim`
+        const Probe = (props: { theme: { color: string; icon: any } }) => {
+        const t = props.theme;
+        const Icon = t.icon;
+        return (
+        <div className="probe">
+        <Icon />
+        <style jsx>{\`
+        .probe {
+        color: \${t.color};
+        }
+        \`}</style>
+        </div>
+        );
+        };
+
+        export default function Home() {
+        return <Probe theme={{ color: '#f00', icon: 'div' }} />;
+        }
+      `,
+          30 * 1000
+        )
+
+        expect({ timedOut, stderr }).toEqual({ timedOut: false, stderr: '' })
+        expect(stdout).toContain('styled-jsx/style')
+        expect(stdout).toContain('_JSXStyle.dynamic')
+      },
+      60 * 1000
+    )
   })
 
   describe('private env replacement', () => {
