@@ -1,0 +1,22 @@
+{
+  "name": "repro-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:rspack": "cross-env NEXT_RSPACK=true next dev -p 3100",
+    "dev:webpack": "next dev -p 3100",
+    "build:rspack": "cross-env NEXT_RSPACK=true next build",
+    "build:webpack": "next build",
+    "start": "next start -p 3100"
+  },
+  "dependencies": {
+    "@demo/service": "file:../../vendor/demo-service-1.0.0.tgz",
+    "next": "16.3.0",
+    "next-rspack": "16.3.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
